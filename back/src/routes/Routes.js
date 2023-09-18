@@ -4,10 +4,12 @@ const express = require('express');
 const app = express();
 app.use(cors({credentials: true}));
 
-//app.get('/', function)
-//app.post('/', multer().single(), function)
+const feed = require('../controller/FeedController');
+const user = require('../controller/UserController');
 
-// Lancement du serveur
+app.get('/feeds', feed.retrieveFeed)
+app.post('/', multer().single(), feed.create)
+
 const ApiConfig = {
     app
 }
