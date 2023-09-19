@@ -5,12 +5,9 @@ const Rss = require('./rss-retriever');
 const Sender = require('./sender');
 
 Cron.schedule('* * * * *', () => {
-
-    Rss.retrieveFeed('https://9to5mac.com/feed')
-        .then(publications => {
-            Sender.process(publications);
-        })
-
+    const publication = Rss.retrieveFeed('https://9to5mac.com/feed');
+    Sender.process(publication);
+    console.log("sent. " + new Date());
 }, {
     timezone: 'Europe/Paris'
 });

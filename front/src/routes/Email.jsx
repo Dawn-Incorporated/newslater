@@ -2,6 +2,8 @@ import Logo from '../assets/dawn-logo.png';
 import Styles from '../styles/Email/main.module.scss'
 import Block from "../components/Email/Block.jsx";
 
+console.log(Email().props.children[3]);
+
 export default function Email() {
 
     return (

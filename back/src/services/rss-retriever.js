@@ -1,56 +1,37 @@
 const Parser = require("rss-parser");
+const {send} = require("../config/mailer");
 
-function retrieveFeed(link) {
-    if (!link.includes('http')) return;
+const parser = new Parser({
+    customFields: {
+        item: [
+            ['media:content', 'media:content', {keepArray: true}],
+        ]
 
-    return (async () => {
-        await new Parser().parseURL(link, (err, feed) => {
-            if (err) return;
+    }
+});
 
-            let publication = [];
-            feed.items.forEach(item => {
-                publication.push({
-                    title: item.title,
-                    link: item.link,
-                    image: item.image,
-                    pubDate: item.pubDate,
-                    creator: item.creator,
-                    content: item.content,
-                    description: item.description
-                });
-            });
-            return publication;
+/**
+ * @param {string} link
+ * @returns {string}
+ */
+async function retrieveFeed(link) {
+    if (!link.includes('http')) return "";
+    const feed = await parser.parseURL(link);
+    let publication = [];
+    feed.items.forEach(item => {
+        publication.push({
+            title: item.title,
+            link: item.link,
+            image: item.image,
+            pubDate: item.pubDate,
+            creator: item.creator,
+            content: item.content,
+            description: item.description
         });
-    })();
+    });
+    return publication;
 }
-
-function retrieveFeedTEST(req, res) {
-
-    if (!req.query.link.includes('http')) return res.status(400).send([]);
-
-    return (async () => {
-        await new Parser().parseURL(req.query.link, (err, feed) => {
-            if (err) return res.status(400).send([]);
-
-            let publication = [];
-            feed.items.forEach(item => {
-                publication.push({
-                    title: item.title,
-                    link: item.link,
-                    image: item.image,
-                    pubDate: item.pubDate,
-                    creator: item.creator,
-                    content: item.content,
-                    description: item.description
-                });
-            });
-            return res.status(200).send(publication);
-        });
-    })();
-}
-
 
 module.exports = {
-    retrieveFeed,
-    retrieveFeedTEST
+    retrieveFeed
 }

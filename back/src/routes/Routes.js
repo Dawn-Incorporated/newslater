@@ -8,7 +8,6 @@ const feed = require('../controller/FeedController');
 const user = require('../controller/UserController');
 const rss = require('../services/rss-retriever')
 
-app.get('/feeds', rss.retrieveFeedTEST)
 app.post('/', multer().single(), feed.create)
 
 const ApiConfig = {
