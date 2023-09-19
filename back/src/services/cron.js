@@ -6,9 +6,9 @@ const Sender = require('./sender');
 
 Cron.schedule('* * * * *', async () => {
     console.log("sending. ");
-    const publication = await Rss.retrieveFeed('https://9to5mac.com/feed');
-    Sender.process(publication);
-    console.log("sent. " + new Date());
+    const feeds = await Rss.retrieveFeeds(['https://9to5mac.com/feed']);
+    Sender.process(feeds);
+    console.log("sent. " + new Date())
 }, {
     timezone: 'Europe/Paris'
 });

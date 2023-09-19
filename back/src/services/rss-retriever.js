@@ -1,14 +1,5 @@
 const Parser = require("rss-parser");
 
-const parser = new Parser({
-    customFields: {
-        item: [
-            ['media:content', 'media:content', {keepArray: true}],
-        ]
-
-    }
-});
-
 function retrieveFeed(link) {
     if (!link.includes('http')) return Promise.resolve([]);
 
@@ -17,6 +8,8 @@ function retrieveFeed(link) {
             let publication = [];
             feed.items.forEach(item => {
                 publication.push({
+                    websiteTitle: feed.title,
+                    websiteLink: feed.link,
                     title: item.title,
                     link: item.link,
                     image: item.image,
@@ -34,6 +27,15 @@ function retrieveFeed(link) {
         });
 }
 
+function retrieveFeeds(links) {
+    return Promise.all(links.map(link => retrieveFeed(link)))
+        .catch(error => {
+            console.error("Une erreur s'est produite lors de la récupération des flux :", error);
+            return [];
+        });
+}
+
 module.exports = {
-    retrieveFeed
+    retrieveFeed,
+    retrieveFeeds
 }
