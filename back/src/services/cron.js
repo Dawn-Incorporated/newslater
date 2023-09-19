@@ -4,9 +4,9 @@ const Rss = require('./rss-retriever');
 
 const Sender = require('./sender');
 
-Cron.schedule('* * * * *', () => {
+Cron.schedule('* * * * *', async () => {
     console.log("sending. ");
-    const publication = Rss.retrieveFeed('https://9to5mac.com/feed');
+    const publication = await Rss.retrieveFeed('https://9to5mac.com/feed');
     Sender.process(publication);
     console.log("sent. " + new Date());
 }, {

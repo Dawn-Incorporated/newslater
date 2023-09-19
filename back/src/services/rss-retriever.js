@@ -1,5 +1,4 @@
 const Parser = require("rss-parser");
-const {send} = require("../config/mailer");
 
 const parser = new Parser({
     customFields: {
@@ -10,26 +9,29 @@ const parser = new Parser({
     }
 });
 
-/**
- * @param {string} link
- * @returns {string}
- */
-async function retrieveFeed(link) {
-    if (!link.includes('http')) return "";
-    const feed = await parser.parseURL(link);
-    let publication = [];
-    feed.items.forEach(item => {
-        publication.push({
-            title: item.title,
-            link: item.link,
-            image: item.image,
-            pubDate: item.pubDate,
-            creator: item.creator,
-            content: item.content,
-            description: item.description
+function retrieveFeed(link) {
+    if (!link.includes('http')) return Promise.resolve([]);
+
+    return new Parser().parseURL(link)
+        .then(feed => {
+            let publication = [];
+            feed.items.forEach(item => {
+                publication.push({
+                    title: item.title,
+                    link: item.link,
+                    image: item.image,
+                    pubDate: item.pubDate,
+                    creator: item.creator,
+                    content: item.content,
+                    description: item.description
+                });
+            });
+            return publication;
+        })
+        .catch(error => {
+            console.error("Une erreur s'est produite lors de la récupération du flux :", error);
+            return [];
         });
-    });
-    return publication;
 }
 
 module.exports = {
