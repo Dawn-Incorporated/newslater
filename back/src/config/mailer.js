@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 
 function send(to, subject, html) {
     transporter.sendMail({
-        from: '"Dawn." <dawn@gmail.com>',
+        from: '"Dawn." <dawn.newslater@gmail.com>',
         to: to,
         subject: subject,
         html: html,

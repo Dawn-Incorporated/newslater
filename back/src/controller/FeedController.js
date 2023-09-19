@@ -12,23 +12,28 @@ function create(req, res) {
 }
 
 function retrieveFeed(req, res) {
-    let parser = new Parser();
+    if (!req.query.link.includes('http')) return res.status(400).send([]);
 
     (async () => {
+        await new Parser().parseURL(req.query.link, (err, feed) => {
+            if (err) return res.status(400).send([]);
 
-        let feed = await parser.parseURL(req.link);
-        let publication = [];
-
-        feed.items.forEach(item => {
-            publication.push({
-                title: item.title,
-                link: item.link,
-                pubDate: item.pubDate,
-                creator: item.creator,
-                content: item.content
+            let publication = [];
+            feed.items.forEach(item => {
+                publication.push({
+                    title: item.title,
+                    link: item.link,
+                    image: item.image,
+                    pubDate: item.pubDate,
+                    creator: item.creator,
+                    content: item.content,
+                    description: item.description
+                });
             });
+            res.status(200).send(publication);
+
         });
-        res.send(publication);
+
     })();
 }
 
