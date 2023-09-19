@@ -4,8 +4,6 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import Root from './routes/Root.jsx'
 import ErrorPage from "../error-page.jsx";
-import Email from "./routes/Email.jsx";
-
 
 const router = createBrowserRouter([
     {
@@ -18,11 +16,6 @@ const router = createBrowserRouter([
                 element: <Child/>,
             },
         ],*/
-    },
-    {
-        path: "/email",
-        element: <Email />,
-        errorElement: <ErrorPage/>,
     }
 ]);
 
