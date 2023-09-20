@@ -1,15 +1,18 @@
 /**
  * Generates the html for the mail
- * @param feeds For each feed, an array of publications
+ * @param user User data
  * @param length The number of publications kept. If -1, don't limit.
  */
-function html(feeds, length = -1) {
+function html(user, length = -1) {
+    const feeds = user.sources;
+    const name = user.firstname;
+
     // Introduction
     let html = `
         <div class="logo">
             <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater." style="width: 200px;">
         </div>
-        <p>here's the latest.</p>
+        <p>hello ${name}. here's the latest.</p>
     `;
 
     // Feeds
@@ -28,7 +31,7 @@ function html(feeds, length = -1) {
             h2 { font-size: 24px; color: #666; }
             p, .subtitle { font-size: 16px; line-height: 1.5; color: #888; }
             a { text-decoration: none; color: #0077cc; }
-            img { max-width: 100%; }
+            img { max-width: 100%; max-height: fit-content }
         </style>
     `;
 

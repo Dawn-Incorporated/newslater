@@ -1,8 +1,9 @@
-function process(publications, length = -1) {
+function process(user, length = -1) {
+    const mail = user.mail;
 
-    const body = require('./html-generator').html(publications, length);
+    const body = require('./html-generator').html(user, length);
 
-    require('../config/mailer').send("dawn.newslater@gmail.com", "Nouvelles publications", body);
+    require('../config/mailer').send(mail, "Nouvelles publications", body);
 }
 
 module.exports = {
