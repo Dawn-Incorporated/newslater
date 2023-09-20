@@ -6,12 +6,20 @@ const transporter = require('nodemailer').createTransport({
     }
 });
 
+const Logger = require('../services/logger')
+
 function send(to, subject, html) {
     transporter.sendMail({
         from: '"Dawn." <dawn.newslater@gmail.com>',
         to: to,
         subject: subject,
         html: html,
+    }, (err, info) => {
+        if (err) {
+            Logger.log("ERROR", err);
+        } else {
+            Logger.log("INFO", "Mail sent to " + to);
+        }
     });
 }
 
@@ -19,5 +27,3 @@ function send(to, subject, html) {
 module.exports = {
     send
 }
-
-
