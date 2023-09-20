@@ -8,6 +8,10 @@ app.use(require('cors')({credentials: true}));
 
 //app.post('/', multer().single(), feed.create)
 
+app.get('/', (res) => {
+    res.send('Hello World!');
+})
+
 const ApiConfig = {
     app
 }
