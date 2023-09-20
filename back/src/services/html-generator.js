@@ -16,6 +16,7 @@ function html(feeds) {
         html += `
             <h1>${feed[0].websiteTitle}</h1>
             ${makeFeed(feed)}
+            <hr>
         `;
     }
 
@@ -52,7 +53,7 @@ function makeFeed(feed) {
             <p>${publication.content}</p>
         `);
     }
-    return feedHtml.join('');
+    return feedHtml.join(' --- ');
 }
 
 /**
