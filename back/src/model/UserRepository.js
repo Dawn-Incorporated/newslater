@@ -1,48 +1,58 @@
 const AbstractRepository = require('./AbstractRepository');
 const database = require('../config/database');
 const {log} = require("../services/logger");
-
 class UserRepository extends AbstractRepository {
 
 
-    create(req, res) {
-        database.execute("INSERT INTO " + this.getTable() + " (login, password, lastname, firstname, mail, sendtime) VALUES (?, ?, ?, ?, ?, ?)", [req.body.login, req.body.password, req.body.lastname, req.body.firstname, req.body.mail, req.body.sendtime ?? '06:00:00'], () => {
-            res.status(201);
-        })
-            .then(() => {
-                log("INFO", "User added.")
-                res.status(201).send(true)
-            })
-            .catch((error) => {
-                log("ERROR", error)
-                res.status(400).send(false)
-            });
+    async create(req, res) {
+        try {
+            await database.execute("INSERT INTO " + this.getTable() + " (login, password, lastname, firstname, mail, sendtime) VALUES (?, ?, ?, ?, ?, ?)", [req.body.login, req.body.password, req.body.lastname, req.body.firstname, req.body.mail, req.body.sendtime ?? '06:00:00']);
+            log("INFO", "User added.")
+            res.status(201).send(true)
+        } catch (error) {
+            log("ERROR", error)
+            res.status(500).send("Internal Server Error");
+        }
     }
 
-    update(req, res) {
-        database.execute("UPDATE " + this.getTable() + " SET password = ?, lastname = ?, firstname = ?, mail = ?, feeds = ?", [req.body.password, req.body.lastname, req.body.firstname, req.body.mail, req.body.feed], () => {
-            res.status(201);
-        });
+    async update(req, res) {
+        try {
+            await database.execute("UPDATE " + this.getTable() + " SET password = ?, lastname = ?, firstname = ?, mail = ?, feeds = ?", [req.body.password, req.body.lastname, req.body.firstname, req.body.mail, req.body.feed]);
+            log("INFO", "User updated.")
+            res.status(201).send(true);
+        } catch (error) {
+            log("ERROR", error);
+            res.status(500).send("Internal Server Error");
+        }
     }
 
-    delete(req, res) {
-        database.execute("DELETE FROM " + this.getTable() + " WHERE login = ?", [req.body.login], () => {
-            res.status(201);
-        });
+    async delete(req, res) {
+        try {
+            await database.execute("DELETE FROM " + this.getTable() + " WHERE login = ?", [req.body.login]);
+            log("INFO", 'User deleted');
+            res.status(200).send(true);
+        } catch (error) {
+            log("ERROR", error);
+            res.status(500).send("Internal Server Error");
+        }
     }
 
     // Custom queries
 
-    getFeedsApi(req, res){
-        database.execute("SELECT * FROM feed NATURAL JOIN follow WHERE login = ?", [req.body.login], (result) => {
-            res.status(201).send(result)
-        })
+    async getFeedsApi(req, res) {
+        try {
+            const result = await database.execute("SELECT * FROM feeds NATURAL JOIN follow WHERE login = ?", [req.query.login]);
+            log("INFO", 'User get');
+            res.status(200).send(result);
+        } catch (error) {
+            log("ERROR", error);
+            res.status(500).send("Internal Server Error");
+        }
     }
 
-    getFeeds(login){
-        database.execute("SELECT * FROM feed NATURAL JOIN follow WHERE login = ?", [login], (result) => {
-            return result;
-        })
+
+    async getFeeds(login) {
+        return await database.execute("SELECT * FROM feed NATURAL JOIN follow WHERE login = ?", [login]);
     }
 
     getTable() {
