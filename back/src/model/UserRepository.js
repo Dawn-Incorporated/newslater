@@ -41,7 +41,7 @@ class UserRepository extends AbstractRepository {
 
     async getFeedsApi(req, res) {
         try {
-            const result = await database.execute("SELECT * FROM feeds NATURAL JOIN follow WHERE login = ?", [req.query.login]);
+            const result = await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
             log("INFO", 'User get');
             res.status(200).send(result);
         } catch (error) {
@@ -51,8 +51,8 @@ class UserRepository extends AbstractRepository {
     }
 
 
-    async getFeeds(login) {
-        return await database.execute("SELECT * FROM feed NATURAL JOIN follow WHERE login = ?", [login]);
+    async getFeeds() {
+        return await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
     }
 
     getTable() {

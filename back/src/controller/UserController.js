@@ -9,7 +9,17 @@ function create(req, res) {
     user.create(req, res)
 }
 
+function getFeedsApi(req, res) {
+    user.getFeedsApi(req, res)
+}
+
+function getFeeds() {
+    return user.getFeeds()
+}
+
 module.exports = {
     getById,
-    create
+    create,
+    getFeedsApi,
+    getFeeds
 }
