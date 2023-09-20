@@ -1,8 +1,9 @@
 /**
  * Generates the html for the mail
  * @param feeds For each feed, an array of publications
+ * @param length The number of publications kept. If -1, don't limit.
  */
-function html(feeds) {
+function html(feeds, length = -1) {
     // Introduction
     let html = `
         <div class="logo">
@@ -15,7 +16,7 @@ function html(feeds) {
     for (let feed of feeds) {
         html += `
             <h1>${feed[0].websiteTitle}</h1>
-            ${makeFeed(feed)}
+            ${makeFeed(feed, length)}
             <hr>
         `;
     }
@@ -40,18 +41,22 @@ function html(feeds) {
 /**
  * Generates the html for a feed
  * @param feed The feed
+ * @param length For each feed, an array of publications
  * @returns {string} The feed in html
  */
-function makeFeed(feed) {
+function makeFeed(feed, length = -1) {
     let feedHtml = [];
+    let numberOfPublications = 0;
     for (let publication of feed) {
-        feedHtml.push(`
+        if (length === -1 || numberOfPublications++ < length) {
+            feedHtml.push(`
             <h2>${publication.title}</h2>
             <div class="subtitle">
                 ${makeSubtitles(publication)}
             </div>
             <p>${publication.content}</p>
         `);
+        }
     }
     return feedHtml.join(' --- ');
 }

@@ -1,5 +1,10 @@
 const Parser = require("rss-parser");
 
+/**
+ * Retrieves the feed from a source.
+ * @param link source
+ * @returns {Promise<*[]>}
+ */
 function retrieveFeed(link) {
     if (!link.includes('http')) return Promise.resolve([]);
 
@@ -27,6 +32,11 @@ function retrieveFeed(link) {
         });
 }
 
+/**
+ * Retrieves publications from all the sources
+ * @param links feeds
+ * @returns {Promise<Awaited<unknown>[] | *[]>}
+ */
 function retrieveFeeds(links) {
     return Promise.all(links.map(link => retrieveFeed(link)))
         .catch(error => {
