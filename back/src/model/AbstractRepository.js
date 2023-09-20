@@ -11,8 +11,8 @@ class AbstractRepository {
         });
     }
 
-    getById(req, res, id) {
-        database.execute('SELECT * FROM ' + this.getTable() + ' WHERE ' + this.getPrimaryKey() + ' = ' + id, [], (results) => {
+    getById(req, res) {
+        database.execute('SELECT * FROM ' + this.getTable() + ' WHERE ' + this.getPrimaryKey() + ' = ?' , [req.body.id], (results) => {
             res.json(results);
         });
     }
@@ -21,7 +21,7 @@ class AbstractRepository {
     }
 
     delete(req, res) {
-        database.execute('DELETE FROM ' + this.getTable() + ' WHERE ' + this.getPrimaryKey() + ' = ' + req.body.id, [], (results) => {
+        database.execute('DELETE FROM ' + this.getTable() + ' WHERE ' + this.getPrimaryKey() + ' = ?', [req.body.id], (results) => {
             res.json(results);
         });
     }
