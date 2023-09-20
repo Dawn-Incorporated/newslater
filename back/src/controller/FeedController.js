@@ -1,5 +1,4 @@
 const FeedRepository = require('../model/FeedRepository');
-
 const feed = new FeedRepository();
 
 function getByName(req, res) {
