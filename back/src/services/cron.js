@@ -14,17 +14,13 @@ const Users = require ('./user-retriever');
  */
 
 async function start() {
-    console.log("sending. ");
     /*const feeds = await Rss.retrieveFeeds(['https://9to5mac.com/feed', 'https://apple.com/newsroom/rss-feed.rss', 'https://feeds.macrumors.com/MacRumors-Front']);
     Sender.process(feeds, "dawn.newslater@gmail.com", 10);*/
-
     Users.sendToUsers();
-
-    console.log("sent. " + new Date())
 }
 
 
-start();
+//start();
 
 module.exports = {
 }

@@ -4,19 +4,17 @@
  * @param length The number of publications kept. If -1, don't limit.
  */
 function html(user, length = -1) {
-    const feeds = user.sources;
-    const name = user.firstname;
 
     // Introduction
     let html = `
         <div class="logo">
             <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater." style="width: 200px;">
         </div>
-        <p>hello ${name}. here's the latest.</p>
+        <p>hello ${user.firstname}.</p>
     `;
 
     // Feeds
-    for (let feed of feeds) {
+    for (let feed of user.sources) {
         html += `
             <h1>${feed[0].websiteTitle}</h1>
             ${makeFeed(feed, length)}

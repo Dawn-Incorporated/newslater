@@ -1,4 +1,4 @@
-function log(type, message) {
+function log(type, message, toReturn = false) {
     // Get current time
     const timestamp = new Date().toISOString();
 
@@ -19,6 +19,7 @@ function log(type, message) {
 
     // Print log
     console.log(`[${timestamp}] ${type} ${message}`);
+    if (toReturn) return `[${timestamp}] ${type} ${message}`;
 }
 
 module.exports = {

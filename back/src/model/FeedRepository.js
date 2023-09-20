@@ -1,12 +1,20 @@
 const AbstractRepository = require('./AbstractRepository');
 const database = require('../config/database');
+const {log} = require('../services/logger');
 
 class FeedRepository extends AbstractRepository {
 
     create(req, res) {
         database.execute("INSERT INTO " + this.getTable() + " (url, name, description, website) VALUES (?, ?, ?, ?)", [req.body.url, req.body.name, req.body.description, req.body.website], () => {
-            res.status(201);
-        });
+        })
+            .then(() => {
+                log("INFO", "Feed added.")
+                res.status(201).send(true)
+            })
+            .catch((error) => {
+                log("ERROR", error)
+                res.status(400).send(false)
+            });
     }
 
     update(req, res) {

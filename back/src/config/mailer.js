@@ -14,7 +14,7 @@ function send(to, subject, html) {
         to: to,
         subject: subject,
         html: html,
-    }, (err, info) => {
+    }, (err) => {
         if (err) {
             Logger.log("ERROR", err);
         } else {

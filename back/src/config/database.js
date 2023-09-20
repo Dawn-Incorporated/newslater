@@ -1,22 +1,20 @@
-const connection = require('mysql').createConnection({
-    connectionLimit: process.env.DB_CONNECTION_LIMIT,
+const {log} = require("../services/logger");
+const connection = require('mysql2').createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PWD,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-}).connect((error) => {
-    if (error) {
-        console.error('Erreur de connexion à la base de données:', error);
-    } else {
-        console.log('Connexion réussie à la base de données');
-    }
-});
+})
 
-function execute(query, params, callback) {
-    connection.query(query, params, (error, results, fields) => {
-        if (error) throw error;
-        callback(results);
+async function execute(query, params) {
+    return new Promise((resolve, reject) => {
+        connection.query(query, params, (error, results, fields) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
     });
 }
 

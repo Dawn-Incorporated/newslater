@@ -1,4 +1,4 @@
-const database = require("../config/Database");
+const database = require("../config/database");
 
 class AbstractRepository {
 
