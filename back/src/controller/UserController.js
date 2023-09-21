@@ -1,5 +1,5 @@
-const UserController = require('../model/UserRepository')
-const user = new UserController();
+const UserRepository = require('../model/UserRepository')
+const user = new UserRepository();
 
 function getById(req, res) {
     user.getById(req, res);

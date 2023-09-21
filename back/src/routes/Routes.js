@@ -4,12 +4,10 @@ app.use(require('cors')({credentials: true}));
 
 const feed = require('../controller/FeedController');
 const user = require('../controller/UserController');
-//const rss = require('../services/rss-retriever')
-
+const follow = require('../controller/FollowController');
 app.post('/user/create', multer().single(), user.create)
 app.post('/feed/create', multer().single(), feed.create)
-
-app.get('/', user.getUsersApi)
+app.post('/follow/create', multer().single(), follow.create)
 
 
 const ApiConfig = {
