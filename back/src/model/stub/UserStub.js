@@ -4,8 +4,12 @@ const sanMarino = {
     lastname: "Vanhove",
     firstname: "Valentin",
     mail: "dawn.newslater@gmail.com",
-    feeds: "https://apple.com/newsroom/rss-feed.rss, https://feeds.macrumors.com/MacRumors-Front",
-    sendtime: "06:00:00"
+    feeds: [
+        'https://9to5mac.com/feed',
+        'https://apple.com/newsroom/rss-feed.rss'
+    ],
+    sendtime: "06:00:00",
+    postlimit: 10
 }
 
 const padilla = {
@@ -18,13 +22,14 @@ const padilla = {
         'https://9to5mac.com/feed',
         'https://apple.com/newsroom/rss-feed.rss'
     ],
-    sendtime: "06:00:00"
+    sendtime: "06:00:00",
+    postlimit: 10
 }
 
-function getAll() {
+function getUsers() {
     return [sanMarino];
 }
 
 module.exports = {
-    getAll
+    getUsers
 }

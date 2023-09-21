@@ -1,9 +1,8 @@
 /**
  * Generates the html for the mail
  * @param user User data
- * @param length The number of publications kept. If -1, don't limit.
  */
-function html(user, length = -1) {
+function html(user) {
 
     // Introduction
     let html = `
@@ -17,7 +16,7 @@ function html(user, length = -1) {
     for (let feed of user.sources) {
         html += `
             <h1>${feed[0].websiteTitle}</h1>
-            ${makeFeed(feed, length)}
+            ${makeFeed(feed, user.postlimit)}
             <hr>
         `;
     }
@@ -45,7 +44,7 @@ function html(user, length = -1) {
  * @param length For each feed, an array of publications
  * @returns {string} The feed in html
  */
-function makeFeed(feed, length = -1) {
+function makeFeed(feed, length) {
     let feedHtml = [];
     let numberOfPublications = 0;
     for (let publication of feed) {
