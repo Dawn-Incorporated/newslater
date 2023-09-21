@@ -54,12 +54,13 @@ class UserRepository extends AbstractRepository {
     async getUsers() {
         try {
             const result = await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime, u.postlimit FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
-
             log("INFO", "Users retrieved internally.")
 
             return result.map((user) => {
                 user.feeds = user.feeds.split(', ');
+                return user;
             });
+
         } catch (error) {
             log("ERROR", 'Users failed to be retrieved internally: ' + error);
             return [];
