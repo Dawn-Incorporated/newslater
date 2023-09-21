@@ -6,7 +6,8 @@ const transporter = require('nodemailer').createTransport({
     }
 });
 
-const Logger = require('../services/logger')
+const Logger = require('../services/system/logger');
+const ErrorHandler = require('../services/system/error-handler');
 
 function send(to, subject, html) {
     transporter.sendMail({
@@ -16,7 +17,8 @@ function send(to, subject, html) {
         html: html,
     }, (err) => {
         if (err) {
-            Logger.log("ERROR", err);
+            Logger.log("ERROR", "Failed to send mail to " + to + ". " + err);
+            ErrorHandler.addToPool(send, ["to", "subject", "html"], 2);
         } else {
             Logger.log("INFO", "Mail sent to " + to);
         }
