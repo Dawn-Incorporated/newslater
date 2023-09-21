@@ -10,7 +10,7 @@ class FeedRepository extends AbstractRepository {
             log("INFO", "Feed added.")
             res.status(200).send(true)
         } catch (error) {
-            log("ERROR", error)
+            log("ERROR", 'Feed failed to be created: ' + error)
             res.status(500).send("Internal Server Error");
         }
     }
@@ -21,7 +21,7 @@ class FeedRepository extends AbstractRepository {
             log("INFO", "Feed updated.")
             res.status(200).send();
         } catch (error) {
-            log("ERROR", error)
+            log("ERROR", 'Feed failed to be updated: ' + error)
             res.status(500).send("Internal Server Error");
         }
     }
@@ -42,7 +42,7 @@ class FeedRepository extends AbstractRepository {
             log("INFO", "Feed get")
             res.status(200).json(results);
         } catch (error) {
-            log("ERROR", error)
+            log("ERROR", 'Feed (getByName) failed to be retrieved: ' + error)
             res.status(500).send("Internal Server Error");
         }
     }

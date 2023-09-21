@@ -1,26 +1,14 @@
 const Cron = require('node-cron');
-const Rss = require('./rss-retriever');
-const Sender = require('./sender');
 const Users = require ('./user-retriever');
+const {log} = require("./logger");
 
-/*Cron.schedule('* * * * *', async () => {
-    console.log("sending. ");
-    const feeds = await Rss.retrieveFeeds(['https://9to5mac.com/feed']);
-    Sender.process(feeds);
-    console.log("sent. " + new Date())
+Cron.schedule('0 6 * * *', async () => {
+    Users.sendToUsers()
+        .then(() => log("INFO", "Sent to all users successfully."))
+        .catch((error) => log("ERROR", "Failed to send to users: " + error));
 }, {
     timezone: 'Europe/Paris'
 });
- */
-
-async function start() {
-    /*const feeds = await Rss.retrieveFeeds(['https://9to5mac.com/feed', 'https://apple.com/newsroom/rss-feed.rss', 'https://feeds.macrumors.com/MacRumors-Front']);
-    Sender.process(feeds, "dawn.newslater@gmail.com", 10);*/
-    Users.sendToUsers();
-}
-
-
-//start();
 
 module.exports = {
 }

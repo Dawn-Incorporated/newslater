@@ -9,6 +9,8 @@ const user = require('../controller/UserController');
 app.post('/user/create', multer().single(), user.create)
 app.post('/feed/create', multer().single(), feed.create)
 
+app.get('/', user.getUsersApi)
+
 
 const ApiConfig = {
     app

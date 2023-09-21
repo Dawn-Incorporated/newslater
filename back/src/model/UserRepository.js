@@ -10,7 +10,7 @@ class UserRepository extends AbstractRepository {
             log("INFO", "User added.")
             res.status(201).send(true)
         } catch (error) {
-            log("ERROR", error)
+            log("ERROR", 'Users failed to be created: ' + error)
             res.status(500).send("Internal Server Error");
         }
     }
@@ -21,7 +21,7 @@ class UserRepository extends AbstractRepository {
             log("INFO", "User updated.")
             res.status(201).send(true);
         } catch (error) {
-            log("ERROR", error);
+            log("ERROR", 'Users failed to be updated: ' + error);
             res.status(500).send("Internal Server Error");
         }
     }
@@ -32,27 +32,38 @@ class UserRepository extends AbstractRepository {
             log("INFO", 'User deleted');
             res.status(200).send(true);
         } catch (error) {
-            log("ERROR", error);
+            log("ERROR", 'User failed to be deleted: ' + error);
             res.status(500).send("Internal Server Error");
         }
     }
 
     // Custom queries
 
-    async getFeedsApi(req, res) {
+    async getUsersApi(req, res) {
         try {
             const result = await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
-            log("INFO", 'User get');
+            log("INFO", 'Users retrieved from the API.');
             res.status(200).send(result);
         } catch (error) {
-            log("ERROR", error);
+            log("ERROR", 'Users failed to be retrieved from the API: ' + error);
             res.status(500).send("Internal Server Error");
         }
     }
 
 
-    async getFeeds() {
-        return await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
+    async getUsers() {
+        try {
+            const result = await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
+
+            log("INFO", "Users retrieved internally.")
+
+            return result.map((user) => {
+                user.feeds = user.feeds.split(', ');
+            });
+        } catch (error) {
+            log("ERROR", 'Users failed to be retrieved internally: ' + error);
+            return [];
+        }
     }
 
     getTable() {
