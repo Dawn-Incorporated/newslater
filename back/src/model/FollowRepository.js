@@ -1,6 +1,6 @@
 const AbstractRepository = require('./AbstractRepository');
 const database = require('../config/database');
-const {log} = require("../services/logger");
+const {log} = require("../services/system/logger");
 const req = require("express/lib/request");
 
 class FollowRepository extends AbstractRepository {
