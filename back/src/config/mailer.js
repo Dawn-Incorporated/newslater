@@ -18,7 +18,7 @@ function send(to, subject, html) {
     }, (err) => {
         if (err) {
             Logger.log("ERROR", "Failed to send mail to " + to + ". " + err);
-            ErrorHandler.addToPool(send, ["to", "subject", "html"], 2);
+            ErrorHandler.addToPool(send, [to, subject, html], 3);
         } else {
             Logger.log("INFO", "Mail sent to " + to);
         }
