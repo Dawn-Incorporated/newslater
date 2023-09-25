@@ -5,7 +5,7 @@ const Sender = require("./sender");
 const {log} = require("byarutils/lib/logger");
 
 async function sendToUsers() {
-    const users = await UserStub.getUsers();
+    const users = await UserDB.getUsers();
 
     log("INFO", "User Retriever", "Users retrieved, starting processing.");
 
