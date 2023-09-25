@@ -1,4 +1,5 @@
 const Parser = require("rss-parser");
+const {log} = require("byarutils/lib/logger");
 
 /**
  * Retrieves the feed from a source.
@@ -27,7 +28,7 @@ function retrieveFeed(link) {
             return publication;
         })
         .catch(error => {
-            console.error("Une erreur s'est produite lors de la récupération du flux :", error);
+            log("ERROR", "RSS Retriever", "An error occurred during RSS feed retrieval. " + error);
             return [];
         });
 }
@@ -40,7 +41,7 @@ function retrieveFeed(link) {
 function retrieveFeeds(links) {
     return Promise.all(links.map(link => retrieveFeed(link)))
         .catch(error => {
-            console.error("Une erreur s'est produite lors de la récupération des flux :", error);
+            log("ERROR", "RSS Retriever", "An error occurred during RSS feeds retrieval. " + error);
             return [];
         });
 }

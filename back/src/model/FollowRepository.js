@@ -1,6 +1,6 @@
 const AbstractRepository = require('./AbstractRepository');
 const database = require('../config/database');
-const {log} = require("../services/system/logger");
+const {log} = require("byarutils/lib/logger");
 const req = require("express/lib/request");
 
 class FollowRepository extends AbstractRepository {
@@ -8,10 +8,10 @@ class FollowRepository extends AbstractRepository {
     async create(req, res) {
         try {
             await database.execute("INSERT INTO " + this.getTable() + " (login, url) VALUES (?, ?)", [req.body.login, req.body.url]);
-            log("INFO", "Follow added.")
+            log("SUCCESS", "FollowRepository", "Follow added.")
             res.status(201).send(true)
         } catch (error) {
-            log("ERROR", 'Follow failed to be created: ' + error)
+            log("ERROR", "FollowRepository", 'Follow failed to be created: ' + error)
             res.status(500).send("Internal Server Error");
         }
     }
@@ -19,10 +19,10 @@ class FollowRepository extends AbstractRepository {
     async delete(req, res) {
         try {
             await database.execute("DELETE FROM " + this.getTable() + " WHERE login = ? AND url = ?", [req.body.login, req.body.url]);
-            log("INFO", 'Follow deleted');
+            log("SUCCESS", "FollowRepository",  'Follow deleted');
             res.status(200).send(true);
         } catch (error) {
-            log("ERROR", 'Follow failed to be deleted: ' + error);
+            log("ERROR", "FollowRepository", 'Follow failed to be deleted: ' + error);
             res.status(500).send("Internal Server Error");
         }
     }

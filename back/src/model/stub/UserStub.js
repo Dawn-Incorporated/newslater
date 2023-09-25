@@ -17,7 +17,7 @@ const padilla = {
     password: "nice",
     lastname: "Byar",
     firstname: "Matis",
-    mail: "dawn.newslater@gmail.com",
+    mail: "matis.byar.06@icloud.com",
     feeds: [
         'https://9to5mac.com/feed',
         'https://apple.com/newsroom/rss-feed.rss'
@@ -27,7 +27,7 @@ const padilla = {
 }
 
 function getUsers() {
-    return [sanMarino];
+    return [padilla];
 }
 
 module.exports = {

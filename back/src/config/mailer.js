@@ -6,10 +6,10 @@ const transporter = require('nodemailer').createTransport({
     }
 });
 
-const Logger = require('../services/system/logger');
-const ErrorHandler = require('../services/system/error-handler');
+const {log} = require("byarutils/lib/logger");
+const {addToPool} = require("byarutils/lib/error-handler");
 
-function send(to, subject, html) {
+async function send(to, subject, html) {
     transporter.sendMail({
         from: '"Dawn." <dawn.newslater@gmail.com>',
         to: to,
@@ -17,14 +17,13 @@ function send(to, subject, html) {
         html: html,
     }, (err) => {
         if (err) {
-            Logger.log("ERROR", "Failed to send mail to " + to + ". " + err);
-            ErrorHandler.addToPool(send, [to, subject, html], 3);
+            log("ERROR", "Mailer", "Failed to send mail to " + to + ". " + err);
+            addToPool(send, [to, subject, html], 3);
         } else {
-            Logger.log("INFO", "Mail sent to " + to);
+            log("SUCCESS", "Mailer", "Mail sent to " + to);
         }
     });
 }
-
 
 module.exports = {
     send

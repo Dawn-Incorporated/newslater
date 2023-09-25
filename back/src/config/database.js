@@ -1,4 +1,5 @@
-const {log} = require("../services/system/logger");
+const {log} = require("byarutils/lib/logger");
+
 const connection = require('mysql2').createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
