@@ -1,17 +1,39 @@
 const {log} = require("byarutils/lib/logger");
 
-const connection = require('mysql2').createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    database: process.env.DB_NAME,
-})
+
+let database = null;
+
+function connection() {
+    try {
+        database = require('mysql2').createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PWD,
+            database: process.env.DB_NAME,
+        })
+        log("SUCCESS", "Database", "Connected.")
+    } catch (error) {
+        log("ERROR", "Database", "Failed to connect to server:" + error)
+    }
+
+}
+
+function disconnect() {
+    try {
+        database.end();
+        log("SUCCESS", "Database", "Disconnected.")
+    } catch (error) {
+        log("ERROR", "Database", "Failed to disconnect from server:" + error)
+    }
+
+
+}
 
 
 async function execute(query, params) {
     try {
         return new Promise((resolve, reject) => {
-            connection.query(query, params, (error, results, fields) => {
+            database.query(query, params, (error, results, fields) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -25,9 +47,11 @@ async function execute(query, params) {
 }
 
 process.on('exit', () => {
-    connection.end();
+    database.end();
 });
 
 module.exports = {
+    connection,
+    disconnect,
     execute
 }
