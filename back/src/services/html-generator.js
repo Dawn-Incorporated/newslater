@@ -1,22 +1,24 @@
 /**
  * Generates the html for the mail
- * @param user User data
+ * @param firstname
+ * @param feeds
  */
-function html(user) {
+function html(firstname, feeds) {
 
     // Introduction
     let html = `
         <div class="logo">
             <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater." style="width: 200px;">
         </div>
-        <p>hello ${user.firstname}.</p>
+        <p>hello ${firstname}.</p>
     `;
 
     // Feeds
-    for (let feed of user.sources) {
+    for (let feed of feeds) {
+        if(feed === undefined || feed.length === 0) continue;
         html += `
             <h1>${feed[0].websiteTitle}</h1>
-            ${makeFeed(feed, user.postlimit)}
+            ${makeFeed(feed)}
             <hr>
         `;
     }
@@ -41,14 +43,12 @@ function html(user) {
 /**
  * Generates the html for a feed
  * @param feed The feed
- * @param length For each feed, an array of publications
  * @returns {string} The feed in html
  */
-function makeFeed(feed, length) {
+function makeFeed(feed) {
     let feedHtml = [];
     let numberOfPublications = 0;
     for (let publication of feed) {
-        if (length === -1 || numberOfPublications++ < length) {
             feedHtml.push(`
             <h2>${publication.title}</h2>
             <div class="subtitle">
@@ -56,7 +56,6 @@ function makeFeed(feed, length) {
             </div>
             <p>${publication.content}</p>
         `);
-        }
     }
     return feedHtml.join(' --- ');
 }

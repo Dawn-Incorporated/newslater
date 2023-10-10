@@ -8,7 +8,7 @@ export default function Feed() {
         formData.append("description", e.target.querySelector("#description").value);
         formData.append("website", e.target.querySelector("#website").value);
 
-        fetch("http://100.104.59.104:4000/feed/create", {
+        fetch("http://192.168.1.26:4000/feed/create", {
             method: "POST",
             body: formData,
         })

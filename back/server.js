@@ -1,5 +1,6 @@
 require('dotenv').config({path: './src/config/.env'});
-require('./src/services/cron');
+//require('./src/services/cron');
+require('./src/main');
 const {log} = require("byarutils/lib/logger");
 
 
