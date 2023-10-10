@@ -47,7 +47,6 @@ function html(firstname, feeds) {
  */
 function makeFeed(feed) {
     let feedHtml = [];
-    let numberOfPublications = 0;
     for (let publication of feed) {
             feedHtml.push(`
             <h2>${publication.title}</h2>
