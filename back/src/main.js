@@ -50,4 +50,4 @@ async function debug() {
     disconnect();
 }
 
-debug();
+//debug();
