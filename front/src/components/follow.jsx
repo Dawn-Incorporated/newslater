@@ -7,7 +7,7 @@ export default function Follow() {
         formData.append("login", e.target.querySelector("#login").value);
 
         //192.168.1.26
-        fetch("http://100.104.59.104:4000/follow/create", {
+        fetch("http://192.168.1.26:4000/follow/create", {
             method: "POST",
             body: formData,
         })

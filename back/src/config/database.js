@@ -31,6 +31,7 @@ function disconnect() {
 
 
 async function execute(query, params) {
+    connection();
     try {
         return new Promise((resolve, reject) => {
             database.query(query, params, (error, results, fields) => {
@@ -44,6 +45,7 @@ async function execute(query, params) {
     } catch (error) {
         log("ERROR", "Database", "Failed to execute query " + query + " with params " + params + ". " + error);
     }
+    disconnect();
 }
 
 process.on('exit', () => {
