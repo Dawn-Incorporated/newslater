@@ -9,7 +9,7 @@ class FollowRepository extends AbstractRepository {
         try {
             await database.execute("INSERT INTO " + this.getTable() + " (login, url) VALUES (?, ?)", [req.body.login, req.body.url]);
             log("SUCCESS", "FollowRepository", "Follow added.")
-            res.status(201).send(true)
+            res.status(200).send(true)
         } catch (error) {
             log("ERROR", "FollowRepository", 'Follow failed to be created: ' + error)
             res.status(500).send("Internal Server Error");
