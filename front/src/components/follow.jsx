@@ -10,7 +10,7 @@ export default function Follow() {
         autocompletion.current.innerHTML = "";
         if (!url.current.value) return;
 
-        fetch("http://localhost:4000/feed/get?name=" + url.current.value, {
+        fetch("http://192.168.1.26:4000/feed/get?name=" + url.current.value, {
             method: "GET",
         })
             .then(async (res) => {
@@ -33,7 +33,7 @@ export default function Follow() {
         e.preventDefault();
         const formData = new FormData();
         formData.append("url", url.current.value);
-        formData.append("login", url.current.value);
+        formData.append("login", login.current.value);
 
         //192.168.1.26
         fetch("http://192.168.1.26:4000/follow/create", {
