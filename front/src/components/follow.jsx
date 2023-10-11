@@ -1,10 +1,39 @@
+import {useRef} from "react";
+
 export default function Follow() {
+    const url = useRef();
+    const login = useRef();
+    const button = useRef();
+    const autocompletion = useRef();
+
+    function research() {
+        autocompletion.current.innerHTML = "";
+        if (!url.current.value) return;
+
+        fetch("http://localhost:4000/feed/get?name=" + url.current.value, {
+            method: "GET",
+        })
+            .then(async (res) => {
+                const data = await res.json();
+                for (const key in data) {
+                    const div = document.createElement("div");
+                    div.innerHTML = data[key].name + ' - ' + data[key].description;
+                    div.addEventListener("click", () => {
+                        url.current.value = data[key].url;
+                    })
+                    autocompletion.current.appendChild(div);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
 
     function send(e) {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("url", e.target.querySelector("#url").value);
-        formData.append("login", e.target.querySelector("#login").value);
+        formData.append("url", url.current.value);
+        formData.append("login", url.current.value);
 
         //192.168.1.26
         fetch("http://192.168.1.26:4000/follow/create", {
@@ -13,8 +42,8 @@ export default function Follow() {
         })
             .then((res) => {
                 res.status === 200
-                    ? (e.target.querySelector("button").style.backgroundColor = "lightgreen")
-                    : (e.target.querySelector("button").style.backgroundColor = "red");
+                    ? (button.current.style.backgroundColor = "lightgreen")
+                    : (button.current.style.backgroundColor = "red");
             })
             .catch((err) => {
                 console.log(err);
@@ -23,9 +52,12 @@ export default function Follow() {
 
     return (<>
             <form onSubmit={send}>
-                <input id={'url'} type="text" placeholder="url"/>
-                <input id={'login'} type="text" placeholder="login"/>
-                <button type="submit">Submit</button>
+                <input ref={url} onInput={research} type="text" placeholder="url"/>
+                <div ref={autocompletion}>
+
+                </div>
+                <input ref={login} type="text" placeholder="login"/>
+                <button ref={button} type="submit">Submit</button>
             </form>
         </>
     );

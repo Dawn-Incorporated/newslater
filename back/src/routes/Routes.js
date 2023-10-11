@@ -8,6 +8,7 @@ const follow = require('../controller/FollowController');
 app.post('/user/create', multer().single(), user.create)
 app.post('/feed/create', multer().single(), feed.create)
 app.post('/follow/create', multer().single(), follow.create)
+app.get('/feed/get', feed.getByName)
 
 
 const ApiConfig = {
