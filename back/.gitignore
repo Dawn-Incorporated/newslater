@@ -1,5 +1,6 @@
 src/config/.env
 node_modules
+test/.env
 
 
 
