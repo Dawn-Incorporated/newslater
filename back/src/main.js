@@ -31,6 +31,8 @@ async function main() {
     }
 }
 
+module.exports = main;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const {connection, disconnect} = require("./config/database");
@@ -43,11 +45,3 @@ Cron.schedule('0 6 * * *', async () => {
 }, {
     timezone: 'Europe/Paris'
 });
-
-async function debug() {
-    connection();
-    await main();
-    disconnect();
-}
-
-//debug();
