@@ -41,7 +41,7 @@ class UserRepository extends AbstractRepository {
 
     async getUsersApi(req, res) {
         try {
-            const result = await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS feeds, u.sendtime, u.postlimit FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
+            const result = await database.execute("SELECT fo.login, u.lastname, u.firstname, u.mail, GROUP_CONCAT(fo.url SEPARATOR ', ') AS sources, u.sendtime, u.postlimit FROM follow fo NATURAL JOIN feeds fe NATURAL JOIN users u GROUP BY fo.login, u.lastname, u.firstname, u.sendtime", []);
             log("SUCCESS", "UserRepository", 'Users retrieved from the API.');
             res.status(200).send(result);
         } catch (error) {

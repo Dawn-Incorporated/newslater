@@ -36,11 +36,11 @@ class FeedRepository extends AbstractRepository {
 
     // Custom queries
 
-    async getByName(req, res) {
+    async getByNameApi(req, res) {
         try {
-            const results = await database.execute('SELECT * FROM ' + this.getTable() + ' WHERE name LIKE ?', [req.query.name + '%']);
+            const result = await database.execute('SELECT * FROM ' + this.getTable() + ' WHERE name LIKE ?', [req.query.name + '%']);
             log("SUCCESS", "FeedRepository", "Feed retrieved");
-            res.status(200).json(results);
+            res.status(200).send(result);
         } catch (error) {
             log("ERROR", "FeedRepository", 'Feed (getByName) failed to be retrieved: ' + error);
             res.status(500).send("Internal Server Error");

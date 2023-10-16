@@ -1,8 +1,8 @@
 const FeedRepository = require('../model/FeedRepository');
 const feed = new FeedRepository();
 
-function getByName(req, res) {
-    feed.getByName(req, res);
+function getByNameApi(req, res) {
+    feed.getByNameApi(req, res);
 }
 
 function create(req, res) {
@@ -12,5 +12,5 @@ function create(req, res) {
 
 module.exports = {
     create,
-    getByName
+    getByNameApi
 }
