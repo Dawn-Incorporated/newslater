@@ -34,7 +34,7 @@ function retrieveFeed(link) {
                 return [];
             });
     } catch (error) {
-        addToPool(retrieveFeed, [link], 3);
+        //addToPool(retrieveFeed, [link], 3);
     }
 }
 

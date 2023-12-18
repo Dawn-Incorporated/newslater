@@ -32,7 +32,7 @@ test('send mail with database', {skip: false}, async (t) => {
 
     } catch (error) {
         logger.log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
-        errorHandler.addToPool(t, [], 5);
+        //errorHandler.addToPool(t, [], 5);
     }
     disconnect();
 });
@@ -60,7 +60,7 @@ test('send mail with stub', {skip: true}, async (t) => {
 
     } catch (error) {
         logger.log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
-        errorHandler.addToPool(t, [], 5);
+        //errorHandler.addToPool(t, [], 5);
     }
     disconnect();
 });

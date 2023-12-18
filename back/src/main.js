@@ -27,7 +27,7 @@ async function main() {
 
     } catch (error) {
         logger.log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
-        errorHandler.addToPool(main, [], 5);
+        //errorHandler.addToPool(main, [], 5);
     }
 }
 

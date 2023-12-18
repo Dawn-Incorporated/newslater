@@ -18,7 +18,7 @@ async function send(to, subject, html) {
     }, (err) => {
         if (err) {
             log("ERROR", "Mailer", "Failed to send mail to " + to + ". " + err);
-            addToPool(send, [to, subject, html], 3);
+            //addToPool(send, [to, subject, html], 3);
         } else {
             log("SUCCESS", "Mailer", "Mail sent to " + to);
         }
