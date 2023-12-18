@@ -35,13 +35,11 @@ module.exports = main;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const {connection, disconnect} = require("./config/database");
+//const {connection, disconnect} = require("./config/database");
 const Cron = require("node-cron");
 
 Cron.schedule('0 6 * * *', async () => {
-    connection();
     await main();
-    disconnect();
 }, {
     timezone: 'Europe/Paris'
 });

@@ -1,5 +1,4 @@
 require('dotenv').config({path: './.env'});
-const {connection, disconnect} = require("../src/config/database");
 const test = require('node:test');
 const userController = require("../src/controller/UserController");
 const userStub = require("../src/model/stub/UserStub");
@@ -11,7 +10,6 @@ const {logger, errorHandler} = require("byarutils");
 
 
 test('send mail with database', {skip: false}, async (t) => {
-    connection();
     try {
         // Récupération des utilisateurs
         const users = await userController.getUsers();
@@ -34,12 +32,10 @@ test('send mail with database', {skip: false}, async (t) => {
         logger.log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
         //errorHandler.addToPool(t, [], 5);
     }
-    disconnect();
 });
 
 
 test('send mail with stub', {skip: true}, async (t) => {
-    connection();
     try {
         // Récupération des utilisateurs
         const users = userStub.getUsers();
@@ -62,5 +58,4 @@ test('send mail with stub', {skip: true}, async (t) => {
         logger.log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
         //errorHandler.addToPool(t, [], 5);
     }
-    disconnect();
 });
