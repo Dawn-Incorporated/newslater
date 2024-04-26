@@ -1,4 +1,4 @@
-"use server"
+export const dynamic = 'force-dynamic'
 
 const {log} = require("byarutils");
 
@@ -28,7 +28,12 @@ async function previewEmail(login: string) {
     }
 }
 
-export async function GET(request: Request, {params}: { params: { login: string } }) {
-    const preview = await previewEmail(params.login);
-    return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const login = searchParams.get('login')
+    if(login) {
+        const preview = await previewEmail(login);
+        return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
+    }
+    return new Response('An internal error occurred.', {status: 500})
 }

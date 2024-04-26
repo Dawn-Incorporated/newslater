@@ -1,4 +1,4 @@
-"use server"
+export const dynamic = 'force-dynamic'
 
 const {logger} = require("byarutils");
 const {send} = require("@api/config/mailer");
