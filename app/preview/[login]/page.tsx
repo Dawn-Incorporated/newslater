@@ -1,8 +1,7 @@
-"use client"
+'use client'
 
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 import useSWR from 'swr'
-import {useEffect} from "react";
 
 const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then(res => res.text())
 
@@ -24,11 +23,7 @@ export default function Home({params}: { params: { login: string } }) {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator/>
                         <BreadcrumbItem>
-                            <BreadcrumbLink>{params.login}</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator/>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="#">Preview</BreadcrumbLink>
+                            <BreadcrumbLink href="#">Preview ({params.login})</BreadcrumbLink>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
