@@ -33,3 +33,5 @@ export default function Home({params}: { params: { login: string } }) {
         </main>
     );
 }
+
+export const dynamic = 'force-dynamic'
