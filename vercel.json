@@ -2,8 +2,7 @@
   "crons": [
     {
       "path": "/api/v1/cron",
-      "schedule": "0 6 * * *",
-      "timezone": "Europe/Paris"
+      "schedule": "0 4 * * *"
     }
   ],
   "rewrites":  [
