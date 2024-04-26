@@ -36,3 +36,5 @@ async function main() {
 module.exports = {
     main
 };
+
+export const dynamic = "force-dynamic";
