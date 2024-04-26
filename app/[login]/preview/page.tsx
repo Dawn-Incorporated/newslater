@@ -6,7 +6,8 @@ import useSWR from 'swr'
 const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then(res => res.text())
 
 export default function Home({params}: { params: { login: string } }) {
-    const {data, error, isLoading} = useSWR(`/api/v1/user/preview?login=${params.login}`, fetcher)
+    const {login} = params;
+    const {data, error, isLoading} = useSWR(`/api/v1/user/preview?login=${login}`, fetcher)
 
     if (error) return <div className={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl"}>Failed to load</div>
     if (isLoading) return (
@@ -23,7 +24,7 @@ export default function Home({params}: { params: { login: string } }) {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator/>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="#">Preview ({params.login})</BreadcrumbLink>
+                            <BreadcrumbLink href="#">Preview ({login})</BreadcrumbLink>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
