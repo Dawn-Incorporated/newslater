@@ -31,4 +31,5 @@ export async function GET(request: Request, {params}: { params: { login: string 
     return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
 }
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
+export const dynamicParams = true
