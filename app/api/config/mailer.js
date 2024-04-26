@@ -15,8 +15,9 @@ async function send(to, subject, html) {
         log("SUCCESS", "Mailer", "Mail sent to " + to);
     } else {
         log("ERROR", "Mailer", "Failed to send mail to " + to + ". ");
-        console.log(send);
     }
+
+    return send;
 }
 
 module.exports = {

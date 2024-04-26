@@ -6,22 +6,13 @@ const rssRetriever = require('@api/services/rss-retriever');
 const rssFilter = require('@api/services/rss-filter');
 const generateHTML = require('@api/services/html-generator');
 
-type userType = {
-    id: number,
-    firstname: string,
-    lastname: string,
-    mail: string,
-    sources: string,
-    postlimit: number
-
-}
-
 async function sendMail() {
     try {
         // Récupération des utilisateurs
         const users = await userController.getUsers();
+        const result: any[] = []
 
-        users.map(async (user: userType) => {
+        for (const user of users) {
             // Récupération des feeds de l'utilisateur depuis ses sources
             let userFeeds = await rssRetriever.retrieveFeeds(user.sources);
 
@@ -32,18 +23,19 @@ async function sendMail() {
             let mailBody = generateHTML.html(user.firstname, userFeedsFiltered)
 
             // Envoi du mail à l'utilisateur
-            await send(user.mail, "Start your day with newslater.", mailBody);
-        });
-        return 'Mails sent successfully.';
+            let mailResult = await send(user.mail, "Start your day with newslater.", mailBody);
+            result.push(mailResult);
+        }
+        return result;
     } catch (error) {
         logger.log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
-        return 'An internal error occurred.';
+        return error;
     }
 }
 
 export async function GET() {
     const cron = await sendMail();
-    return new Response(cron, {status: 200})
+    return new Response(JSON.stringify(cron), {status: 200})
 }
 
 export const dynamic = "force-dynamic";

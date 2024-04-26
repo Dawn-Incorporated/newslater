@@ -30,3 +30,5 @@ export async function GET(request: Request, {params}: { params: { login: string 
     const preview = await previewEmail(params.login);
     return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
 }
+
+export const dynamic = "force-dynamic";
