@@ -1,3 +1,5 @@
+"use server"
+
 const {logger} = require("byarutils");
 const {send} = require("@api/config/mailer");
 
@@ -37,5 +39,3 @@ export async function GET() {
     const cron = await sendMail();
     return new Response(JSON.stringify(cron), {status: 200})
 }
-
-export const dynamic = "force-dynamic";
