@@ -5,5 +5,8 @@
       "schedule": "0 6 * * *",
       "timezone": "Europe/Paris"
     }
+  ],
+  "rewrites":  [
+    {"source": "/(.*)", "destination": "/"}
   ]
 }
