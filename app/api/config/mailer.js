@@ -8,7 +8,7 @@ const {log} = require("byarutils");
 
 async function send(to, subject, html) {
     const send = await resend.emails.send({
-        from: 'Newslater by Dawn. <noreplay@newslater.vanhovev.com>', to: to, subject: subject, html: html,
+        from: 'Newslater by Dawn. <no-reply@newslater.vanhovev.com>', to: to, subject: subject, html: html,
     });
 
     if (!send.error) {
