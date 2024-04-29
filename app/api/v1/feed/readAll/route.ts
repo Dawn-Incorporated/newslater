@@ -1,5 +1,13 @@
-export const dynamic = 'force-dynamic'
+const feedController = require('@api/controller/FeedController');
+
 
 export async function GET() {
-    return new Response('Not implemented', { status: 501 })
+    try {
+        const feeds = await feedController.getAll();
+        return new Response(JSON.stringify(feeds), {status: 200})
+    } catch (error) {
+        return new Response('An internal error occurred.', {status: 500})
+    }
 }
+
+export const dynamic = 'force-dynamic'
