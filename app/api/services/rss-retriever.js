@@ -52,5 +52,6 @@ function retrieveFeeds(links) {
 }
 
 module.exports = {
+    retrieveFeed,
     retrieveFeeds
 }
