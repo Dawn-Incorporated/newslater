@@ -8,6 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 
 export default function PreviewFeeds() {
     const [feeds, setFeeds] = useState([] as any)
@@ -38,10 +39,23 @@ export default function PreviewFeeds() {
 
     return (
         <>
+            <div className={"absolute top-10 left-10 max-sm:hidden"}>
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator/>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">Feed</BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </div>
             <div className={"flex w-full mt-10 mb-10 justify-center"}>
                 <Select onValueChange={(e) => readFeed(e)} defaultValue={'https://9to5mac.com/feed'}>
                     <SelectTrigger className="w-[300px]">
-                        <SelectValue placeholder="Feeds" />
+                        <SelectValue placeholder="Feeds"/>
                     </SelectTrigger>
                     <SelectContent>
                         {feeds.map((feed: any) => (
@@ -55,13 +69,20 @@ export default function PreviewFeeds() {
                     <>
                         <div key={item.link}>
                             <h2 className={"flex text-xl font-bold justify-center mb-5"}>{item.title}</h2>
-                            <p className={"flex flex-col items-center text-muted-foreground"}>{item.creator ? item.creator + ' -' : ''} {new Date(item.pubDate).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})}</p>
+                            <p className={"flex flex-col items-center text-muted-foreground"}>{item.creator ? item.creator + ' -' : ''} {new Date(item.pubDate).toLocaleString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric'
+                            })}</p>
                             <div className={"flex flex-row justify-center text-muted-foreground mb-10 gap-4"}>
                                 <a href={item.link} target={"_blank"}>Acticle</a> - <a href={item.websiteLink} target={"_blank"}> Website</a>
                             </div>
                             <p className={"mb-5 p-5 rounded bg-neutral-100"} dangerouslySetInnerHTML={item.content ? {__html: item.content} : undefined}></p>
                         </div>
-                        <hr className={"m-7 border-black"} />
+                        <hr className={"m-7 border-black"}/>
                     </>
                 ))}
             </div>
