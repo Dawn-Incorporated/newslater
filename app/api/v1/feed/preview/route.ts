@@ -1,4 +1,4 @@
-const rss_retriever = require('@api/services/rss-retriever')
+const rss_retriever = require('@api/_system/services/rss-retriever')
 
 export async function GET(request: Request) {
 

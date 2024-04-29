@@ -1,7 +1,7 @@
 "use server"
 
-const AbstractRepository = require('./AbstractRepository');
-const database = require('../config/database');
+const AbstractRepository = require('@api/_system/model/AbstractRepository');
+const database = require('@api/_system/config/database');
 const {log} = require("byarutils");
 
 class FollowRepository extends AbstractRepository {

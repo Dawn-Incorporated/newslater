@@ -1,4 +1,4 @@
-const feedController = require('@api/controller/FeedController');
+const feedController = require('@api/_system/controller/FeedController');
 
 
 export async function GET() {

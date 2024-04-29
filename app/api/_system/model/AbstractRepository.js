@@ -1,6 +1,6 @@
 "use server"
 
-const database = require("../config/database");
+const database = require("@api/_system/config/database");
 const {log} = require("byarutils");
 
 class AbstractRepository {

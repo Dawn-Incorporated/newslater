@@ -1,6 +1,6 @@
 "use server"
 
-const FeedRepository = require('@api/model/FeedRepository');
+const FeedRepository = require('@api/_system/model/FeedRepository');
 const feed = new FeedRepository();
 
 function create(req, res) {
