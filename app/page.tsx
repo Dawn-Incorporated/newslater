@@ -12,7 +12,7 @@ export default function Home() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <h1 className={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl animate-pulse"}>Development in progress...</h1>
+            <h1 className={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-2xl animate-pulse"}>Development</h1>
         </main>
     );
 }
