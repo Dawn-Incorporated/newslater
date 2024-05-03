@@ -14,7 +14,7 @@ export default function Header() {
                                 <Link href="/" className="text-gray-500 hover:text-gray-800">Home</Link>
                             </li>
                             <li>
-                                <Link href="/feed" className="text-gray-500 hover:text-gray-800">Feed</Link>
+                                <Link href="/feeds" className="text-gray-500 hover:text-gray-800">Feed</Link>
                             </li>
                             <li>
                                 <Link href="/account" className="text-gray-500 hover:text-gray-800">Account</Link>
