@@ -3,7 +3,7 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList} from "@/comp
 export default function Home() {
     return (
         <main>
-            <div className={"absolute top-10 left-10"}>
+            <div className="w-full m-4 px-4">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
