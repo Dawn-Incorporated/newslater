@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-const user = require('@api/controller/UserController');
+const user = require('@api/_system/controller/UserController');
 
 export async function GET() {
     const users = await user.getUsersApi();

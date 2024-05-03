@@ -1,6 +1,6 @@
 "use server"
 
-import UserRepository from '../model/UserRepository'
+const UserRepository = require('@api/_system/model/UserRepository');
 const user = new UserRepository();
 
 function getById(req, res) {

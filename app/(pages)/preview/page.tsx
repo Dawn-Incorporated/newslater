@@ -2,8 +2,8 @@
 
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 
-export default function Home({params}: { params: { login: string } }) {
-    const {login} = params;
+export default function Preview() {
+    const login = 'vanhovev'
 
     return (
         <main>
@@ -20,8 +20,8 @@ export default function Home({params}: { params: { login: string } }) {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <div className={"flex flex-col w-2/3 max-sm:w-screen m-auto mt-10 mb-10 border-8 p-6 rounded-xl shadow-2xl iframe"}>
-                <iframe allowFullScreen={true} src={`/api/v1/user/preview?login=${login}`} className={"flex h-screen"}></iframe>
+            <div className={"flex flex-col w-2/3 max-sm:w-screen m-auto mt-10 mb-10 border-8 p-6 rounded-xl shadow-2xl h-screen-bt-spacing"}>
+                <iframe src={`/api/v1/user/preview?login=${login}`} className={"flex h-screen"}></iframe>
             </div>
         </main>
     );
