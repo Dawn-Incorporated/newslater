@@ -11,7 +11,7 @@ export default function Account() {
         return (
             <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)]">
                 <p className="text-center">
-                    Hello { session.user.name }
+                    Hello { session.user?.name || "N/A" }
                 </p>
 
                 <Button onClick={() => signOut()}>
