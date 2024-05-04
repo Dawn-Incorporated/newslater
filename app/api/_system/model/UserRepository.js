@@ -1,8 +1,8 @@
 "use server"
 
-import AbstractRepository from './AbstractRepository';
-import database from '../config/database';
-import {log} from "byarutils";
+const AbstractRepository = require('@api/_system/model/AbstractRepository');
+const database = require('@api/_system/config/database');
+const {log} = require("byarutils");
 
 class UserRepository extends AbstractRepository {
 

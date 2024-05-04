@@ -1,24 +1,28 @@
-import type {Metadata} from "next";
-import {Inter} from "next/font/google";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import NextAuthProvider from "@/app/context/NextAuthProvider";
+import Header from "@/components/custom/Header";
 
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
     title: "Newslater",
-    description: "Send newsletters to your subscribers.",
+    description: "Send newsletters to your subscribers."
 };
 
 export default function RootLayout({
-                                       children,
+                                       children
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
         <html lang="en">
-        <body className={inter.className}>
-        <h1 className={"flex justify-center text-3xl font-bold mt-10"}>Newslater</h1>
-        {children}
+        <body className={ inter.className }>
+        <NextAuthProvider>
+            <Header />
+            { children }
+        </NextAuthProvider>
         </body>
         </html>
     );

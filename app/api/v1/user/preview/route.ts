@@ -2,10 +2,10 @@ export const dynamic = 'force-dynamic'
 
 const {log} = require("byarutils");
 
-const userController = require('@api/controller/UserController');
-const rssRetriever = require('@api/services/rss-retriever');
-const rssFilter = require('@api/services/rss-filter');
-const generateHTML = require('@api/services/html-generator');
+const userController = require('@api/_system/controller/UserController');
+const rssRetriever = require('@api/_system/services/rss-retriever');
+const rssFilter = require('@api/_system/services/rss-filter');
+const generateHTML = require('@api/_system/services/html-generator');
 
 async function previewEmail(login: string) {
     try {
