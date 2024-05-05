@@ -41,7 +41,7 @@ export default function PreviewFeeds() {
         if (feedUrl) {
             readFeed(feedUrl);
         }
-    }, []);
+    }, [readFeed, searchParams]);
 
     return (
         <>
@@ -135,9 +135,7 @@ export default function PreviewFeeds() {
                                     </div>
                                 ) :
                                 <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
-                                    <Suspense>
-                                        { searchParams.has("feedUrl") ? 'Loading...' : 'Select a feed to get started.' }
-                                    </Suspense>
+                                    { searchParams.has("feedUrl") ? 'Loading...' : 'Select a feed to get started.' }
                                 </h1>
                             }
                         </div>
