@@ -53,23 +53,6 @@ export default function PreviewFeeds() {
                             </div>
                             <div className="flex flex-col gap-2 w-full overflow-auto">
                                 <h1 className="text-2xl font-bold">Feeds</h1>
-                                {/*<Tabs>*/}
-                                {/*    <TabsList className="flex flex-col w-full h-full">*/}
-                                {/*        <Suspense fallback={ <p>Loading...</p> }>*/}
-                                {/*            { Array.isArray(feeds) ? feeds.map((feed: any) => (*/}
-                                {/*                    <TabsTrigger*/}
-                                {/*                        key={ feed.url }*/}
-                                {/*                        onClick={ () => readFeed(feed.url) }*/}
-                                {/*                        value={ feed.url }*/}
-                                {/*                        className="w-full block text-left text-ellipsis"*/}
-                                {/*                    >{ feed.name }</TabsTrigger>*/}
-                                {/*                )) :*/}
-                                {/*                <p>No feeds found</p>*/}
-                                {/*            }*/}
-                                {/*        </Suspense>*/}
-                                {/*    </TabsList>*/}
-                                {/*</Tabs>*/}
-
                                 <FeedsList readFeed={readFeed}/>
                             </div>
                         </div>
