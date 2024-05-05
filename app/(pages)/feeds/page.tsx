@@ -102,7 +102,7 @@ export default function PreviewFeeds() {
                                         <hr className={ "m-7 border-black" }/>
                                     </>
                                 )) :
-                                <h1 className="m-auto h-[calc(100vh-4rem)] flex -center items-center font-bold text-2xl animate-pulse">Select a feed to get started.</h1>
+                                <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">Select a feed to get started.</h1>
                             }
                         </div>
                     </ResizablePanel>

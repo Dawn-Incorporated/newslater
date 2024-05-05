@@ -1,11 +1,16 @@
+'use client'
+
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { CircleUser, Menu, Search } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
+    const {data: session, status, update} = useSession()
+
     return (
         <div className="flex w-full flex-col">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -64,13 +69,26 @@ export default function Header() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>
-                                <Link href="/account">My Account</Link>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator/>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator/>
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            { status === 'authenticated' ? (
+                                <>
+                                    <DropdownMenuLabel>
+                                        Hello { session?.user?.name || "N/A" }
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator/>
+                                    <Link href="/account">
+                                        <DropdownMenuItem className="cursor-pointer">My Account</DropdownMenuItem>
+                                    </Link>
+                                    <Link href="/api/auth/signout">
+                                        <DropdownMenuItem className="cursor-pointer text-red-500">Sign out</DropdownMenuItem>
+                                    </Link>
+                                </>
+                            ) : (
+
+                                <Link href="/account">
+                                    <DropdownMenuItem className="cursor-pointer">Sign in</DropdownMenuItem>
+                                </Link>
+                            )
+                            }
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
