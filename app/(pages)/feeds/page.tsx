@@ -12,7 +12,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
     const {replace} = useRouter();
@@ -25,11 +24,11 @@ export default function PreviewFeeds() {
 
         params.set("feedUrl", feedUrl);
 
-        replace(`${pathname}?${params.toString()}`);
+        replace(`${ pathname }?${ params.toString() }`);
     };
 
     const readFeed = async (url: string) => {
-        const response = await fetch(`/api/v1/feed/preview?url=${url}`)
+        const response = await fetch(`/api/v1/feed/preview?url=${ url }`)
             .then(response => response.json())
             .then(data => {
                 setFeed(data);
