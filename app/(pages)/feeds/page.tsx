@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import FeedsList from "@/app/(pages)/feeds/FeedsList";
@@ -45,7 +45,7 @@ export default function PreviewFeeds() {
     }, []);
 
     return (
-        <>
+        <Suspense>
             <div className="flex flex-row w-full h-[calc(100vh-4rem)]">
                 <ResizablePanelGroup direction="horizontal" className="md:!flex-row !flex-col">
                     <ResizablePanel minSize={ 15 } defaultSize={ 25 } maxSize={ 30 } className="md:flex-[25] !flex-[15] md:border-b-0 border-b-[1px]">
@@ -143,7 +143,7 @@ export default function PreviewFeeds() {
                     </ResizablePanel>
                 </ResizablePanelGroup>
             </div>
-        </>
+        </Suspense>
     )
 }
 export const dynamic = 'force-dynamic'
