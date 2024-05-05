@@ -26,7 +26,7 @@ export default function PreviewFeeds() {
         <>
             <div className="flex flex-row w-full h-[calc(100vh-4rem)]">
                 <ResizablePanelGroup direction="horizontal" className="md:!flex-row !flex-col">
-                    <ResizablePanel minSize={ 15 } defaultSize={ 25 } maxSize={ 30 } className="md:flex-[25] !flex-[15] md:border-b-0 border-b-[1px]">
+                    <ResizablePanel minSize={ 15 } defaultSize={ 25 } maxSize={ 35 } className="md:!flex-[35] !flex-[15] md:border-b-0 border-b-[1px]">
                         <div className="flex flex-col md:h-[calc(100vh-4rem)] h-auto p-5 gap-2">
                             <div className="flex flex-col w-full gap-2">
                                 <Breadcrumb>
@@ -57,7 +57,7 @@ export default function PreviewFeeds() {
                         <div className="flex flex-col max-sm:w-full p-5 max-h-screen overflow-y-auto">
                             { feed ? (
                                     <div className="flex flex-col gap-8">
-                                        <div className="flex md:flew-row flex-col justify-between">
+                                        <div className="flex md:flew-col flex-row justify-between">
                                             <div>
                                                 <h1 className="flex text-3xl font-bold">{ feed[0]?.websiteTitle }</h1>
                                                 <Link href={ feed[0]?.websiteLink || "#" }>Visit Website</Link>
