@@ -9,36 +9,47 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { ExternalLinkIcon, PlusIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 
 export default function PreviewFeeds() {
-    const [feed, setFeed] = useState<any | null>(null)
+    const [feed, setFeed] = useState<any | null>(null);
+    const {replace} = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    const updateUrl = (feedUrl: string) => {
+        const params = new URLSearchParams(searchParams);
+        if (params.has("feedUrl")) params.delete("feedUrl");
+
+        params.set("feedUrl", feedUrl);
+
+        replace(`${pathname}?${params.toString()}`);
+    };
 
     const readFeed = async (url: string) => {
-        const response = await fetch(`/api/v1/feed/preview?url=${ url }`)
+        const response = await fetch(`/api/v1/feed/preview?url=${url}`)
             .then(response => response.json())
             .then(data => {
-                setFeed(data)
-
-                const currentUrl = new URL(window.location.href)
-                currentUrl.searchParams.set('feedUrl', url)
-                window.history.pushState({}, '', currentUrl.toString())
-            })
-    }
+                setFeed(data);
+                updateUrl(url);
+            });
+    };
 
     useEffect(() => {
-        const currentUrl = new URL(window.location.href)
-        const feedUrl = currentUrl.searchParams.get('feedUrl')
+        const feedUrl = searchParams.get("feedUrl");
         if (feedUrl) {
-            readFeed(feedUrl)
+            readFeed(feedUrl);
         }
     }, []);
 
     return (
         <>
             <div className="flex flex-row w-full h-[calc(100vh-4rem)]">
-                <ResizablePanelGroup direction="horizontal">
-                    <ResizablePanel defaultSize={ 25 } maxSize={ 30 }>
-                        <div className="flex flex-col h-[calc(100vh-4rem)] p-5 gap-2">
+                <ResizablePanelGroup direction="horizontal" className="md:!flex-row !flex-col">
+                    <ResizablePanel minSize={ 15 } defaultSize={ 25 } maxSize={ 30 } className="md:flex-[25] !flex-[15] md:border-b-0 border-b-[1px]">
+                        <div className="flex flex-col md:h-[calc(100vh-4rem)] h-auto p-5 gap-2">
                             <div className="flex flex-col w-full gap-2">
                                 <Breadcrumb>
                                     <BreadcrumbList>
@@ -54,7 +65,12 @@ export default function PreviewFeeds() {
                                 <h1 className="text-2xl font-bold">Feeds</h1>
                             </div>
                             <div className="flex flex-col w-full overflow-auto">
-                                <FeedsList readFeed={ readFeed }/>
+                                <div className="w-full hidden md:block">
+                                    <FeedsList readFeed={ readFeed }/>
+                                </div>
+                                <div className="md:hidden">
+                                    <MobileFeedsList readFeed={ readFeed }/>
+                                </div>
                             </div>
                         </div>
                     </ResizablePanel>
@@ -63,7 +79,7 @@ export default function PreviewFeeds() {
                         <div className="flex flex-col max-sm:w-full p-5 max-h-screen overflow-y-auto">
                             { feed ? (
                                     <div className="flex flex-col gap-8">
-                                        <div className="flex justify-between">
+                                        <div className="flex md:flew-row flex-col justify-between">
                                             <div>
                                                 <h1 className="flex text-3xl font-bold">{ feed[0]?.websiteTitle }</h1>
                                                 <Link href={ feed[0]?.websiteLink || "#" }>Visit Website</Link>
@@ -120,7 +136,7 @@ export default function PreviewFeeds() {
                                     </div>
                                 ) :
                                 <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
-                                    { new URL(window.location.href).searchParams.get('feedUrl') ? 'Loading...' : 'Select a feed to get started.' }
+                                    { searchParams.has("feedUrl") ? 'Loading...' : 'Select a feed to get started.' }
                                 </h1>
                             }
                         </div>
