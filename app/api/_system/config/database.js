@@ -16,7 +16,7 @@ async function connection() {
     }
     try {
         database = new Client({
-            host: PGHOST, port: 5432,  database: PGDATABASE, user: PGUSER, password: PGPASSWORD,  ssl: false
+            host: PGHOST, port: 5432,  database: PGDATABASE, user: PGUSER, password: PGPASSWORD, ssl: true
         })
         await database.connect();
         log("SUCCESS", "Database", "Connected.")
