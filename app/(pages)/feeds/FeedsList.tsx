@@ -31,10 +31,10 @@ function Feeds({readFeed}: { readFeed: Function }) {
             const response = await fetch(`/api/v1/feed/readAll`);
             const data = await response.json();
             setFeeds(data);
-        } catch (err) {
+        } catch (err: Error | any) {
             const error = err?.message || "Unknown error occurred.";
             setError(error);
-            toast.error(`An error occurred.`,  {
+            toast.error(`An error occurred.`, {
                 description: error
             });
         }
