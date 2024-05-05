@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import FeedsList from "@/app/(pages)/feeds/FeedsList";
@@ -10,38 +10,17 @@ import { Button } from "@/components/ui/button";
 import { ExternalLinkIcon, PlusIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
-    const {replace} = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    const updateUrl = (feedUrl: string) => {
-        const params = new URLSearchParams(searchParams);
-        if (params.has("feedUrl")) params.delete("feedUrl");
-
-        params.set("feedUrl", feedUrl);
-
-        replace(`${ pathname }?${ params.toString() }`);
-    };
 
     const readFeed = async (url: string) => {
         const response = await fetch(`/api/v1/feed/preview?url=${ url }`)
             .then(response => response.json())
             .then(data => {
                 setFeed(data);
-                updateUrl(url);
             });
     };
-
-    useEffect(() => {
-        const feedUrl = searchParams.get("feedUrl");
-        if (feedUrl) {
-            readFeed(feedUrl);
-        }
-    }, [readFeed, searchParams]);
 
     return (
         <>
@@ -135,7 +114,7 @@ export default function PreviewFeeds() {
                                     </div>
                                 ) :
                                 <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
-                                    { searchParams.has("feedUrl") ? 'Loading...' : 'Select a feed to get started.' }
+                                    Select a feed to get started.
                                 </h1>
                             }
                         </div>
