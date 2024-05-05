@@ -1,28 +1,98 @@
+'use client'
+
 import Link from "next/link";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { CircleUser, Menu, Search } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
+    const {data: session, status, update} = useSession()
+
     return (
-        <header className="w-full bg-white z-50 border-b-[1px] backdrop-filter backdrop-blur-md">
-            <div className="flex items-center p-5 gap-8">
-                <div>
-                    <h1 className="text-xl font-bold">Newslater</h1>
+        <div className="flex w-full flex-col">
+            <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+                    <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
+                        <h1 className="header">Newslater</h1>
+                    </Link>
+                    <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
+                        Home
+                    </Link>
+                    <Link href="/feeds" className="text-muted-foreground transition-colors hover:text-foreground">
+                        Feeds
+                    </Link>
+                </nav>
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="shrink-0 md:hidden"
+                        >
+                            <Menu className="h-5 w-5"/>
+                            <span className="sr-only">Toggle navigation menu</span>
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent side="left">
+                        <nav className="grid gap-6 text-lg font-medium">
+                            <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
+                                <h1 className="header">Newslater</h1>
+                            </Link>
+                            <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
+                                Home
+                            </Link>
+                            <Link href="/feeds" className="text-muted-foreground transition-colors hover:text-foreground">
+                                Feeds
+                            </Link>
+                        </nav>
+                    </SheetContent>
+                </Sheet>
+                <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+                    <form className="ml-auto flex-1 sm:flex-initial">
+                        <div className="relative">
+                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
+                            <Input
+                                type="search"
+                                placeholder="Search feeds..."
+                                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                            />
+                        </div>
+                    </form>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="secondary" size="icon" className="rounded-full">
+                                <CircleUser className="h-5 w-5"/>
+                                <span className="sr-only">Toggle user menu</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            { status === 'authenticated' ? (
+                                <>
+                                    <DropdownMenuLabel>
+                                        Hello { session?.user?.name || "N/A" }
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator/>
+                                    <Link href="/account">
+                                        <DropdownMenuItem className="cursor-pointer">My Account</DropdownMenuItem>
+                                    </Link>
+                                    <Link href="/api/auth/signout">
+                                        <DropdownMenuItem className="cursor-pointer text-red-500">Sign out</DropdownMenuItem>
+                                    </Link>
+                                </>
+                            ) : (
+
+                                <Link href="/account">
+                                    <DropdownMenuItem className="cursor-pointer">Sign in</DropdownMenuItem>
+                                </Link>
+                            )
+                            }
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
-                <div>
-                    <nav>
-                        <ul className="flex space-x-5">
-                            <li>
-                                <Link href="/" className="text-gray-500 hover:text-gray-800">Home</Link>
-                            </li>
-                            <li>
-                                <Link href="/feeds" className="text-gray-500 hover:text-gray-800">Feed</Link>
-                            </li>
-                            <li>
-                                <Link href="/account" className="text-gray-500 hover:text-gray-800">Account</Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
+            </header>
+        </div>
     );
 }

@@ -79,3 +79,9 @@
 .h-screen-bt-spacing{
     height: calc(100vh - 10rem);
 }
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
