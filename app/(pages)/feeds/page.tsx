@@ -44,7 +44,7 @@ export default function PreviewFeeds() {
     }, []);
 
     return (
-        <Suspense>
+        <>
             <div className="flex flex-row w-full h-[calc(100vh-4rem)]">
                 <ResizablePanelGroup direction="horizontal" className="md:!flex-row !flex-col">
                     <ResizablePanel minSize={ 15 } defaultSize={ 25 } maxSize={ 30 } className="md:flex-[25] !flex-[15] md:border-b-0 border-b-[1px]">
@@ -135,14 +135,16 @@ export default function PreviewFeeds() {
                                     </div>
                                 ) :
                                 <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
-                                    { searchParams.has("feedUrl") ? 'Loading...' : 'Select a feed to get started.' }
+                                    <Suspense>
+                                        { searchParams.has("feedUrl") ? 'Loading...' : 'Select a feed to get started.' }
+                                    </Suspense>
                                 </h1>
                             }
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
             </div>
-        </Suspense>
+        </>
     )
 }
 export const dynamic = 'force-dynamic'
