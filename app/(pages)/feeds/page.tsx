@@ -68,19 +68,28 @@ export default function PreviewFeeds() {
                                                 <h1 className="flex text-3xl font-bold">{ feed[0]?.websiteTitle }</h1>
                                                 <Link href={ feed[0]?.websiteLink || "#" }>Visit Website</Link>
                                             </div>
-                                            <TooltipProvider>
-                                                <Tooltip>
-                                                    <TooltipTrigger asChild>
-                                                        <Button variant="secondary">
-                                                            <PlusIcon size={ 24 } className="mr-2 -ml-2"/>
-                                                            Follow
-                                                        </Button>
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>
-                                                        You&apos;ll receive updates every day, on 6 a.m.
-                                                    </TooltipContent>
-                                                </Tooltip>
-                                            </TooltipProvider>
+
+                                            <div className="flex flex-row-reverse gap-4">
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Button>
+                                                                Follow
+                                                                <PlusIcon size={ 24 } className="ml-2"/>
+                                                            </Button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            You&apos;ll receive updates every day, on 6 a.m.
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+
+                                                { feed[0]?.websiteLink && (
+                                                    <Link href={ feed[0]?.websiteLink } target="_blank" className="flex justify-center align-center">
+                                                        <Button variant="secondary">Visite Website <ExternalLinkIcon size={ 15 } className="ml-2"/></Button>
+                                                    </Link>
+                                                ) }
+                                            </div>
                                         </div>
 
                                         { feed.map((item: any) => (
@@ -111,7 +120,7 @@ export default function PreviewFeeds() {
                                     </div>
                                 ) :
                                 <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
-                                    {new URL(window.location.href).searchParams.get('feedUrl') ? 'Loading...' : 'Select a feed to get started.'}
+                                    { new URL(window.location.href).searchParams.get('feedUrl') ? 'Loading...' : 'Select a feed to get started.' }
                                 </h1>
                             }
                         </div>
