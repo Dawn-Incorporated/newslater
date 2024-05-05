@@ -22,6 +22,7 @@
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
+    "next-themes": "^0.3.0",
     "node-cron": "^3.0.3",
     "pg": "^8.11.5",
     "react": "^18",
@@ -29,6 +30,7 @@
     "react-resizable-panels": "^2.0.19",
     "resend": "^3.2.0",
     "rss-parser": "^3.13.0",
+    "sonner": "^1.4.41",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"

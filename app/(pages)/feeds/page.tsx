@@ -1,13 +1,14 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import FeedsList from "@/app/(pages)/feeds/FeedsList";
 
 export default function PreviewFeeds() {
-    const [feeds, setFeeds] = useState([] as any)
-    const [feed, setFeed] = useState([] as any)
+    const [feeds, setFeeds] = useState<any|null>(null)
+    const [feed, setFeed] = useState<any|null>(null)
 
     const readAllFeeds = async () => {
         const response = await fetch(`/api/v1/feed/readAll`)
@@ -28,7 +29,7 @@ export default function PreviewFeeds() {
 
     useEffect(() => {
         readAllFeeds()
-        readFeed('https://9to5mac.com/feed')
+        //readFeed('https://9to5mac.com/feed')
     }, []);
 
     return (
@@ -52,37 +53,31 @@ export default function PreviewFeeds() {
                             </div>
                             <div className="flex flex-col gap-2 w-full overflow-auto">
                                 <h1 className="text-2xl font-bold">Feeds</h1>
-                                {/*<Select onValueChange={ (e) => readFeed(e) } defaultValue={ 'https://9to5mac.com/feed' }>*/ }
-                                {/*    <SelectTrigger className="w-[300px]">*/ }
-                                {/*        <SelectValue placeholder="Feeds"/>*/ }
-                                {/*    </SelectTrigger>*/ }
-                                {/*    <SelectContent>*/ }
-                                {/*        { Array.isArray(feeds) ? feeds.map((feed: any) => (*/ }
-                                {/*            <SelectItem key={ feed.url } value={ feed.url }>{ feed.name }</SelectItem>*/ }
-                                {/*        )) : null }*/ }
-                                {/*    </SelectContent>*/ }
-                                {/*</Select>*/ }
-                                <Tabs>
-                                    <TabsList className="flex flex-col w-full h-full">
-                                        { Array.isArray(feeds) ? feeds.map((feed: any) => (
-                                                <TabsTrigger
-                                                    key={ feed.url }
-                                                    onClick={ () => readFeed(feed.url) }
-                                                    value={ feed.url }
-                                                    className="w-full block text-left text-ellipsis"
-                                                >{ feed.name }</TabsTrigger>
-                                            )) :
-                                            <p>No feeds found</p>
-                                        }
-                                    </TabsList>
-                                </Tabs>
+                                {/*<Tabs>*/}
+                                {/*    <TabsList className="flex flex-col w-full h-full">*/}
+                                {/*        <Suspense fallback={ <p>Loading...</p> }>*/}
+                                {/*            { Array.isArray(feeds) ? feeds.map((feed: any) => (*/}
+                                {/*                    <TabsTrigger*/}
+                                {/*                        key={ feed.url }*/}
+                                {/*                        onClick={ () => readFeed(feed.url) }*/}
+                                {/*                        value={ feed.url }*/}
+                                {/*                        className="w-full block text-left text-ellipsis"*/}
+                                {/*                    >{ feed.name }</TabsTrigger>*/}
+                                {/*                )) :*/}
+                                {/*                <p>No feeds found</p>*/}
+                                {/*            }*/}
+                                {/*        </Suspense>*/}
+                                {/*    </TabsList>*/}
+                                {/*</Tabs>*/}
+
+                                <FeedsList readFeed={readFeed}/>
                             </div>
                         </div>
                     </ResizablePanel>
                     <ResizableHandle/>
                     <ResizablePanel defaultSize={ 75 }>
                         <div className="flex flex-col m-auto max-sm:w-full p-5 max-h-screen overflow-y-auto">
-                            { !feed ? feed.map((item: any) => (
+                            { feed ? feed.map((item: any) => (
                                     <>
                                         <div key={ item.link }>
                                             <h2 className={ "flex text-xl font-bold justify-center mb-5" }>{ item.title }</h2>
