@@ -1,5 +1,15 @@
 'use client'
 
+<<<<<<< HEAD
+import { Suspense, useEffect, useState } from "react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import FeedsList from "@/app/(pages)/feeds/FeedsList";
+import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
+import { toast } from "sonner";
+import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
+import FeedItem from "@/app/(pages)/feeds/FeedItem";
+=======
 import { useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
@@ -10,16 +20,40 @@ import { Button } from "@/components/ui/button";
 import { ExternalLinkIcon, PlusIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
+>>>>>>> main
 
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
 
     const readFeed = async (url: string) => {
+<<<<<<< HEAD
+        try {
+            if (!url) {
+                setFeed(null)
+                return;
+            }
+
+            await fetch(`/api/v1/feed/preview?url=${ url }`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    } else {
+                        setFeed(data);
+                    }
+                });
+        } catch (err: Error | any) {
+            toast.error(`An error occurred.`, {
+                description: err?.message || "Unknown error occurred."
+            });
+        }
+=======
         const response = await fetch(`/api/v1/feed/preview?url=${ url }`)
             .then(response => response.json())
             .then(data => {
                 setFeed(data);
             });
+>>>>>>> main
     };
 
     return (
@@ -55,6 +89,11 @@ export default function PreviewFeeds() {
                     <ResizableHandle/>
                     <ResizablePanel defaultSize={ 75 }>
                         <div className="flex flex-col max-sm:w-full p-5 max-h-screen overflow-y-auto">
+<<<<<<< HEAD
+                            <Suspense fallback={<p>Loading...</p>}>
+                                <FeedContent feed={feed} />
+                            </Suspense>
+=======
                             { feed ? (
                                     <div className="flex flex-col gap-8">
                                         <div className="flex md:flew-col flex-row justify-between">
@@ -117,6 +156,7 @@ export default function PreviewFeeds() {
                                     Select a feed to get started.
                                 </h1>
                             }
+>>>>>>> main
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
@@ -124,4 +164,29 @@ export default function PreviewFeeds() {
         </>
     )
 }
+<<<<<<< HEAD
+
+function FeedContent({feed}: { feed: any }) {
+    if (!feed) {
+        return <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
+            Select a feed to get started.
+        </h1>
+    }
+
+    if (!Array.isArray(feed) || feed.length === 0) {
+        return <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
+            No feed items available.
+        </h1>
+    }
+
+    return (
+        <div className="flex flex-col gap-8">
+            <FeedHeader feed={ feed }/>
+            { feed.map((item: any, index: number) => <FeedItem key={ index } item={ item }/>) }
+        </div>
+    )
+}
+
+=======
+>>>>>>> main
 export const dynamic = 'force-dynamic'

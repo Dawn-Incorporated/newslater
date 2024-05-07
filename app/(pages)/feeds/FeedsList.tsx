@@ -54,6 +54,10 @@ function Feeds({readFeed}: { readFeed: Function }) {
             onClick={ () => readFeed(feed.url) }
             value={ feed.url }
             className="w-full block text-left text-ellipsis"
+<<<<<<< HEAD
+        >{ feed.name || feed.url }</TabsTrigger>
+=======
         >{ feed.name }</TabsTrigger>
+>>>>>>> main
     ));
 }
