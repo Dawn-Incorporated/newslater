@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function SearchBar() {
-    const [feeds, setFeeds] = useState<[] | null>(null);
+    const [feeds, setFeeds] = useState<any>(null);
     const [open, setOpen] = useState<boolean>(false)
     const [value, setValue] = useState("")
 
