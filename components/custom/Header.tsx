@@ -5,8 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { CircleUser, Menu, Search } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import SearchBar from "@/components/custom/SearchBar";
 
 export default function Header() {
@@ -55,7 +54,7 @@ export default function Header() {
                     <form className="ml-auto flex-1 sm:flex-initial">
                         <div className="relative">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
-                            <SearchBar />
+                            <SearchBar/>
                         </div>
                     </form>
                     <DropdownMenu>
@@ -75,17 +74,17 @@ export default function Header() {
                                     <Link href="/account">
                                         <DropdownMenuItem className="cursor-pointer">My Account</DropdownMenuItem>
                                     </Link>
-                                    <Link href="/api/auth/signout">
-                                        <DropdownMenuItem className="cursor-pointer text-red-500">Sign out</DropdownMenuItem>
-                                    </Link>
+                                    <DropdownMenuItem
+                                        className="cursor-pointer text-red-500"
+                                        onClick={ () => signOut() }
+                                    >Sign out</DropdownMenuItem>
                                 </>
                             ) : (
 
                                 <Link href="/account">
                                     <DropdownMenuItem className="cursor-pointer">Sign in</DropdownMenuItem>
                                 </Link>
-                            )
-                            }
+                            ) }
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
