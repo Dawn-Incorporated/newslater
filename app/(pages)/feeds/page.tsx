@@ -1,5 +1,6 @@
 'use client'
 
+<<<<<<< HEAD
 import { Suspense, useEffect, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
@@ -8,11 +9,24 @@ import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 import { toast } from "sonner";
 import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
 import FeedItem from "@/app/(pages)/feeds/FeedItem";
+=======
+import { useState } from "react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import FeedsList from "@/app/(pages)/feeds/FeedsList";
+import Link from "next/link";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ExternalLinkIcon, PlusIcon } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
+>>>>>>> main
 
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
 
     const readFeed = async (url: string) => {
+<<<<<<< HEAD
         try {
             if (!url) {
                 setFeed(null)
@@ -33,6 +47,13 @@ export default function PreviewFeeds() {
                 description: err?.message || "Unknown error occurred."
             });
         }
+=======
+        const response = await fetch(`/api/v1/feed/preview?url=${ url }`)
+            .then(response => response.json())
+            .then(data => {
+                setFeed(data);
+            });
+>>>>>>> main
     };
 
     return (
@@ -68,9 +89,74 @@ export default function PreviewFeeds() {
                     <ResizableHandle/>
                     <ResizablePanel defaultSize={ 75 }>
                         <div className="flex flex-col max-sm:w-full p-5 max-h-screen overflow-y-auto">
+<<<<<<< HEAD
                             <Suspense fallback={<p>Loading...</p>}>
                                 <FeedContent feed={feed} />
                             </Suspense>
+=======
+                            { feed ? (
+                                    <div className="flex flex-col gap-8">
+                                        <div className="flex md:flew-col flex-row justify-between">
+                                            <div>
+                                                <h1 className="flex text-3xl font-bold">{ feed[0]?.websiteTitle }</h1>
+                                                <Link href={ feed[0]?.websiteLink || "#" }>Visit Website</Link>
+                                            </div>
+
+                                            <div className="flex flex-row-reverse gap-4">
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Button>
+                                                                Follow
+                                                                <PlusIcon size={ 24 } className="ml-2"/>
+                                                            </Button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            You&apos;ll receive updates every day, on 6 a.m.
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+
+                                                { feed[0]?.websiteLink && (
+                                                    <Link href={ feed[0]?.websiteLink } target="_blank" className="flex justify-center align-center">
+                                                        <Button variant="secondary">Visite Website <ExternalLinkIcon size={ 15 } className="ml-2"/></Button>
+                                                    </Link>
+                                                ) }
+                                            </div>
+                                        </div>
+
+                                        { feed.map((item: any) => (
+                                            <Card key={ item.title.concat(item.pubDate) }>
+                                                <CardHeader>
+                                                    <CardTitle className="text-xl">{ item.title }</CardTitle>
+                                                    <CardDescription>{ item.creator ? item.creator + ' - ' : '' } { new Date(item.pubDate).toLocaleString('en-US', {
+                                                        weekday: 'long',
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                        hour: 'numeric',
+                                                        minute: 'numeric'
+                                                    }) }</CardDescription>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <p dangerouslySetInnerHTML={ item.content ? {__html: item.content} : undefined }></p>
+                                                </CardContent>
+                                                { item.link && (
+                                                    <CardFooter>
+                                                        <Link href={ item.link } target="_blank" className="flex justify-center align-center">
+                                                            <Button>Read full article <ExternalLinkIcon size={ 15 } className="ml-2"/></Button>
+                                                        </Link>
+                                                    </CardFooter>
+                                                ) }
+                                            </Card>
+                                        )) }
+                                    </div>
+                                ) :
+                                <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
+                                    Select a feed to get started.
+                                </h1>
+                            }
+>>>>>>> main
                         </div>
                     </ResizablePanel>
                 </ResizablePanelGroup>
@@ -78,6 +164,7 @@ export default function PreviewFeeds() {
         </>
     )
 }
+<<<<<<< HEAD
 
 function FeedContent({feed}: { feed: any }) {
     if (!feed) {
@@ -100,4 +187,6 @@ function FeedContent({feed}: { feed: any }) {
     )
 }
 
+=======
+>>>>>>> main
 export const dynamic = 'force-dynamic'
