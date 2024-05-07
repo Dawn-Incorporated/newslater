@@ -7,20 +7,6 @@ const {log} = require('byarutils');
 class FeedRepository extends AbstractRepository {
 
     async getAll() {
-<<<<<<< HEAD
-=======
-        try {
-            const result = await database.execute(`SELECT * FROM ${this.getTable()} ORDER BY name ASC`);
-            log("SUCCESS", "FeedRepository", "Feed retrieved.")
-            return result.rows;
-        } catch (error) {
-            log("ERROR", "FeedRepository", 'Feed failed to be retrieved: ' + error)
-            return false;
-        }
-    }
-
-    async create(url, name, description, website) {
->>>>>>> main
         try {
             const result = await database.execute(`SELECT * FROM ${this.getTable()} ORDER BY name ASC`);
             log("SUCCESS", "FeedRepository", "Feed retrieved.")

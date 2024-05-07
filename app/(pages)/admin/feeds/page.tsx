@@ -2,7 +2,6 @@
 
 import { FeedFromDB } from "@/app/types";
 import { useEffect, useState } from "react";
-import { ColumnDef } from "@tanstack/react-table"
 import { DataTable } from "@/app/(pages)/admin/feeds/data-table";
 import { columns } from "@/app/(pages)/admin/feeds/columns";
 
