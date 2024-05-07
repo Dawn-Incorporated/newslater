@@ -86,11 +86,10 @@ export function QueryFeeds({value, setValue, setOpen, feeds, setFeeds}: { value:
             onSelect={ (currentValue) => {
                 setValue(currentValue === value ? "" : currentValue)
                 setOpen(false)
-                // push feed.url while escaping special characters
                 router.push(`/feeds/${ encodeURIComponent(feed.url) }`)
             } }
         >
-            { feed.name }
+            { feed.name || feed.url }
         </CommandItem>
     ))
 }
