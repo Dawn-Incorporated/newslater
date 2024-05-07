@@ -17,9 +17,9 @@ class FeedRepository extends AbstractRepository {
         }
     }
 
-    async create(url, name, description, website) {
+    async create(url, name, description, website, category) {
         try {
-            const result = await database.execute(`INSERT INTO  ${this.getTable()} (url, name, description, website) VALUES (?, ?, ?, ?)`, [url, name, description, website]);
+            const result = await database.execute(`INSERT INTO  ${this.getTable()} (url, name, description, website, categorie) VALUES (?, ?, ?, ?, ?)`, [url, name, description, category]);
             log("SUCCESS", "FeedRepository", "Feed added.")
             return result.rows;
         } catch (error) {
