@@ -1,9 +1,9 @@
-import Header from "@/components/custom/Header";
+import Nav from "@/components/custom/general/Nav";
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <>
-            <Header/>
+            <Nav/>
             { children }
         </>
     );

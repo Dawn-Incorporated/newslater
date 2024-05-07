@@ -2,8 +2,7 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSe
 
 export default function AddFeed() {
     return (
-        <main>
-            <div className={"absolute top-10 left-10"}>
+        <div className="mx-6 my-4">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -11,7 +10,7 @@ export default function AddFeed() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator/>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="#">Admin</BreadcrumbLink>
+                            <BreadcrumbLink href="/admin">Admin</BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator/>
                         <BreadcrumbItem>
@@ -19,7 +18,10 @@ export default function AddFeed() {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
+
+            <div>
+
             </div>
-        </main>
+        </div>
     );
 }
