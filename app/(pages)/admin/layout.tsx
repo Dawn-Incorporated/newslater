@@ -13,7 +13,7 @@ const sidebarNavItems = [
         href: "/admin/feeds"
     },
     {
-        title: "Accounts",
+        title: "Manage accounts",
         href: "/admin/accounts"
     }
 ]
