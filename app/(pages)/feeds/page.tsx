@@ -6,7 +6,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import FeedsList from "@/app/(pages)/feeds/FeedsList";
 import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 import { toast } from "sonner";
-import FeedHeader from "@/app/(pages)/feeds/FeedHeader";
+import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
 import FeedItem from "@/app/(pages)/feeds/FeedItem";
 
 export default function PreviewFeeds() {
