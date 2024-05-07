@@ -7,6 +7,7 @@ import { CircleUser, Menu, Search } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
+import SearchBar from "@/components/custom/SearchBar";
 
 export default function Header() {
     const {data: session, status, update} = useSession()
@@ -54,11 +55,7 @@ export default function Header() {
                     <form className="ml-auto flex-1 sm:flex-initial">
                         <div className="relative">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
-                            <Input
-                                type="search"
-                                placeholder="Search feeds..."
-                                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                            />
+                            <SearchBar />
                         </div>
                     </form>
                     <DropdownMenu>
