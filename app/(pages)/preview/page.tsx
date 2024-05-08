@@ -1,13 +1,13 @@
 'use client'
 
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 export default function Preview() {
     const login = 'vanhovev'
 
     return (
-        <main>
-            <div className={"absolute top-10 left-10 max-sm:hidden"}>
+        <main className="flex flex-col flex-1">
+            <div className="my-4 mx-6">
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -15,7 +15,7 @@ export default function Preview() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator/>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="#">Preview ({login})</BreadcrumbLink>
+                            <BreadcrumbLink href="#">Preview ({ login })</BreadcrumbLink>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
