@@ -113,14 +113,14 @@ export function SearchBar() {
                         className="pl-8 sm:min-w-[300px] md:min-w-[200px] lg:min-w-[100px]"
                     >
                         { value
-                            ? feeds && feeds.find((feed: any) => feed.url === value)?.name || "Feed"
+                            ? feeds && feeds.find((feed: any) => feed.name === value)?.name || "Feed"
                             : "Feed" }
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[200px] p-0">
                     <Command>
-                        <CommandInput placeholder="Search framework..." className="h-9"/>
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandInput placeholder="Search feeds..." className="h-9"/>
+                        <CommandEmpty>No feed found.</CommandEmpty>
                         <CommandGroup><CommandList>
                             <Suspense fallback={ <CommandItem>Loading...</CommandItem> }>
                                 <QueryFeeds feeds={ feeds } setFeeds={ setFeeds } value={ value } setValue={ setValue } setOpen={ setOpen }/>
@@ -172,9 +172,9 @@ export function QueryFeeds({value, setValue, setOpen, feeds, setFeeds}: { value:
     return feeds.map((feed: any) => (
         <CommandItem
             key={ feed.url }
-            value={ feed.url }
+            value={ feed.name }
             onSelect={ (currentValue) => {
-                setValue(currentValue === value ? "" : currentValue)
+                setValue(currentValue)
                 setOpen(false)
                 router.push(`/feeds/${ encodeURIComponent(feed.url) }`)
             } }
