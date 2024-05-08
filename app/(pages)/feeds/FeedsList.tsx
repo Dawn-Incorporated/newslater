@@ -3,18 +3,22 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function FeedsList({readFeed}: { readFeed: Function }) {
     return (
-        <>
-            <Tabs>
-                <TabsList className="flex flex-col w-full h-full">
-                    <Suspense fallback={ <p>Loading...</p> }>
-                        <Feeds readFeed={ readFeed }/>
-                    </Suspense>
-                </TabsList>
-            </Tabs>
-        </>
+        <div className="flex flex-row justify-end gap-2">
+            <div className="flex flex-col max-sm:w-full max-h-full overflow-y-auto">
+                <Tabs>
+                    <TabsList className="flex flex-col h-full w-full">
+                        <Suspense fallback={ <p className="!w-full">Loading...</p> }>
+                            <Feeds readFeed={ readFeed }/>
+                        </Suspense>
+                    </TabsList>
+                </Tabs>
+            </div>
+            <NameIndex/>
+        </div>
     )
 }
 
@@ -45,15 +49,38 @@ function Feeds({readFeed}: { readFeed: Function }) {
     }
 
     if (!feeds) {
-        return <p>Loading...</p>;
+        return <p className="!w-full">Loading...</p>;
     }
 
-    return feeds.map((feed: any) => (
-        <TabsTrigger
-            key={ feed.url }
-            onClick={ () => readFeed(feed.url) }
-            value={ feed.url }
-            className="w-full block text-left text-ellipsis"
-        >{ feed.name || feed.url }</TabsTrigger>
-    ));
+    return feeds.map((feed: any) => {
+        const firstChar = (feed.name || feed.url).charAt(0).toUpperCase();
+
+        return (
+            <TabsTrigger
+                key={ feed.url }
+                id={ /^[A-Z]$/.test(firstChar) ? firstChar : '#' }
+                onClick={ () => readFeed(feed.url) }
+                value={ feed.url }
+                className="w-full block text-left text-ellipsis"
+            >{ feed.name || feed.url }</TabsTrigger>
+        )
+    });
+}
+
+export function NameIndex() {
+    const scrollTo = (id: string) => {
+        const element = document.getElementById(id);
+        element?.scrollIntoView({behavior: 'smooth'});
+    }
+
+    return (
+        <>
+            <div className="flex flex-col justify-center items-center h-[85svh] fixed translate-x-4">
+                { 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((char) => (
+                    <Link key={ char } href="#" onClick={ () => scrollTo(char) }>{ char }</Link>
+                ))
+                }
+            </div>
+        </>
+    )
 }
