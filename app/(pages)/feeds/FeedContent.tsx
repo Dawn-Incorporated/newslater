@@ -1,5 +1,6 @@
-import { Suspense } from "react";
-import { FeedData } from "@/app/(pages)/feeds/FeedData";
+'use client'
+
+import { Suspense, useEffect, useState } from "react";
 
 export default function FeedContent({url}: { url: string }) {
     const feed = FeedData(url);
@@ -32,4 +33,26 @@ export default function FeedContent({url}: { url: string }) {
             </Suspense>
         </div>
     );
+}
+
+export function useFeedData(url: string) {
+    const [data, setData] = useState<any|null>(null);
+
+    useEffect(() => {
+        fetch(`/api/v1/feed/preview?url=${ url }`)
+            .then(response => response.json())
+            .then(data => setData(data));
+    }, [url]);
+
+    return data;
+}
+
+export function FeedData(url: string) {
+    const data = useFeedData(url);
+
+    if (data === null) {
+        throw new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    return data;
 }
