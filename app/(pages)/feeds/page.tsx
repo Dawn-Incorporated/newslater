@@ -1,9 +1,9 @@
 'use client'
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
-import FeedsList from "@/app/(pages)/feeds/FeedsList";
+import FeedsList, { NameIndex } from "@/app/(pages)/feeds/FeedsList";
 import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 import { toast } from "sonner";
 import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
@@ -56,7 +56,7 @@ export default function PreviewFeeds() {
                                 <h1 className="text-2xl font-bold">Feeds</h1>
                             </div>
                             <div className="flex flex-col w-full overflow-auto">
-                                <div className="w-full hidden md:block">
+                                <div className="w-full hidden md:block pr-1">
                                     <FeedsList readFeed={ readFeed }/>
                                 </div>
                                 <div className="md:hidden">
@@ -68,8 +68,8 @@ export default function PreviewFeeds() {
                     <ResizableHandle/>
                     <ResizablePanel defaultSize={ 75 }>
                         <div className="flex flex-col max-sm:w-full p-5 max-h-screen overflow-y-auto">
-                            <Suspense fallback={<p>Loading...</p>}>
-                                <FeedContent feed={feed} />
+                            <Suspense fallback={ <p>Loading...</p> }>
+                                <FeedContent feed={ feed }/>
                             </Suspense>
                         </div>
                     </ResizablePanel>
