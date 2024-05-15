@@ -3,11 +3,11 @@
 import { Suspense, useState } from "react";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
-import FeedsList, { NameIndex } from "@/app/(pages)/feeds/FeedsList";
-import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 import { toast } from "sonner";
 import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
 import FeedItem from "@/app/(pages)/feeds/FeedItem";
+import { db } from "@/server/db";
+import { feeds } from "@/server/db/schema";
 
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
@@ -55,14 +55,7 @@ export default function PreviewFeeds() {
                                 </Breadcrumb>
                                 <h1 className="text-2xl font-bold">Feeds</h1>
                             </div>
-                            <div className="flex flex-col w-full overflow-auto">
-                                <div className="w-full hidden md:block pr-1">
-                                    <FeedsList readFeed={ readFeed }/>
-                                </div>
-                                <div className="md:hidden">
-                                    <MobileFeedsList readFeed={ readFeed }/>
-                                </div>
-                            </div>
+
                         </div>
                     </ResizablePanel>
                     <ResizableHandle/>
