@@ -24,7 +24,8 @@ async function previewEmail(login: string) {
         let userFeedsFiltered = await filter(userFeeds, user.postlimit);
 
         // Génération du mail pour l'utilisateur
-        return html(user.firstname, userFeedsFiltered)
+        //return MailHTML(user.firstname, userFeedsFiltered); // TODO: C'est un composant React, il faut le rendre en HTML
+        return html(user.firstname, userFeedsFiltered);
     } catch (error) {
         log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
         return 'An internal error occurred.';
