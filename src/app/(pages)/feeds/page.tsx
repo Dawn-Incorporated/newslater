@@ -6,8 +6,6 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { toast } from "sonner";
 import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
 import FeedItem from "@/app/(pages)/feeds/FeedItem";
-import { db } from "@/server/db";
-import { feeds } from "@/server/db/schema";
 import FeedsList from "@/app/(pages)/feeds/FeedsList";
 import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 
