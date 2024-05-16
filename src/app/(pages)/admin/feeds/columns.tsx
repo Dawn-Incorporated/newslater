@@ -1,15 +1,15 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { FeedFromDB } from "@/server/types";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import React from "react";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
+import {FeedType} from "@/server/db/schema";
 
-export const columns: ColumnDef<FeedFromDB>[] = [
+export const columns: ColumnDef<FeedType>[] = [
     {
         id: "select",
         header: ({table}) => (

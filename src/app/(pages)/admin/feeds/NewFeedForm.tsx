@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
 import { useState } from "react";
+import {addFeed} from "@/server/db/action/feedsActions";
 
 const formSchema = z.object({
     url: z.string().min(1, "This field is required.").url().max(255),
@@ -48,23 +49,7 @@ export default function NewFeedForm() {
     const [open, setOpen] = useState<boolean>(false)
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        const attempt = new Promise((resolve, reject) => {
-            fetch("/api/v1/feed/create", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(values)
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.error) {
-                        reject(data.error)
-                    } else {
-                        resolve(data)
-                    }
-                })
-        })
+        const attempt = addFeed(values)
 
         toast.promise(attempt, {
             loading: "Creating feed...",

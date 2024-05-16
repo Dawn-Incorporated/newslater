@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { getFeed } from "@/server/db/action/feedsActions";
 
 export default function FeedsList({readFeed}: { readFeed: Function }) {
     return (
@@ -32,9 +33,9 @@ function Feeds({readFeed}: { readFeed: Function }) {
 
     const fetchFeeds = async () => {
         try {
-            const response = await fetch(`/api/v1/feed/readAll`);
-            const data = await response.json();
-            setFeeds(data);
+            const response = await getFeed();
+            console.log(response)
+            setFeeds(response);
         } catch (err: Error | any) {
             const error = err?.message || "Unknown error occurred.";
             setError(error);

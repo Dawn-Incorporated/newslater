@@ -1,16 +1,16 @@
 import {html} from "@/server/services/html-generator";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
-import userController from "@/server/controller/UserController";
 import { send } from "@/server/config/mailer";
 import { filter } from "@/server/services/rss-filter";
 import { log } from "byarutils";
+import { getUsersWithFeeds } from "@/server/db/action/usersActions";
 
 export const dynamic = 'force-dynamic'
 
 async function sendMail() {
     try {
         // Récupération des utilisateurs
-        const users = await userController.getUsers();
+        const users = await getUsersWithFeeds() as any[];
         const result: any[] = []
 
         for (const user of users) {

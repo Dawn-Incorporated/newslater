@@ -1,17 +1,21 @@
 import { log } from "byarutils";
-import userController from "@/server/controller/UserController";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
 import { filter } from "@/server/services/rss-filter";
 import { html } from "@/server/services/html-generator";
+import { getUsersWithFeeds } from "@/server/db/action/usersActions";
 
 export const dynamic = 'force-dynamic'
 
 async function previewEmail(login: string) {
     try {
         // Récupération des utilisateurs
-        const users = await userController.getUsers();
+        const users = await getUsersWithFeeds() as any[]
 
         const user = users.find((user: { login: string; }) => user.login === login);
+
+        if (!user) {
+            return 'User not found';
+        }
 
         // Récupération des feeds de l'utilisateur depuis ses sources
         let userFeeds = await retrieveFeeds(user.sources);
@@ -28,11 +32,11 @@ async function previewEmail(login: string) {
 }
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url)
+    const {searchParams} = new URL(request.url)
     const login = searchParams.get('login')
-    if(login) {
+    if (login) {
         const preview = await previewEmail(login);
         return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
     }
-    return new Response('An internal error occurred.', {status: 500})
+    return new Response('Please provide a login or invalid login', {status: 400});
 }

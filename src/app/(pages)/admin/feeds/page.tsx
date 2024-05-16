@@ -1,18 +1,18 @@
 'use client'
 
-import { FeedFromDB } from "@/server/types";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/app/(pages)/admin/feeds/data-table";
 import { columns } from "@/app/(pages)/admin/feeds/columns";
+import {FeedType} from "@/server/db/schema";
+import {getFeed} from "@/server/db/action/feedsActions";
 
 
 export default function Feeds() {
-    const [feeds, setFeeds] = useState<FeedFromDB[]>([])
+    const [feeds, setFeeds] = useState<FeedType[]>([])
 
     useEffect(() => {
         async function getFeeds() {
-            const response = await fetch('/api/v1/feed/readAll');
-            const data = await response.json();
+            const data = await getFeed();
             setFeeds(data);
         }
         getFeeds();

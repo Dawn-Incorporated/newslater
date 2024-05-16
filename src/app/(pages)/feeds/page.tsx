@@ -8,6 +8,8 @@ import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
 import FeedItem from "@/app/(pages)/feeds/FeedItem";
 import { db } from "@/server/db";
 import { feeds } from "@/server/db/schema";
+import FeedsList from "@/app/(pages)/feeds/FeedsList";
+import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
@@ -55,7 +57,12 @@ export default function PreviewFeeds() {
                                 </Breadcrumb>
                                 <h1 className="text-2xl font-bold">Feeds</h1>
                             </div>
-
+                            <div className={"max-sm:hidden"}>
+                                <FeedsList readFeed={ readFeed }/>
+                            </div>
+                            <div className={"sm:hidden"}>
+                                <MobileFeedsList readFeed={ readFeed }/>
+                            </div>
                         </div>
                     </ResizablePanel>
                     <ResizableHandle/>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getFeed } from "@/server/db/action/feedsActions";
 
 export default function MobileFeedsList({readFeed}: { readFeed: Function }) {
     const [feeds, setFeeds] = useState<any | null>(null);
@@ -15,9 +16,8 @@ export default function MobileFeedsList({readFeed}: { readFeed: Function }) {
 
     const fetchFeeds = async () => {
         try {
-            const response = await fetch(`/api/v1/feed/readAll`);
-            const data = await response.json();
-            setFeeds(data);
+            const response = await getFeed();
+            setFeeds(response);
             setLoading(false);
         } catch (err: Error | any) {
             const error = err?.message || "Unknown error occurred.";
