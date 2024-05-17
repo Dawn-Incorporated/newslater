@@ -6,8 +6,8 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { signIn } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
-import { _onSubmit } from "@/app/(auth)/account/magicLink"
 import { useState } from "react";
+import { _onSubmit } from "@/app/(auth)/account/magicLink";
 
 export function SignIn() {
     const [email, setEmail] = useState<string>("")
@@ -47,7 +47,7 @@ export function SignIn() {
                     <CardFooter>
                         <Button className="gap-2 m-auto bg-muted-foreground"
                                 onClick={() => {
-                                    signIn('email')
+                                    _onSubmit(email)
                                 }}
                         ><Mail size={"18"} />Send link</Button>
                     </CardFooter>
