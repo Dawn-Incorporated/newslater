@@ -47,7 +47,7 @@ export function SignIn() {
                     <CardFooter>
                         <Button className="gap-2 m-auto bg-muted-foreground"
                                 onClick={() => {
-                                    _onSubmit(email)
+                                    signIn('email')
                                 }}
                         ><Mail size={"18"} />Send link</Button>
                     </CardFooter>

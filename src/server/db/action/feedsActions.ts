@@ -1,7 +1,8 @@
 "use server"
 
-import {feeds, FeedType} from "@/server/db/schema";
+import {feeds} from "@/server/db/schema";
 import {db} from "@/server/db";
+import { FeedType } from "@/server/db/types";
 
 
 export const getFeed = async () => {

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import {FeedType} from "@/server/db/schema";
+import { FeedType } from "@/server/db/types";
 
 export const columns: ColumnDef<FeedType>[] = [
     {

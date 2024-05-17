@@ -1,5 +1,5 @@
-import { pgTable, varchar, time, integer, primaryKey } from "drizzle-orm/pg-core"
-
+import { integer, pgTable, primaryKey, text, time, timestamp, varchar } from "drizzle-orm/pg-core"
+import { AdapterAccountType } from "@auth/core/adapters";
 
 
 export const feeds = pgTable("feeds", {
@@ -30,6 +30,56 @@ export const follow = pgTable("follow", {
 	}
 });
 
-export type FeedType = typeof feeds.$inferInsert;
-export type UserType = typeof users.$inferInsert;
-export type FollowType = typeof follow.$inferInsert;
+export const usersAuth = pgTable("userAuth", {
+	id: text("id")
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
+	name: text("name"),
+	email: text("email").notNull(),
+	emailVerified: timestamp("emailVerified", { mode: "date" }),
+	image: text("image"),
+})
+
+export const accountsAuth = pgTable(
+	"accountAuth",
+	{
+		userId: text("userId")
+			.notNull()
+			.references(() => usersAuth.id, { onDelete: "cascade" }),
+		type: text("type").$type<AdapterAccountType>().notNull(),
+		provider: text("provider").notNull(),
+		providerAccountId: text("providerAccountId").notNull(),
+		refresh_token: text("refresh_token"),
+		access_token: text("access_token"),
+		expires_at: integer("expires_at"),
+		token_type: text("token_type"),
+		scope: text("scope"),
+		id_token: text("id_token"),
+		session_state: text("session_state"),
+	},
+	(account) => ({
+		compoundKey: primaryKey({
+			columns: [account.provider, account.providerAccountId],
+		}),
+	})
+)
+
+export const sessionsAuth = pgTable("sessionAuth", {
+	sessionToken: text("sessionToken").primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => usersAuth.id, { onDelete: "cascade" }),
+	expires: timestamp("expires", { mode: "date" }).notNull(),
+})
+
+export const verificationTokensAuth = pgTable(
+	"verificationTokenAuth",
+	{
+		identifier: text("identifier").notNull(),
+		token: text("token").notNull(),
+		expires: timestamp("expires", { mode: "date" }).notNull(),
+	},
+	(vt) => ({
+		compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+	})
+)
