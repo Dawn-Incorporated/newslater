@@ -28,8 +28,8 @@ export function SignIn() {
                     </CardHeader>
                     <CardFooter>
                         <Button className="w-full gap-2"
-                                onClick={() => {
-                                    signIn('github')
+                                onClick={async () => {
+                                    await signIn('github', {redirect: false})
                                 }}
                         ><GitHubLogoIcon/>Sign in with GitHub</Button>
                     </CardFooter>

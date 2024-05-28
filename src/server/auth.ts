@@ -31,5 +31,23 @@ export const authOptions: NextAuthOptions = {
             },
             from: process.env.EMAIL_FROM,
         }),
-    ]
+    ],
+    callbacks:{
+        async signIn({ user, account, profile, email, credentials }) {
+            console.log('signIn')
+            return true
+        },
+        async redirect({ url, baseUrl }) {
+            console.log('redirect')
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
+        async session({ session, user, token }) {
+            console.log('session')
+            return session
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+            console.log('jwt')
+            return token
+        }
+    }
 }
