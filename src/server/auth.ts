@@ -1,6 +1,7 @@
 import GithubProvider from "next-auth/providers/github";
 import EmailProvider from 'next-auth/providers/email';
 import { NextAuthOptions } from "next-auth";
+import { Adapter } from "next-auth/adapters";
 import { env } from "@/env";
 import { db } from "@/server/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
@@ -12,7 +13,7 @@ export const authOptions: NextAuthOptions = {
         accountsTable: accountsAuth,
         sessionsTable: sessionsAuth,
         verificationTokensTable: verificationTokensAuth,
-    }),
+    }) as Adapter,
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         GithubProvider({
