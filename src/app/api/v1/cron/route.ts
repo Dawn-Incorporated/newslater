@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { html } from "@/server/services/html-generator";
+import MailHTML from "@/server/services/html-generator";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
 import { send } from "@/server/config/mailer";
 import { filter } from "@/server/services/rss-filter";
@@ -22,7 +22,7 @@ async function sendMail() {
       let userFeedsFiltered = await filter(userFeeds, user.postlimit);
 
       // Génération du mail pour l'utilisateur
-      let mailBody = html(user.firstname, userFeedsFiltered);
+      let mailBody = MailHTML(user.firstname, userFeedsFiltered);
 
       // Envoi du mail à l'utilisateur
       let mailResult = await send(

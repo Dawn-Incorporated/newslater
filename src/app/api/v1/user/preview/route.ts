@@ -1,8 +1,8 @@
 import { log } from "byarutils";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
 import { filter } from "@/server/services/rss-filter";
-import { html } from "@/server/services/html-generator";
 import { getUsersWithFeeds } from "@/server/db/action/usersActions";
+import MailHTML from "@/server/services/html-generator";
 
 export const dynamic = 'force-dynamic'
 
@@ -24,8 +24,7 @@ async function previewEmail(login: string) {
         let userFeedsFiltered = await filter(userFeeds, user.postlimit);
 
         // Génération du mail pour l'utilisateur
-        //return MailHTML(user.firstname, userFeedsFiltered); // TODO: C'est un composant React, il faut le rendre en HTML
-        return html(user.firstname, userFeedsFiltered);
+        return MailHTML(user.firstname, userFeedsFiltered);
     } catch (error) {
         log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
         return 'An internal error occurred.';
@@ -36,8 +35,9 @@ export async function GET(request: Request) {
     const {searchParams} = new URL(request.url)
     const login = searchParams.get('login')
     if (login) {
-        const preview = await previewEmail(login);
-        return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
+        //const preview = await previewEmail(login);
+        //return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
+        return new Response('Preview is disabled', {status: 400});
     }
     return new Response('Please provide a login or invalid login', {status: 400});
 }

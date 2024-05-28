@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 interface Publication {
     title: string;
@@ -11,11 +11,11 @@ interface Publication {
     link: string;
 }
 
-const MailHTML = (firstname: string, feeds: any[]) => {
+export default function MailHTML(firstname: string, feeds: any[]) {
     return (
         <div>
             <div className="logo">
-                <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater" style={{ width: '200px' }} />
+                <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater" style={{width: '200px'}}/>
             </div>
             {feeds.map((feed) => (
                 (feed && feed.length > 0) ? (
@@ -48,30 +48,42 @@ function makeFeed(publications: Publication[]) {
             {publications.map((publication, index) => (
                 <div className="feed" key={index}>
                     <h2>{publication.title}</h2>
-                    <div className="subtitle">
+                    <div className="subtitle" key={index}>
                         {makeSubtitles(publication)}
                     </div>
-                    <p>{publication.content}</p>
+                    <p dangerouslySetInnerHTML={{__html: publication.content}}></p>
                 </div>
             ))}
         </>
     );
 }
 
-function makeSubtitles(publication: Publication) {
-    const subtitles = [];
+function makeSubtitles(publication: Publication): (string | JSX.Element)[] {
+    let subtitles: (string | JSX.Element)[] = [];
     if (publication.creator) subtitles.push(publication.creator);
     if (publication.description) subtitles.push(publication.description);
-    if (publication.pubDate) subtitles.push(new Date(publication.pubDate).toLocaleString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric'
-    }));
-    if (publication.websiteLink) subtitles.push(<a className="website" href={publication.link}>{publication.websiteTitle}</a>);
-    return subtitles.join(' - ');
+    if (publication.pubDate) {
+        const formattedDate = new Date(publication.pubDate).toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+        });
+        subtitles.push(formattedDate);
+    }
+    if (publication.websiteLink && publication.websiteTitle) {
+        subtitles.push(
+            <a className="website" href={publication.websiteLink} key="websiteLink">
+                {publication.websiteTitle}
+            </a>
+        );
+    }
+    return subtitles.map((subtitle, index) => (
+        <Fragment key={index}>
+            {subtitle}
+            {index < subtitles.length - 1 ? ' - ' : ''}
+        </Fragment>
+    ));
 }
-
-export default MailHTML;
