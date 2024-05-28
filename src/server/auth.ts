@@ -6,6 +6,7 @@ import { env } from "@/env";
 import { db } from "@/server/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { accountsAuth, sessionsAuth, usersAuth, verificationTokensAuth } from "@/server/db/schema";
+import emailForMagicLink from "@/server/auth/sendVeficiationRequestEmail";
 
 export const authOptions: NextAuthOptions = {
     adapter: DrizzleAdapter(db, {
@@ -30,6 +31,9 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             from: process.env.EMAIL_FROM,
+            sendVerificationRequest({identifier, url}) {
+                emailForMagicLink(identifier, url)
+            }
         }),
     ],
     callbacks:{
