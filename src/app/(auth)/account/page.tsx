@@ -1,11 +1,23 @@
 'use client'
 
-import { signOut, useSession } from "next-auth/react";
 import { SignIn } from "@/app/(auth)/account/SignIn";
 import { Button } from "@/components/ui/button";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function Account() {
-    const {data: session, status, update} = useSession()
+    const {data: session, status} = useSession()
+    const router = useRouter()
+    const searchParams = useSearchParams()
+
+    useEffect(() => {
+        if (searchParams.has("error")) {
+            toast.error(searchParams.get("error"))
+            void router.push("/account")
+        }
+    }, [router, searchParams]);
 
     if (status === 'authenticated') {
         return (
@@ -14,7 +26,7 @@ export default function Account() {
                     Hello { session.user?.name || "N/A" }
                 </p>
 
-                <Button onClick={() => signOut()}>
+                <Button onClick={ () => signOut() }>
                     Sign out
                 </Button>
             </div>
