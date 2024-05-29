@@ -1,7 +1,7 @@
 import { env } from "@/env";
 import emailForMagicLink from "@/server/auth/sendVerificiationRequestEmail";
 import { db } from "@/server/db";
-import { accountsAuth, sessionsAuth, usersAuth, verificationTokensAuth } from "@/server/db/schema";
+import { auth_accounts, auth_sessions, auth_users, auth_verification_token } from "@/server/db/schema";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
@@ -11,10 +11,10 @@ import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
     adapter: DrizzleAdapter(db, {
-        usersTable: usersAuth,
-        accountsTable: accountsAuth,
-        sessionsTable: sessionsAuth,
-        verificationTokensTable: verificationTokensAuth
+        usersTable: auth_users,
+        accountsTable: auth_accounts,
+        sessionsTable: auth_sessions,
+        verificationTokensTable: auth_verification_token
     }) as Adapter,
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
