@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const key = searchParams.get("key");
 
-  if (key !== process.env.CRON_KEY) {
+  if (key !== process.env.CRON_SECRET) {
     return new Response("Unauthorized", { status: 401 });
   }
 
