@@ -7,10 +7,10 @@ const MagicLink = z.string().email().min(1).max(255);
 
 export function _onSubmit(value: string) {
 
-    const attempt = new Promise((resolve, reject) => {
+    const attempt = new Promise(async (resolve, reject) => {
         try {
             MagicLink.parse(value);
-            const result = signIn('email', {email: value})
+            const result = await signIn('email', {email: value, redirect: false});
             resolve(result)
         } catch (error) {
             reject(error)

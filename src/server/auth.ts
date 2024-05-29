@@ -6,6 +6,7 @@ import { env } from "@/env";
 import { db } from "@/server/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { accountsAuth, sessionsAuth, usersAuth, verificationTokensAuth } from "@/server/db/schema";
+import emailForMagicLink from "@/server/auth/sendVerificiationRequestEmail";
 
 export const authOptions: NextAuthOptions = {
     adapter: DrizzleAdapter(db, {
@@ -30,6 +31,27 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             from: process.env.EMAIL_FROM,
+            sendVerificationRequest({identifier, url}) {
+                emailForMagicLink(identifier, url)
+            }
         }),
-    ]
+    ],
+    callbacks:{
+        async signIn({ user, account, profile, email, credentials }) {
+            console.log('signIn')
+            return true
+        },
+        async redirect({ url, baseUrl }) {
+            console.log('redirect')
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
+        async session({ session, user, token }) {
+            console.log('session')
+            return session
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+            console.log('jwt')
+            return token
+        }
+    }
 }
