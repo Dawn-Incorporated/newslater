@@ -3,15 +3,13 @@
 import { SignIn } from "@/app/(auth)/account/SignIn";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
-import { toast } from "sonner";
+import { Suspense } from "react";
 import { Input } from "@/components/ui/input"
 import { updateUser } from "@/server/db/action/usersActions";
 
 export default function Account() {
     const {data: session, status} = useSession()
-    const router = useRouter()
+    /*const router = useRouter()
     const searchParams = useSearchParams()
 
     useEffect(() => {
@@ -19,7 +17,9 @@ export default function Account() {
             toast.error(searchParams.get("error"))
             void router.push("/account")
         }
-    }, [router, searchParams]);
+    }, [router, searchParams]);*/
+
+    // TODO: remove searchParams due to build failure
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
