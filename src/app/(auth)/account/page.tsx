@@ -25,7 +25,7 @@ export default function Account() {
         event.preventDefault();
         const nameValue = (event.currentTarget.elements.namedItem('name') as HTMLInputElement)?.value;
 
-        if (session && typeof nameValue === 'string') {
+        if (session?.user?.email && typeof nameValue === 'string') {
             await updateUser(session.user.email, nameValue);
             window.location.reload()
         }
