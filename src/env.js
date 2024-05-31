@@ -26,7 +26,7 @@ export const env = createEnv({
     GITHUB_SECRET: z.string(),
     GOOGLE_ID: z.string(),
     GOOGLE_SECRET: z.string(),
-    RESEND_KEY: z.string().optional(),
+    RESEND_KEY: z.string(),
     CRON_SECRET: z.string(),
     EMAIL_SERVER_USER: z.string(),
     EMAIL_SERVER_PASSWORD: z.string(),

@@ -1,4 +1,4 @@
-import { integer, pgTable, primaryKey, text, timestamp, varchar, json } from "drizzle-orm/pg-core"
+import { integer, pgTable, primaryKey, text, timestamp, varchar, jsonb } from "drizzle-orm/pg-core"
 import { AdapterAccountType } from "@auth/core/adapters";
 
 
@@ -67,5 +67,5 @@ export const auth_verification_token = pgTable("auth_verification_token", {
 
 export const settings = pgTable("settings", {
     userId: text("user_id").notNull().references(() => auth_users.id, {onDelete: "cascade"}),
-    setting: json("setting").notNull(),
+    setting: jsonb("setting").notNull(),
 })

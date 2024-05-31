@@ -11,7 +11,7 @@ interface Publication {
     link: string;
 }
 
-export default function MailHTML(firstname: string, feeds: any[]) {
+export default function MailHTML(name: string, feeds: any[]) {
     return (
         <div>
             <div className="logo">
