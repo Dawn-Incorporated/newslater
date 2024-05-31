@@ -34,7 +34,6 @@ function Feeds({readFeed}: { readFeed: Function }) {
     const fetchFeeds = async () => {
         try {
             const response = await getFeed();
-            console.log(response)
             setFeeds(response);
         } catch (err: Error | any) {
             const error = err?.message || "Unknown error occurred.";

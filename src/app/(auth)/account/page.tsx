@@ -4,7 +4,7 @@ import { SignIn } from "@/app/(auth)/account/SignIn";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input"
 import { updateUser } from "@/server/db/action/usersActions";
@@ -31,32 +31,34 @@ export default function Account() {
         }
     };
 
-    if (status === 'authenticated') {
-        if (!session?.user?.name) {
-            return (
-                <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)]">
-                    <p className="text-center">
-                        You are signed in, but your account is not complete. Please complete your account.
-                    </p>
-                    <form className={ "flex gap-4 mt-5 " } onSubmit={ handleSubmit }>
-                        <Input type="text" placeholder={ "Name" } name="name"/>
-                        <Button type="submit">
-                            Save
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            {status === 'authenticated' ? (
+                !session?.user?.name ? (
+                    <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)]">
+                        <p className="text-center">
+                            You are signed in, but your account is not complete. Please complete your account.
+                        </p>
+                        <form className={ "flex gap-4 mt-5 " } onSubmit={ handleSubmit }>
+                            <Input type="text" placeholder={ "Name" } name="name"/>
+                            <Button type="submit">
+                                Save
+                            </Button>
+                        </form>
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)]">
+                        <p className="text-center">
+                            Hello { session.user?.name }
+                        </p>
+                        <Button onClick={ () => signOut() }>
+                            Sign out
                         </Button>
-                    </form>
-                </div>
-            )
-        }
-        return (
-            <div className="flex flex-col items-center justify-center h-[calc(100vh-5rem)]">
-                <p className="text-center">
-                    Hello { session.user?.name }
-                </p>
-                <Button onClick={ () => signOut() }>
-                    Sign out
-                </Button>
-            </div>
-        )
-    }
-    return <SignIn/>
+                    </div>
+                )
+            ) : (
+                <SignIn />
+            )}
+        </Suspense>
+    );
 }
