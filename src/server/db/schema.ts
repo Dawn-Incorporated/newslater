@@ -1,4 +1,4 @@
-import { integer, pgTable, primaryKey, text, timestamp, varchar, jsonb } from "drizzle-orm/pg-core"
+import { integer, pgTable, primaryKey, text, timestamp, varchar, jsonb, boolean } from "drizzle-orm/pg-core"
 import { AdapterAccountType } from "@auth/core/adapters";
 
 
@@ -9,6 +9,7 @@ export const feeds = pgTable("feeds", {
     website: varchar("website", {length: 255}),
     categorie: varchar("categorie", {length: 255}),
     date_added: timestamp("date_added"),
+    date_verified: timestamp("date_verified"),
 });
 
 export const follow = pgTable("follow", {

@@ -5,6 +5,8 @@ import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { getFeed } from "@/server/db/action/feedsActions";
+import { CheckCircledIcon } from '@radix-ui/react-icons'
+
 
 export default function FeedsList({readFeed}: { readFeed: Function }) {
     return (
@@ -54,6 +56,7 @@ function Feeds({readFeed}: { readFeed: Function }) {
 
     return feeds.map((feed: any) => {
         const firstChar = (feed.name || feed.url).charAt(0).toUpperCase();
+        const verified = feed.date_verified ? <CheckCircledIcon /> : '';
 
         return (
             <TabsTrigger
@@ -62,7 +65,7 @@ function Feeds({readFeed}: { readFeed: Function }) {
                 onClick={ () => readFeed(feed.url) }
                 value={ feed.url }
                 className="w-full block text-left text-ellipsis"
-            >{ feed.name || feed.url }</TabsTrigger>
+            ><span className={"flex flex-row gap-2 items-center"}>{ verified }{ feed.name || feed.url }</span></TabsTrigger>
         )
     });
 }
