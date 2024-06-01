@@ -4,11 +4,11 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Button } from "@/components/ui/button";
 import { ExternalLinkIcon, MinusIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
-import { checkFollowed } from "@/server/db/action/followActions";
+import { addFeed, checkFollowed, removeFeed } from "@/server/db/action/followActions";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-export default function FeedHeader({feed, url}: { feed: any, url: string | null}) {
+export default function FeedHeader({feed, url}: { feed: any, url: string | null }) {
     return feed && (
         <div className="flex md:flew-col flex-row justify-between">
             <h1 className="flex text-3xl font-bold">{ feed[0]?.websiteTitle || feed[0]?.websiteLink || "" }</h1>
@@ -21,7 +21,7 @@ export default function FeedHeader({feed, url}: { feed: any, url: string | null}
 }
 
 
-function FollowButton({link}: { link: string |null }) {
+function FollowButton({link}: { link: string | null }) {
     const {data: session, status} = useSession()
     const [followed, setFollowed] = useState(false)
 
@@ -29,6 +29,24 @@ function FollowButton({link}: { link: string |null }) {
         if (session?.user?.email) {
             const followed = await checkFollowed(session.user.email, url)
             setFollowed(followed.length > 0)
+        }
+    }
+
+    const addFeedToFollow = async (url: string) => {
+        if (session?.user?.email && url) {
+            const add = await addFeed(session.user.email, url)
+            if (add) {
+                setFollowed(true)
+            }
+        }
+    }
+
+    const removeFeedFromFollow = async (url: string) => {
+        if (session?.user?.email && url) {
+            const remove = await removeFeed(session.user.email, url)
+            if (remove) {
+                setFollowed(false)
+            }
         }
     }
 
@@ -44,19 +62,17 @@ function FollowButton({link}: { link: string |null }) {
             <Tooltip>
                 { status === 'authenticated' ?
                     <TooltipTrigger asChild>
-                        <Button>
-                            { followed ?
-                                <>
-                                    Unfollow
-                                    <MinusIcon size={ 24 } className="ml-2"/>
-                                </>
-                                :
-                                <>
-                                    Follow
-                                    <PlusIcon size={ 24 } className="ml-2"/>
-                                </>
-                            }
-                        </Button>
+                        { followed ?
+                            <Button onClick={ () => removeFeedFromFollow(link ?? '') }>
+                                Unfollow
+                                <MinusIcon size={ 24 } className="ml-2"/>
+                            </Button>
+                            :
+                            <Button onClick={ () => addFeedToFollow(link ?? '') }>
+                                Follow
+                                <PlusIcon size={ 24 } className="ml-2"/>
+                            </Button>
+                        }
                     </TooltipTrigger>
                     : '' }
                 <TooltipContent>
