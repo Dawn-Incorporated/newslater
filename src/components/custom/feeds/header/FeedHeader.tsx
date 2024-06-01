@@ -1,31 +1,64 @@
+'use client'
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { ExternalLinkIcon, PlusIcon } from "lucide-react";
+import { ExternalLinkIcon, MinusIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { checkFollowed } from "@/server/db/action/followActions";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-export default function FeedHeader({feed}: { feed: any }) {
+export default function FeedHeader({feed, url}: { feed: any, url: string | null}) {
     return feed && (
         <div className="flex md:flew-col flex-row justify-between">
             <h1 className="flex text-3xl font-bold">{ feed[0]?.websiteTitle || feed[0]?.websiteLink || "" }</h1>
             <div className="flex flex-row-reverse gap-4">
-                <FollowButton />
-                { feed[0]?.websiteLink && <WebsiteLink link={feed[0]?.websiteLink} /> }
+                <FollowButton link={ url }/>
+                { feed[0]?.websiteLink && <WebsiteLink link={ feed[0]?.websiteLink }/> }
             </div>
         </div>
     )
 }
 
 
-function FollowButton() {
+function FollowButton({link}: { link: string |null }) {
+    const {data: session, status} = useSession()
+    const [followed, setFollowed] = useState(false)
+
+    const isFollowed = async (url: string) => {
+        if (session?.user?.email) {
+            const followed = await checkFollowed(session.user.email, url)
+            setFollowed(followed.length > 0)
+        }
+    }
+
+    useEffect(() => {
+        if (status === 'authenticated' && link) {
+            isFollowed(link)
+        }
+    }, [link, status])
+
+
     return (
         <TooltipProvider>
             <Tooltip>
-                <TooltipTrigger asChild>
-                    <Button>
-                        Follow
-                        <PlusIcon size={ 24 } className="ml-2"/>
-                    </Button>
-                </TooltipTrigger>
+                { status === 'authenticated' ?
+                    <TooltipTrigger asChild>
+                        <Button>
+                            { followed ?
+                                <>
+                                    Unfollow
+                                    <MinusIcon size={ 24 } className="ml-2"/>
+                                </>
+                                :
+                                <>
+                                    Follow
+                                    <PlusIcon size={ 24 } className="ml-2"/>
+                                </>
+                            }
+                        </Button>
+                    </TooltipTrigger>
+                    : '' }
                 <TooltipContent>
                     You&apos;ll receive updates every day, on 6 a.m.
                 </TooltipContent>

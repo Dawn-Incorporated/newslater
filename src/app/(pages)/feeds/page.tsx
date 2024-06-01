@@ -11,8 +11,10 @@ import MobileFeedsList from "@/app/(pages)/feeds/MobileFeedsList";
 
 export default function PreviewFeeds() {
     const [feed, setFeed] = useState<any | null>(null);
+    const [url, setUrl] = useState<string | null>(null);
 
     const readFeed = async (url: string) => {
+        setUrl(url);
         try {
             if (!url) {
                 setFeed(null)
@@ -55,10 +57,10 @@ export default function PreviewFeeds() {
                                 </Breadcrumb>
                                 <h1 className="text-2xl font-bold">Feeds</h1>
                             </div>
-                            <div className={"max-sm:hidden"}>
+                            <div className={ "max-sm:hidden overflow-scroll" }>
                                 <FeedsList readFeed={ readFeed }/>
                             </div>
-                            <div className={"sm:hidden"}>
+                            <div className={ "sm:hidden" }>
                                 <MobileFeedsList readFeed={ readFeed }/>
                             </div>
                         </div>
@@ -67,7 +69,7 @@ export default function PreviewFeeds() {
                     <ResizablePanel defaultSize={ 75 }>
                         <div className="flex flex-col max-sm:w-full p-5 max-h-screen overflow-y-auto">
                             <Suspense fallback={ <p>Loading...</p> }>
-                                <FeedContent feed={ feed }/>
+                                <FeedContent feed={ feed } url={ url }/>
                             </Suspense>
                         </div>
                     </ResizablePanel>
@@ -77,7 +79,7 @@ export default function PreviewFeeds() {
     )
 }
 
-function FeedContent({feed}: { feed: any }) {
+function FeedContent({feed, url}: { feed: any, url: string | null }) {
     if (!feed) {
         return <h1 className="m-auto h-[calc(100vh-4rem)] flex items-center font-bold text-2xl animate-pulse">
             Select a feed to get started.
@@ -92,7 +94,7 @@ function FeedContent({feed}: { feed: any }) {
 
     return (
         <div className="flex flex-col gap-8">
-            <FeedHeader feed={ feed }/>
+            <FeedHeader feed={ feed } url={ url }/>
             { feed.map((item: any, index: number) => <FeedItem key={ index } item={ item }/>) }
         </div>
     )

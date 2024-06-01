@@ -23,7 +23,7 @@ export default function FeedPage({params}: { params: { feed: string } }) {
     return (
         <>
             <div className="mx-6 my-4">
-                <FeedHeader feed={ feed }/>
+                <FeedHeader feed={ feed } url={ url }/>
             </div>
         </>
     )
