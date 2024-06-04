@@ -20,7 +20,6 @@ export default function FeedsList({readFeed}: { readFeed: Function }) {
                     </TabsList>
                 </Tabs>
             </div>
-            <NameIndex/>
         </div>
     )
 }
@@ -55,35 +54,15 @@ function Feeds({readFeed}: { readFeed: Function }) {
     }
 
     return feeds.map((feed: any) => {
-        const firstChar = (feed.name || feed.url).charAt(0).toUpperCase();
         const verified = feed.date_verified ? <CheckCircledIcon /> : '';
 
         return (
             <TabsTrigger
                 key={ feed.url }
-                id={ /^[A-Z]$/.test(firstChar) ? firstChar : '#' }
                 onClick={ () => readFeed(feed.url) }
                 value={ feed.url }
                 className="w-full block text-left text-ellipsis"
             ><span className={"flex flex-row gap-2 items-center"}>{ verified }{ feed.name || feed.url }</span></TabsTrigger>
         )
     });
-}
-
-export function NameIndex() {
-    const scrollTo = (id: string) => {
-        const element = document.getElementById(id);
-        element?.scrollIntoView({behavior: 'smooth'});
-    }
-
-    return (
-        <>
-            <div className="flex flex-col justify-center items-center h-[85svh] fixed translate-x-4">
-                { 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((char) => (
-                    <Link key={ char } href="#" onClick={ () => scrollTo(char) }>{ char }</Link>
-                ))
-                }
-            </div>
-        </>
-    )
 }
