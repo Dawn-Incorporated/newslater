@@ -1,12 +1,7 @@
-import { auth } from "@/auth";
 import { retrieveFeed } from "@/server/services/rss-retriever";
-import { NextAuthRequest } from "next-auth/lib";
+import type { NextRequest } from "next/server";
 
-export const GET = auth(async function GET(request: NextAuthRequest) {
-    if (!request.auth) {
-        return new Response('Unauthorized', {status: 401})
-    }
-
+export async function GET(request: NextRequest) {
     const {searchParams} = new URL(request.url)
 
     const url = searchParams.get('url')
@@ -21,4 +16,4 @@ export const GET = auth(async function GET(request: NextAuthRequest) {
     } catch (error) {
         return new Response('An internal error occurred.', {status: 500})
     }
-})
+}
