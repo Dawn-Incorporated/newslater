@@ -21,7 +21,7 @@ export default function Preview() {
                 </Breadcrumb>
             </div>
             <div className={"flex flex-col w-2/3 max-sm:w-screen m-auto mt-10 mb-10 border-8 p-6 rounded-xl shadow-2xl h-screen-bt-spacing"}>
-                <iframe src={`/api/v1/user/preview?login=${login}`} className={"flex h-screen"}></iframe>
+                <iframe src={`/api/v1/user/preview`} className={"flex h-screen"}></iframe>
             </div>
         </main>
     );
