@@ -20,13 +20,13 @@ export default function Nav() {
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                     <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
-                        <h1 className="header">Newslater</h1>
+                        <h1 className="header">newslater.</h1>
                     </Link>
                     <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
-                        Home
+                        home
                     </Link>
                     <Link href="/feeds" className="text-muted-foreground transition-colors hover:text-foreground">
-                        Feeds
+                        feeds
                     </Link>
                 </nav>
                 <Sheet>
@@ -114,7 +114,7 @@ export function SearchBar() {
                     >
                         { value
                             ? feeds && feeds.find((feed: any) => feed.name === value)?.name || "Feed"
-                            : "Feed" }
+                            : "feed" }
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-[200px] p-0">
