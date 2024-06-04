@@ -149,7 +149,7 @@ export function QueryFeeds({value, setValue, setOpen, feeds, setFeeds}: { value:
 
     const fetchFeeds = async () => {
         try {
-            const response = await fetch(`/api/v1/feed/readAll`);
+            const response = await fetch(`/api/v1/feed`);
             const data = await response.json();
             setFeeds(data);
         } catch (err: Error | any) {
