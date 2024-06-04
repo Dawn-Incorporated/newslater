@@ -6,9 +6,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import DataTablePagination from "@/app/(pages)/admin/feeds/pagination";
+import DataTablePagination from "@/app/(pages)/admin/(root)/pagination";
 import { TrashIcon } from "lucide-react";
-import NewFeedForm from "@/app/(pages)/admin/feeds/NewFeedForm";
+import NewFeedForm from "@/app/(pages)/admin/(root)/NewFeedForm";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]

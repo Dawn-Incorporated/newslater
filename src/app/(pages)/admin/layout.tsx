@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const sidebarNavItems = [
     {
         title: "manage feeds",
-        href: "/admin/feeds"
+        href: "/admin"
     },
     {
         title: "manage accounts",

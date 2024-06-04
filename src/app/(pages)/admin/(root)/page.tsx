@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { DataTable } from "@/app/(pages)/admin/feeds/data-table";
-import { columns } from "@/app/(pages)/admin/feeds/columns";
+import { DataTable } from "@/app/(pages)/admin/(root)/data-table";
+import { columns } from "@/app/(pages)/admin/(root)/columns";
 import {getFeed} from "@/server/db/action/feedsActions";
 import { FeedType } from "@/server/db/types";
 
