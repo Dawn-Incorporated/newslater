@@ -4,45 +4,34 @@ import MailHTML from "@/server/services/html-generator";
 import { filter } from "@/server/services/rss-filter";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
 import { log } from "byarutils";
-import { NextAuthRequest } from "next-auth/lib";
-
-export const dynamic = 'force-dynamic'
 
 async function previewEmail(login: string) {
-    try {
-        // Récupération des utilisateurs
-        const users = await getUsersWithFeeds() as any[]
+    const users = await getUsersWithFeeds() as any[]
 
-        const user = users.find((user: { user_id: string; }) => user.user_id === login);
+    const user = users.find((user: { user_id: string; }) => user.user_id === login);
 
-        if (!user) {
-            return 'No feed found';
-        }
-
-        // Récupération des feeds de l'utilisateur depuis ses sources
-        let userFeeds = await retrieveFeeds(user.sources);
-
-        // Filtrage des feeds récupérés en fonction des préférences de l'utilisateur
-        let userFeedsFiltered = await filter(userFeeds, user.postlimit);
-
-        // Génération du mail pour l'utilisateur
-        return MailHTML(user.firstname, userFeedsFiltered);
-    } catch (error) {
-        log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
-        return 'An internal error occurred.';
+    if (!user) {
+        throw new Error('User not found.');
     }
+
+    let userFeeds = await retrieveFeeds(user.sources);
+
+    let userFeedsFiltered = await filter(userFeeds, user.postlimit);
+
+    return MailHTML(user.firstname, userFeedsFiltered);
 }
 
-export const GET = auth(async function GET(request: NextAuthRequest) {
-    if (!request.auth) {
+export const GET = auth(async function GET(request) {
+    if (!request.auth || !request.auth.user?.id) {
         return new Response('Unauthorized', {status: 401})
     }
 
-    const login = request.auth.user?.id;
-    if (login) {
-        const preview = await previewEmail(login);
+    try {
+        const preview = await previewEmail(request.auth.user?.id);
+        // @ts-ignore todo: fix this
         return new Response(preview, {status: 200, headers: {'Content-Type': 'text/html'}});
-        //return new Response('Preview is disabled', {status: 400});
+    } catch (error) {
+        log('ERROR', 'API — Preview Mail', 'An internal error occurred: ' + error);
+        return new Response('An internal error occurred.', {status: 500});
     }
-    return new Response('Please provide a login or invalid login', {status: 400});
 })
