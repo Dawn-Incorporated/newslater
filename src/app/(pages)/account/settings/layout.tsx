@@ -1,38 +1,44 @@
 "use client"
 
+import { SidebarNav } from "@/components/custom/general/SidebarNav";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
+const sidebarNavItems = [
+    {
+        title: "account",
+        href: "/account/settings"
+    },
+    {
+        title: "security",
+        href: "/account/settings/security"
+    },
+    {
+        title: "advanced",
+        href: "/account/settings/advanced"
+    }
+]
+
 export default function SettingsLayout({children}: { children: ReactNode }) {
     return (
-        <div className="flex min-h-screen w-full flex-col">
-            <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-                <div className="mx-auto grid w-full max-w-6xl gap-2">
-                    <h1 className="text-3xl font-semibold">settings.</h1>
+        <>
+            <div className="hidden space-y-6 p-10 pb-16 md:block">
+                <div className="space-y-0.5">
+                    <h2 className="text-2xl font-bold tracking-tight">settings.</h2>
+                    <p className="text-muted-foreground">
+                        manage your account, mail and privacy settings.
+                    </p>
                 </div>
-                <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-                    <nav className="grid gap-4 text-sm text-muted-foreground">
-                        <NavLink href={ "/account/settings" }>general</NavLink>
-                        <NavLink href={ "/account/settings/security" }>security</NavLink>
-                        <NavLink href={ "/account/settings/advanced" }>advanced</NavLink>
-                    </nav>
-                    <div className="grid gap-6">
-                        { children }
-                    </div>
+                <Separator className="my-6"/>
+                <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+                    <aside className="-mx-4 lg:w-1/5">
+                        <SidebarNav items={ sidebarNavItems }/>
+                    </aside>
+                    <div className="flex-1">{ children }</div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </>
     )
-}
-
-function NavLink({href, children}: { href: string, children: ReactNode }) {
-    const pathname = usePathname();
-
-    return (
-        <Link className={ pathname === href ? "font-semibold text-primary" : "" }
-              href={ href }>
-            { children }
-        </Link>
-    );
 }

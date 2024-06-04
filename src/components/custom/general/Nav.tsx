@@ -25,7 +25,7 @@ export default function Nav() {
                     <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
                         home
                     </Link>
-                    <Link href="/feeds" className="text-muted-foreground transition-colors hover:text-foreground">
+                    <Link href={ "/feeds" } className="text-muted-foreground transition-colors hover:text-foreground">
                         feeds
                     </Link>
                 </nav>
@@ -46,10 +46,10 @@ export default function Nav() {
                                 <h1 className="header">Newslater</h1>
                             </Link>
                             <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
-                                Home
+                                home
                             </Link>
-                            <Link href="/feeds" className="text-muted-foreground transition-colors hover:text-foreground">
-                                Feeds
+                            <Link href={ "/feeds" } className="text-muted-foreground transition-colors hover:text-foreground">
+                                feeds
                             </Link>
                         </nav>
                     </SheetContent>
@@ -75,9 +75,13 @@ export default function Nav() {
                                         Hello { session?.user?.name || "N/A" }
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator/>
-                                    <Link href="/account">
-                                        <DropdownMenuItem className="cursor-pointer">My Account</DropdownMenuItem>
+                                    <Link href={ "/account" }>
+                                        <DropdownMenuItem className="cursor-pointer">account</DropdownMenuItem>
                                     </Link>
+                                    <Link href={ "/account/settings" }>
+                                        <DropdownMenuItem className="cursor-pointer">settings</DropdownMenuItem>
+                                    </Link>
+                                    <DropdownMenuSeparator />
                                     <DropdownMenuItem
                                         className="cursor-pointer text-red-500"
                                         onClick={ () => signOut() }
@@ -85,7 +89,7 @@ export default function Nav() {
                                 </>
                             ) : (
 
-                                <Link href="/account">
+                                <Link href={ "/account" }>
                                     <DropdownMenuItem className="cursor-pointer">Sign in</DropdownMenuItem>
                                 </Link>
                             ) }
