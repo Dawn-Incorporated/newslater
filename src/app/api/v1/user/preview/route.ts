@@ -5,7 +5,6 @@ import { filter } from "@/server/services/rss-filter";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
 import { log } from "byarutils";
 import { NextAuthRequest } from "next-auth/lib";
-import { loadWebpackHook } from "next/dist/server/config-utils";
 
 export const dynamic = 'force-dynamic'
 
