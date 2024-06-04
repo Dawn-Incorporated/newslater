@@ -3,7 +3,7 @@ import { log } from "byarutils";
 import { env } from "@/env";
 import { ReactElement } from "react";
 
-const resend = new Resend(env.RESEND_KEY);
+const resend = new Resend(env.AUTH_RESEND_KEY);
 
 export async function send(to: string, subject: string, html: ReactElement) {
     const send = await resend.emails.send({

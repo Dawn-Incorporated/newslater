@@ -1,6 +1,5 @@
 'use client'
 
-import { _onSubmit } from "@/app/(auth)/account/magicLink";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,8 @@ import { Mail } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from "sonner";
+import { z } from "zod";
 
 export function SignIn() {
     const [email, setEmail] = useState<string>("")
@@ -55,9 +56,28 @@ export function SignIn() {
                     <CardFooter>
                         <Button className="gap-2 m-auto bg-muted-foreground"
                                 onClick={ () => {
-                                    _onSubmit(email)
+                                    toast.promise(new Promise(async (resolve, reject) => {
+                                        try {
+                                            const schemaMagicLink = z.string().email().min(1).max(255)
+                                            const valid = schemaMagicLink.safeParse(email)
+
+                                            if (!valid.success) {
+                                                reject(new Error('Invalid email'))
+                                            }
+
+                                            resolve(await signIn('resend', {email: email, redirect: false}))
+                                        } catch (error) {
+                                            reject(error)
+                                        }
+                                    }), {
+                                        loading: 'Sending magic link...',
+                                        success: 'Magic link sent!',
+                                        error: (e) => e.message || 'Failed to send magic link'
+                                    })
                                 } }
-                        ><Mail size={ "18" }/>Send link</Button>
+                        >
+                            <Mail size={ 18 }/>Send link
+                        </Button>
                     </CardFooter>
                 </Card>
             </div>
