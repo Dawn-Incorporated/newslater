@@ -1,5 +1,5 @@
 import { SignIn } from "@/app/(auth)/signin/page";
-import AccountIncomplete from "@/app/(pages)/account/account-incomplete";
+import { AccountIncompleteForm } from "@/app/(pages)/account/account-incomplete";
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +11,7 @@ export default async function Account() {
     }
 
     if (!session.user.name) {
-        return <AccountIncomplete/>
+        return <AccountIncompleteForm/>
     }
 
     return (

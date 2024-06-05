@@ -6,7 +6,7 @@ import { updateUser } from "@/server/db/action/usersActions";
 import { useSession } from "next-auth/react";
 import { FormEvent } from "react";
 
-export default function AccountIncompleteForm() {
+export function AccountIncompleteForm() {
     const {data: session} = useSession()
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
