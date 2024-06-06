@@ -1,11 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function Followed() {
+export default function Available() {
     return (
         <>
             <Card>
                 <CardHeader>
-                    <CardTitle>Followed</CardTitle>
+                    <CardTitle>Available</CardTitle>
                     <CardDescription>
 
                     </CardDescription>

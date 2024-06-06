@@ -42,7 +42,7 @@ export default function UserSettings({user, callback}: UserSettingsProps) {
         <>
             <Card>
                 <CardHeader>
-                    <CardTitle>Your info</CardTitle>
+                    <CardTitle>Account</CardTitle>
                     <CardDescription>
 
                     </CardDescription>
