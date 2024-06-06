@@ -1,4 +1,4 @@
-import { integer, pgTable, primaryKey, text, timestamp, varchar, jsonb, boolean } from "drizzle-orm/pg-core"
+import { integer, pgTable, primaryKey, text, timestamp, varchar, jsonb } from "drizzle-orm/pg-core"
 import { AdapterAccountType } from "@auth/core/adapters";
 
 
@@ -7,7 +7,7 @@ export const feeds = pgTable("feeds", {
     name: varchar("name", {length: 255}),
     description: varchar("description", {length: 255}),
     website: varchar("website", {length: 255}),
-    categorie: varchar("categorie", {length: 255}),
+    category: varchar("category", {length: 255}),
     date_added: timestamp("date_added"),
     date_verified: timestamp("date_verified"),
 });
@@ -28,6 +28,7 @@ export const auth_users = pgTable("auth_users", {
     email: text("email").notNull(),
     emailVerified: timestamp("email_verified", {mode: "date"}),
     image: text("image"),
+    settings: jsonb("settings")
 })
 
 export const auth_accounts = pgTable("auth_accounts", {
@@ -65,8 +66,3 @@ export const auth_verification_token = pgTable("auth_verification_token", {
         compoundKey: primaryKey({columns: [vt.identifier, vt.token]}),
     })
 )
-
-export const settings = pgTable("settings", {
-    userId: text("user_id").notNull().references(() => auth_users.id, {onDelete: "cascade"}),
-    setting: jsonb("setting").notNull(),
-})
