@@ -11,7 +11,7 @@ import { FaGoogle } from "react-icons/fa";
 import { toast } from "sonner";
 import { z } from "zod";
 
-export function SignIn() {
+export default function SignIn() {
     const [email, setEmail] = useState<string>("")
 
     return (

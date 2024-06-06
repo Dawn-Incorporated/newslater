@@ -1,4 +1,4 @@
-import { SignIn } from "@/app/(auth)/signin/page";
+import SignIn from "@/app/(auth)/signin/page";
 import { AccountIncompleteForm } from "@/app/(pages)/account/account-incomplete";
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import { SignIn } from "@/app/(auth)/signin/page";
+import SignIn from "@/app/(auth)/signin/page";
 import UserSettings, { schemaUserSettings } from "@/app/(pages)/account/settings/(root)/client";
 import { auth } from "@/auth";
 import { db } from "@/server/db";
