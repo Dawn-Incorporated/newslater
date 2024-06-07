@@ -29,3 +29,13 @@ export const getUsersWithFeeds = async () => {
     `);
 };
 
+export const getFeedsByUser = async (email: string) => {
+    return await db.execute(sql`
+        SELECT fe.url, fe.name, fe.description, fe.website, fe.category
+        FROM follow fo
+                 JOIN feeds fe ON fo.url = fe.url
+                 JOIN auth_users u ON fo.user_id = u.user_id
+        WHERE u.email = ${email}
+    `);
+};
+

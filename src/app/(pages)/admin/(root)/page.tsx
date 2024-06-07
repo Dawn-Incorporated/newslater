@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { DataTable } from "@/app/(pages)/admin/(root)/data-table";
-import { columns } from "@/app/(pages)/admin/(root)/columns";
+
 import {getFeed} from "@/server/db/action/feedsActions";
 import { FeedType } from "@/server/db/types";
+import { DataTable } from "@/app/(pages)/account/data-table";
+import { columns } from "@/app/(pages)/account/columns";
 
 
 export default function Feeds() {
@@ -13,6 +14,7 @@ export default function Feeds() {
     useEffect(() => {
         async function getFeeds() {
             const data = await getFeed();
+            console.log(data);
             setFeeds(data);
         }
         getFeeds();
