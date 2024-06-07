@@ -19,8 +19,8 @@ export const getUsersWithFeeds = async () => {
             u.name,
             u.email,
             JSON_AGG(fo.url) AS sources,
-            (SELECT setting ->> 'sendtime' FROM settings s WHERE s.user_id = u.user_id) AS sendtime,
-            (SELECT setting ->> 'postlimit' FROM settings s WHERE s.user_id = u.user_id) AS postlimit
+            u.settings ->> 'sendtime' AS sendtime,
+            u.settings ->> 'postlimit' as postlimit
         FROM
             follow fo
             JOIN feeds fe ON fo.url = fe.url
