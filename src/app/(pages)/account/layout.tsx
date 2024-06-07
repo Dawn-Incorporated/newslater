@@ -13,10 +13,6 @@ const sidebarNavItems = (isAdmin = false) => {
             href: "/account"
         },
         {
-            title: "available",
-            href: "/account/available"
-        },
-        {
             title: "preview",
             href: "/account/preview"
         },
