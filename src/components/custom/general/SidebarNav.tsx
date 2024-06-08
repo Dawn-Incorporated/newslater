@@ -46,11 +46,7 @@ export function SidebarNav({className, items, ...props}: SidebarNavProps) {
                     }}
                 >
                     <div className={"flew items-center"}>
-                        {hasChildren && (
-                            <button onClick={() => toggleExpand(item.href || item.title)}>
-                                {isExpanded ? <ChevronDown size={13}/> : <ChevronRight size={13}/>}
-                            </button>
-                        )}
+
                         {item.href ? (
                             <Link
                                 href={item.href}
@@ -68,11 +64,16 @@ export function SidebarNav({className, items, ...props}: SidebarNavProps) {
                             <div
                                 className={cn(
                                     buttonVariants({variant: 'ghost'}),
-                                    'justify-start hover:cursor-pointer'
+                                    'justify-start hover:cursor-pointer ml-4 gap-2'
                                 )}
                                 onClick={() => toggleExpand(item.href || item.title)}
                             >
                                 {item.title}
+                                {hasChildren && (
+                                    <button onClick={() => toggleExpand(item.href || item.title)}>
+                                        {isExpanded ? <ChevronDown size={13}/> : <ChevronRight size={13}/>}
+                                    </button>
+                                )}
                             </div>
                         )}
                     </div>
