@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/styles/globals.css";
 import NextAuthProvider from "@/app/context/NextAuthProvider";
+import { inter } from "@/components/fonts";
 import { Toaster } from "@/components/ui/sonner";
+import type { Metadata } from "next";
+import "@/styles/globals.css";
 import { ReactNode } from "react";
-
-const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
     title: "Newslater",
@@ -15,12 +13,12 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: ReactNode; }>) {
     return (
         <html lang="en">
-        <body className={inter.className}>
+        <body className={ inter.className }>
         <NextAuthProvider>
-            {children}
+            { children }
             <Toaster/>
         </NextAuthProvider>
-        <Toaster richColors={true}/>
+        <Toaster richColors={ true }/>
         </body>
         </html>
     );

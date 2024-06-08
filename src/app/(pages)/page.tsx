@@ -1,8 +1,7 @@
-import { Libre_Baskerville } from "next/font/google";
+import { libre_baskerville } from "@/components/fonts";
 import Image from "next/image";
 import gradient  from "public/logo-gradient.svg"
 
-const libre_baskerville = Libre_Baskerville({subsets: ["latin"], weight: "700"});
 
 export default function Home() {
     return (<>
