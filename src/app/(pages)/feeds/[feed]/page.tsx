@@ -1,5 +1,6 @@
 'use client'
 
+import FeedContent from "@/app/(pages)/feeds/FeedContent";
 import FeedHeader from "@/components/custom/feeds/header/FeedHeader";
 import { useEffect, useState } from "react";
 
@@ -25,6 +26,7 @@ export default function FeedPage({params}: { params: { feed: string } }) {
             <div className="mx-6 my-4">
                 <FeedHeader feed={ feed } url={ url }/>
             </div>
+            <FeedContent url={url} />
         </>
     )
 }

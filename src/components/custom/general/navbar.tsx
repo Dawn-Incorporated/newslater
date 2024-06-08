@@ -1,21 +1,18 @@
-'use client'
-
+import { auth } from "@/auth";
+import { SignoutButton } from "@/components/custom/general/signout-button";
+import { SearchBar } from "@/components/custom/nav-search-bar/search-bar";
 import { libre_baskerville } from "@/components/fonts";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { CircleUser, Menu, Search } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { signOut, useSession } from "next-auth/react";
-import { Suspense, useEffect, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { getFeed } from "@/server/db/action/feedsActions";
+import { CircleUser, Menu, Search } from "lucide-react";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 
-export default function Nav() {
-    const {data: session, status, update} = useSession()
+export default async function Navbar() {
+    const session = await auth();
 
     return (
         <div className="flex w-full flex-col">
@@ -60,7 +57,7 @@ export default function Nav() {
                     <form className="ml-auto flex-1 sm:flex-initial">
                         <div className="relative">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
-                            <SearchBar/>
+                            <SearchBarWithData/>
                         </div>
                     </form>
                     <DropdownMenu>
@@ -71,7 +68,7 @@ export default function Nav() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            { status === 'authenticated' ? (
+                            { session?.user ? (
                                 <>
                                     <DropdownMenuLabel>
                                         Hello { session?.user?.name || "N/A" }
@@ -83,11 +80,8 @@ export default function Nav() {
                                     <Link href={ "/account/settings" }>
                                         <DropdownMenuItem className="cursor-pointer">settings</DropdownMenuItem>
                                     </Link>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem
-                                        className="cursor-pointer text-red-500"
-                                        onClick={ () => signOut() }
-                                    >Sign out</DropdownMenuItem>
+                                    <DropdownMenuSeparator/>
+                                    <SignoutButton />
                                 </>
                             ) : (
 
@@ -103,89 +97,11 @@ export default function Nav() {
     );
 }
 
-export function SearchBar() {
-    const [feeds, setFeeds] = useState<any>(null);
-    const [open, setOpen] = useState<boolean>(false)
-    const [value, setValue] = useState("")
+async function SearchBarWithData() {
+    "use server"
+    const feeds = await getFeed();
 
     return (
-        <>
-            <Popover open={ open } onOpenChange={ setOpen }>
-                <PopoverTrigger asChild>
-                    <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={ open }
-                        className="pl-8 sm:min-w-[300px] md:min-w-[200px] lg:min-w-[100px]"
-                    >
-                        { value
-                            ? feeds && feeds.find((feed: any) => feed.name === value)?.name || "Feed"
-                            : "feed" }
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                    <Command>
-                        <CommandInput placeholder="Search feeds..." className="h-9"/>
-                        <CommandEmpty>No feed found.</CommandEmpty>
-                        <CommandGroup><CommandList>
-                            <Suspense fallback={ <CommandItem>Loading...</CommandItem> }>
-                                <QueryFeeds feeds={ feeds } setFeeds={ setFeeds } value={ value } setValue={ setValue } setOpen={ setOpen }/>
-                            </Suspense>
-                        </CommandList>
-                        </CommandGroup>
-                    </Command>
-                </PopoverContent>
-            </Popover>
-
-        </>
+        <SearchBar feeds_list={ feeds }/>
     )
-}
-
-/**
- * Get feeds from the server
- * To use with Suspense
- */
-export function QueryFeeds({value, setValue, setOpen, feeds, setFeeds}: { value: string, setValue: Function, setOpen: Function, feeds: any | null, setFeeds: Function }) {
-    const [error, setError] = useState<string | null>(null);
-    const router = useRouter()
-
-    useEffect(() => {
-        fetchFeeds();
-    }, []);
-
-    const fetchFeeds = async () => {
-        try {
-            const response = await fetch(`/api/v1/feed`);
-            const data = await response.json();
-            setFeeds(data);
-        } catch (err: Error | any) {
-            const error = err?.message || "Unknown error occurred.";
-            setError(error);
-            toast.error(`An error occurred.`, {
-                description: error
-            });
-        }
-    }
-
-    if (error) {
-        return <CommandItem disabled>An error occurred.</CommandItem>;
-    }
-
-    if (!feeds) {
-        return <CommandItem disabled>Loading...</CommandItem>;
-    }
-
-    return feeds.map((feed: any) => (
-        <CommandItem
-            key={ feed.url }
-            value={ feed.name }
-            onSelect={ (currentValue) => {
-                setValue(currentValue)
-                setOpen(false)
-                router.push(`/feeds/${ encodeURIComponent(feed.url) }`)
-            } }
-        >
-            { feed.name || feed.url }
-        </CommandItem>
-    ))
 }

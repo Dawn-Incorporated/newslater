@@ -29,6 +29,6 @@ function Header() {
 
 function UnderlayingGradient() {
     return (
-        <Image src={gradient} alt="Gradient" className="z-0 absolute bottom-0 left-0 w-full"/>
+        <Image src={gradient} alt="Gradient" className="z-0 fixed bottom-0 left-0 w-full"/>
     )
 }
