@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { TrashIcon } from "lucide-react";
 import NewFeedForm from "@/app/(pages)/admin/(root)/NewFeedForm";
-import DataTablePagination from "@/app/(pages)/account/pagination";
+import DataTablePagination from "@/components/data/pagination";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
