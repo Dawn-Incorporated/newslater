@@ -1,20 +1,23 @@
-import { getFeedsByUser } from "@/server/db/action/usersActions";
+import SettingsLayout from "@/app/(pages)/account/(authenticated)/layout";
+import { AuthenticatedAccountPage } from "@/app/(pages)/account/(authenticated)/root";
+import { AccountIncompleteForm } from "@/app/(pages)/account/(unauthenticated)/account-incomplete";
+import { SignIn } from "@/app/(pages)/account/(unauthenticated)/sign-in";
 import { auth } from "@/auth";
-import { DataTable } from "@/app/(pages)/account/data-table";
-import { columns } from "@/app/(pages)/account/columns";
-
 
 export default async function Followed() {
     const session = await auth()
-    let feeds: any[] = []
 
-    if (session?.user?.email) {
-        feeds = await getFeedsByUser(session?.user?.email)
+    if (!session?.user) {
+        return <SignIn/>
+    }
+
+    if (!session.user.name) {
+        return <AccountIncompleteForm/>
     }
 
     return (
-        <>
-            <DataTable columns={columns} data={feeds} />
-        </>
+        <SettingsLayout>
+            <AuthenticatedAccountPage email={ session.user.email }/>
+        </SettingsLayout>
     )
 }

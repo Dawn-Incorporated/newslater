@@ -1,5 +1,5 @@
-import SignIn from "@/app/(auth)/signin/page";
-import UserSettings, { schemaUserSettings } from "@/app/(pages)/account/settings/(root)/client";
+import SignIn from "@/app/(pages)/account/(unauthenticated)/page";
+import UserSettings, { schemaUserSettings } from "@/app/(pages)/account/(authenticated)/settings/(root)/client";
 import { auth } from "@/auth";
 import { db } from "@/server/db";
 import { auth_users } from "@/server/db/schema";

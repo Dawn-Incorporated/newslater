@@ -1,4 +1,4 @@
-import { MailPreview } from "@/app/(pages)/account/preview/server";
+import { MailPreview } from "@/app/(pages)/account/(authenticated)/preview/server";
 import { Suspense } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import {getFeed} from "@/server/db/action/feedsActions";
 import { FeedType } from "@/server/db/types";
-import { DataTable } from "@/app/(pages)/account/data-table";
+import { DataTable } from "@/components/data/data-table";
 import { columns } from "@/app/(pages)/account/columns";
 
 
