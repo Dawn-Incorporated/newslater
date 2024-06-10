@@ -8,7 +8,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { getFeed } from "@/server/db/action/feedsActions";
 import { CircleUser, Menu, Search } from "lucide-react";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 export default async function Navbar() {
@@ -20,12 +19,6 @@ export default async function Navbar() {
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                     <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
                         <h1 className={ cn(libre_baskerville.className, "header") }>newslater.</h1>
-                    </Link>
-                    <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
-                        home
-                    </Link>
-                    <Link href={ "/feeds" } className="text-muted-foreground transition-colors hover:text-foreground">
-                        feeds
                     </Link>
                 </nav>
                 <Sheet>
@@ -42,13 +35,7 @@ export default async function Navbar() {
                     <SheetContent side="left">
                         <nav className="grid gap-6 text-lg font-medium">
                             <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
-                                <h1 className="header">Newslater</h1>
-                            </Link>
-                            <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
-                                home
-                            </Link>
-                            <Link href={ "/feeds" } className="text-muted-foreground transition-colors hover:text-foreground">
-                                feeds
+                                <h1 className={ cn(libre_baskerville.className, "header") }>newslater.</h1>
                             </Link>
                         </nav>
                     </SheetContent>
@@ -81,7 +68,7 @@ export default async function Navbar() {
                                         <DropdownMenuItem className="cursor-pointer">settings</DropdownMenuItem>
                                     </Link>
                                     <DropdownMenuSeparator/>
-                                    <SignoutButton />
+                                    <SignoutButton/>
                                 </>
                             ) : (
 
