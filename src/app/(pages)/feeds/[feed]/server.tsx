@@ -14,12 +14,14 @@ import { cn } from "@/lib/utils";
 export async function FeedHeader({feed}: { feed: string }) {
     const data: FeedType = (await db.select().from(feeds).where(eq(feeds.url, decodeURIComponent(feed))))[0]
 
-    return data && (
+    const full_link = data.website?.includes("http") ? data.website : `https://${data.website}`
+
+    return (
         <div className="flex md:flew-col flex-row justify-between my-6">
             <h1 className={cn("flex text-4xl font-bold", libre_baskerville.className)}>{ data.name ?? data.url ?? "" }</h1>
-            <div className="flex flex-row-reverse gap-4">
+            <div className="flex flex-row gap-4">
+                <WebsiteLink link={ full_link }/>
                 <FollowButton link={ data.url }/>
-                <WebsiteLink link={ data.website! }/>
             </div>
         </div>
     )
