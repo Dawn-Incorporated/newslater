@@ -1,4 +1,4 @@
-import NextAuthProvider from "@/app/context/NextAuthProvider";
+import NextAuthProvider from "@/context/NextAuthProvider";
 import { inter } from "@/components/fonts";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
