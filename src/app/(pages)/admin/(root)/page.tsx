@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import {getFeed} from "@/server/db/action/feedsActions";
 import { FeedType } from "@/server/db/types";
 import { DataTable } from "@/components/data/data-table";
-import { columns } from "@/app/(pages)/account/columns";
+import { columnsFeed } from "@/columns/columns-feed";
 
 
 export default function Feeds() {
@@ -22,7 +22,7 @@ export default function Feeds() {
 
     return feeds && (
         <>
-            <DataTable columns={columns} data={feeds} />
+            <DataTable columns={columnsFeed} data={feeds} />
         </>
     );
 }

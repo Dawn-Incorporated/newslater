@@ -1,4 +1,4 @@
-import { FollowButton } from "@/components/custom/feeds/feed-followed-button";
+import { FollowButton } from "@/components/app/feeds/feed-followed-button";
 import { Button } from "@/components/ui/button";
 import { db } from "@/server/db";
 import { feeds } from "@/server/db/schema";
@@ -8,7 +8,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import { retrieveFeed } from "@/server/services/rss-retriever";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { libre_baskerville } from "@/components/fonts";
+import { libre_baskerville } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 export async function FeedHeader({feed}: { feed: string }) {

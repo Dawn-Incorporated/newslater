@@ -8,7 +8,7 @@ import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FeedType } from "@/server/db/types";
 
-export const columns: ColumnDef<FeedType>[] = [
+export const columnsFeed: ColumnDef<FeedType>[] = [
     {
         id: "select",
         header: ({table}) => (

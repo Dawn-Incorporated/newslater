@@ -18,9 +18,14 @@ export default async function Page() {
 
     user_id = session.user.id;
 
-    const user = (await db.select().from(auth_users).where(eq(auth_users.id, session.user?.id)))[0];
+   return <UserSettingsWrapper user_id={ user_id }/>
+}
+
+async function UserSettingsWrapper({user_id}: {user_id: string}) {
+    const user = (await db.select().from(auth_users).where(eq(auth_users.id, user_id)))[0];
 
     return <UserSettings user={ user } callback={editAccount}/>
+
 }
 
 async function editAccount(values: z.infer<typeof schemaUserSettings>) {

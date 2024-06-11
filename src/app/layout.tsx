@@ -1,5 +1,5 @@
-import NextAuthProvider from "@/app/context/NextAuthProvider";
-import { inter } from "@/components/fonts";
+import NextAuthProvider from "@/context/NextAuthProvider";
+import { inter } from "@/lib/fonts";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import "@/styles/globals.css";

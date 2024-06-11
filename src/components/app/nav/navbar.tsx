@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
-import { SignoutButton } from "@/components/custom/general/signout-button";
-import { SearchBar } from "@/components/custom/nav-search-bar/search-bar";
-import { libre_baskerville } from "@/components/fonts";
+import { SignoutButton } from "@/components/app/general/signout-button";
+import { SearchBar } from "@/components/app/nav/search-bar";
+import { libre_baskerville } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";

@@ -1,4 +1,4 @@
-import { libre_baskerville } from "@/components/fonts";
+import { libre_baskerville } from "@/lib/fonts";
 import Image from "next/image";
 import gradient  from "public/logo-gradient.svg"
 
