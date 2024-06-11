@@ -3,19 +3,9 @@ import { AuthenticatedAccountPage } from "@/app/(pages)/account/(authenticated)/
 import { AccountIncompleteForm } from "@/app/(pages)/account/(unauthenticated)/account-incomplete";
 import { SignIn } from "@/app/(pages)/account/(unauthenticated)/sign-in";
 import { auth } from "@/auth";
-import { Suspense } from "react";
+
 
 export default async function Followed() {
-    return (
-        <SettingsLayout>
-            <Suspense fallback={<p>Loading</p>}>
-                <MainElement/>
-            </Suspense>
-        </SettingsLayout>
-    )
-}
-
-async function MainElement() {
     const session = await auth()
 
     if (!session?.user) {
@@ -26,5 +16,10 @@ async function MainElement() {
         return <AccountIncompleteForm/>
     }
 
-    return <AuthenticatedAccountPage email={session.user.email}/>
+    return (
+        <SettingsLayout>
+            <AuthenticatedAccountPage email={session.user.email}/>
+        </SettingsLayout>
+    )
 }
+
