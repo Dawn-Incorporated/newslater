@@ -1,7 +1,34 @@
+import { libre_baskerville } from "@/components/fonts";
+import Image from "next/image";
+import gradient  from "public/logo-gradient.svg"
+
+
 export default function Home() {
-    return (
-        <main>
-            <h1 className="m-auto h-[calc(100vh-4rem)] flex justify-center text-center items-center font-bold text-2xl animate-pulse">Work in progress...</h1>
-        </main>
+    return (<>
+            <div className="z-1">
+                <Header/>
+            </div>
+            <UnderlayingGradient/>
+        </>
     );
+}
+
+function Header() {
+
+    return (
+        <div className="w-full mt-12">
+            <h1 className={ libre_baskerville.className + " text-4xl font-bold text-center" }>
+                newslater.
+            </h1>
+            <p className="text-center text-lg">
+                read the news. one day at a time.
+            </p>
+        </div>
+    )
+}
+
+function UnderlayingGradient() {
+    return (
+        <Image src={gradient} alt="Gradient" className="z-0 fixed bottom-0 left-0 w-full"/>
+    )
 }

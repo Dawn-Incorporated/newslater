@@ -1,69 +1,45 @@
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { send } from "@/server/config/mailer";
-import React, { ReactElement } from "react";
+import { Body, Button, Head, Html, Tailwind, Text } from "@react-email/components";
+import React from "react";
 
 export default async function emailForMagicLink(identifier: string, url: string) {
-    send(identifier, "Bienvenue sur Newslater.", HtmlElement(identifier, url))
+    void send(identifier, "Welcome to newslater.", ReactMail(identifier, url));
 }
 
-const HtmlElement = (identifier: string, url: string): ReactElement => {
+const ReactMail = (identifier: string, url: string) => {
     return (
-        <>
-            <div className="logo">
-                <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater" style={ {width: '200px'} }/>
-            </div>
-            <h1>YOUR LOGIN CODE FOR NEWSLATER.</h1>
-            <a href={ url } className="button">Login to Newslater.</a>
-            <p>This link will only be valid for the next 5 minutes. If the link does not work, try again</p>
-            <hr/>
-            <h4>Newslater.</h4>
-            <style>
-                { `
-                    .logo { 
-                        display: flex; 
-                        justify-content: center; 
-                        margin-bottom: 50px;
-                    }
-                    img { 
-                        max-width: 100%; 
-                        max-height: fit-content;
-                    }
-                    body { 
-                        background-color: transparent;
-                    }
-                    h1 { 
-                        display: flex; 
-                        justify-content: center; 
-                        font-size: 24px; 
-                        color: #333;
-                    }
-                    a.button { 
-                        display: block; 
-                        width: fit-content; 
-                        margin: auto;
-                        padding: 10px 20px; 
-                        text-decoration: none; 
-                        color: white; 
-                        background-color: #8DAB8A; 
-                        border-radius: 5px; 
-                        text-align: center;
-                        font-size: 16px;
-                        font-weight: 600;
-                    }
-                    p { 
-                        font-size: 14px; 
-                        color: #555; 
-                        text-align: center;
-                    }
-                    hr { 
-                        border: none; 
-                        border-top: 1px solid #6A6A6A; 
-                        margin: 20px 0;
-                    }
-                    h4 { 
-                        color: #6A6A6A;
-                    }
-                ` }
-            </style>
-        </>
-    );
+        <Html>
+            <Head/>
+            <Tailwind>
+                <Body className="flex flex-col items-center h-screen mx-3">
+                    <Card>
+                        <CardContent>
+                            <div className="flex flex-col">
+                                <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater" style={ {width: '200px'} }/>
+                                <h1 className="text-2xl font-bold">Your Magic Link</h1>
+                                <p>We are thrilled to welcome you. Click the button below to sign in to newslater.</p>
+                                <Button
+                                    className="bg-[#000000] rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
+                                    href={ url }
+                                >
+                                    Sign in to newslater.
+                                </Button>
+                            </div>
+                        </CardContent>
+                        <CardFooter className="flex flex-col gap-2 text-xs text-muted-foreground items-start">
+                            <Text className="text-[#666666] text-[12px] leading-[24px]">
+                                This invitation was intended for{ " " }
+                                <span className="text-black">{ identifier }</span>
+                                . If you
+                                were not expecting this invitation, you can ignore this email.
+                                This link will only be valid for the next 5 minutes.
+                                If the link does not work, please follow the below url: https://newslater.vercel.app/signin.
+                            </Text>
+                        </CardFooter>
+                    </Card>
+                </Body>
+            </Tailwind>
+        </Html>
+    )
 }

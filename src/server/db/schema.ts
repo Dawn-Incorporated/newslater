@@ -1,85 +1,68 @@
-import { integer, pgTable, primaryKey, text, time, timestamp, varchar } from "drizzle-orm/pg-core"
+import { integer, pgTable, primaryKey, text, timestamp, varchar, jsonb } from "drizzle-orm/pg-core"
 import { AdapterAccountType } from "@auth/core/adapters";
 
 
 export const feeds = pgTable("feeds", {
-	url: varchar("url", { length: 255 }).primaryKey().notNull(),
-	name: varchar("name", { length: 255 }),
-	description: varchar("description", { length: 255 }),
-	website: varchar("website", { length: 255 }),
-	categorie: varchar("categorie", { length: 255 }),
-});
-
-export const users = pgTable("users", {
-	login: varchar("login", { length: 255 }).primaryKey().notNull(),
-	password: varchar("password", { length: 255 }).notNull(),
-	lastname: varchar("lastname", { length: 255 }).notNull(),
-	firstname: varchar("firstname", { length: 255 }).notNull(),
-	mail: varchar("mail", { length: 255 }).notNull(),
-	sendtime: time("sendtime").default('06:00:00').notNull(),
-	postlimit: integer("postlimit").default(-1).notNull(),
+    url: varchar("url", {length: 255}).primaryKey().notNull(),
+    name: varchar("name", {length: 255}),
+    description: varchar("description", {length: 255}),
+    website: varchar("website", {length: 255}),
+    category: varchar("category", {length: 255}),
+    date_added: timestamp("date_added"),
+    date_verified: timestamp("date_verified"),
 });
 
 export const follow = pgTable("follow", {
-	login: varchar("login", { length: 255 }).notNull().references(() => users.login, { onDelete: "cascade", onUpdate: "cascade" } ),
-	url: varchar("url", { length: 255 }).notNull().references(() => feeds.url, { onDelete: "cascade", onUpdate: "cascade" } ),
-},
-(table) => {
-	return {
-		pk_follow: primaryKey({ columns: [table.login, table.url], name: "pk_follow"}),
-	}
-});
+        userId: varchar("user_id", {length: 255}).notNull().references(() => auth_users.id, {onDelete: "cascade", onUpdate: "cascade"}),
+        url: varchar("url", {length: 255}).notNull().references(() => feeds.url, {onDelete: "cascade", onUpdate: "cascade"}),
+    },
+    (table) => {
+        return {
+            pk_follow: primaryKey({columns: [table.userId, table.url], name: "pk_follow"}),
+        }
+    });
 
-export const usersAuth = pgTable("userAuth", {
-	id: text("id")
-		.primaryKey()
-		.$defaultFn(() => crypto.randomUUID()),
-	name: text("name"),
-	email: text("email").notNull(),
-	emailVerified: timestamp("emailVerified", { mode: "date" }),
-	image: text("image"),
+export const auth_users = pgTable("auth_users", {
+    id: text("user_id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    name: text("name"),
+    email: text("email").notNull(),
+    emailVerified: timestamp("email_verified", {mode: "date"}),
+    image: text("image"),
+    settings: jsonb("settings")
 })
 
-export const accountsAuth = pgTable(
-	"accountAuth",
-	{
-		userId: text("userId")
-			.notNull()
-			.references(() => usersAuth.id, { onDelete: "cascade" }),
-		type: text("type").$type<AdapterAccountType>().notNull(),
-		provider: text("provider").notNull(),
-		providerAccountId: text("providerAccountId").notNull(),
-		refresh_token: text("refresh_token"),
-		access_token: text("access_token"),
-		expires_at: integer("expires_at"),
-		token_type: text("token_type"),
-		scope: text("scope"),
-		id_token: text("id_token"),
-		session_state: text("session_state"),
-	},
-	(account) => ({
-		compoundKey: primaryKey({
-			columns: [account.provider, account.providerAccountId],
-		}),
-	})
+export const auth_accounts = pgTable("auth_accounts", {
+        userId: text("user_id").notNull().references(() => auth_users.id, {onDelete: "cascade"}),
+        type: text("type").$type<AdapterAccountType>().notNull(),
+        provider: text("provider").notNull(),
+        providerAccountId: text("provider_account_id").notNull(),
+        refresh_token: text("refresh_token"),
+        access_token: text("access_token"),
+        expires_at: integer("expires_at"),
+        token_type: text("token_type"),
+        scope: text("scope"),
+        id_token: text("id_token"),
+        session_state: text("session_state"),
+    },
+    (account) => ({
+        compoundKey: primaryKey({
+            columns: [account.provider, account.providerAccountId],
+        }),
+    })
 )
 
-export const sessionsAuth = pgTable("sessionAuth", {
-	sessionToken: text("sessionToken").primaryKey(),
-	userId: text("userId")
-		.notNull()
-		.references(() => usersAuth.id, { onDelete: "cascade" }),
-	expires: timestamp("expires", { mode: "date" }).notNull(),
+export const auth_sessions = pgTable("auth_sessions", {
+    sessionToken: text("session_token").primaryKey(),
+    userId: text("user_id").notNull().references(() => auth_users.id, {onDelete: "cascade"}),
+    expires: timestamp("expires", {mode: "date"}).notNull(),
 })
 
-export const verificationTokensAuth = pgTable(
-	"verificationTokenAuth",
-	{
-		identifier: text("identifier").notNull(),
-		token: text("token").notNull(),
-		expires: timestamp("expires", { mode: "date" }).notNull(),
-	},
-	(vt) => ({
-		compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-	})
+export const auth_verification_token = pgTable("auth_verification_token", {
+        identifier: text("user_id").notNull(),
+        token: text("token").notNull(),
+        expires: timestamp("expires", {mode: "date"}).notNull(),
+    },
+    (vt) => ({
+        compoundKey: primaryKey({columns: [vt.identifier, vt.token]}),
+    })
 )

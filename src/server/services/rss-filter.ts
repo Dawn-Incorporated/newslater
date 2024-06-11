@@ -9,7 +9,7 @@ import { log } from "byarutils";
  */
 export async function filter(userFeeds: any[], postLimit: number) {
     let filteredFeeds = [];
-
+    postLimit = Number(postLimit);
     try {
         // If the user wants to receive all the posts
         if (postLimit === -1) {

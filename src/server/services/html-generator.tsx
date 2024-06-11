@@ -1,4 +1,8 @@
 import React, { Fragment } from 'react';
+import { Img, Tailwind } from "@react-email/components";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { libre_baskerville } from "@/components/fonts";
 
 interface Publication {
     title: string;
@@ -11,34 +15,25 @@ interface Publication {
     link: string;
 }
 
-export default function MailHTML(firstname: string, feeds: any[]) {
+export default function MailHTML(name: string, feeds: any[]) {
     return (
-        <div>
-            <div className="logo">
-                <img src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater" style={{width: '200px'}}/>
+        <Tailwind>
+            <div>
+                <div className={"flex justify-center mb-12"}>
+                    <Img className={"w-[200px]"} src="https://i.ibb.co/c690ymG/newslater.png" alt="newslater"/>
+                </div>
+                {feeds.map((feed) => (
+                    (feed && feed.length > 0) ? (
+                        <>
+                            <h1 className={cn("flex justify-center text-3xl mb-5 font-bold", libre_baskerville.className)}>{feed[0].websiteTitle}</h1>
+                            <div className={"grid gap-6"} style={{gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))'}}>
+                                {makeFeed(feed)}
+                            </div>
+                        </>
+                    ) : null
+                ))}
             </div>
-            {feeds.map((feed) => (
-                (feed && feed.length > 0) ? (
-                    <>
-                        <h1>{feed[0].websiteTitle}</h1>
-                        {makeFeed(feed)}
-                    </>
-                ) : null
-            ))}
-            <style>
-                {`
-                    .logo { display: flex; justify-content: center; margin-bottom: 50px;}
-                    .hello {  display: flex; justify-content: center; margin-bottom: 20px;}
-                    body { background-color: transparent;}
-                    h2 { font-size: 24px; }
-                    h1 { display: flex; justify-content: center;}
-                    p, .subtitle { font-size: 16px; line-height: 1.5; color: #888; }
-                    a { text-decoration: none; color: #0077cc; }
-                    img { max-width: 100%; max-height: fit-content }
-                    .feed { padding: 1.5rem; margin-bottom: 20px; margin-inline: 5px; border-radius: 0.75rem; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.1); }
-                `}
-            </style>
-        </div>
+        </Tailwind>
     );
 };
 
@@ -46,12 +41,20 @@ function makeFeed(publications: Publication[]) {
     return (
         <>
             {publications.map((publication, index) => (
-                <div className="feed" key={index}>
-                    <h2>{publication.title}</h2>
-                    <div className="subtitle" key={index}>
-                        {makeSubtitles(publication)}
-                    </div>
-                    <p dangerouslySetInnerHTML={{__html: publication.content}}></p>
+                <div className={"mb-6 flex"} key={index}>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>{publication.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="mail-subtitle" key={index}>
+                                {makeSubtitles(publication)}
+                            </div>
+                        </CardContent>
+                        <CardFooter>
+                            <p className={"leading-6 text-neutral-600"} dangerouslySetInnerHTML={{__html: publication.content}}></p>
+                        </CardFooter>
+                    </Card>
                 </div>
             ))}
         </>
@@ -75,7 +78,7 @@ function makeSubtitles(publication: Publication): (string | JSX.Element)[] {
     }
     if (publication.websiteLink && publication.websiteTitle) {
         subtitles.push(
-            <a className="website" href={publication.websiteLink} key="websiteLink">
+            <a className={"no-underline text-blue-400"} href={publication.websiteLink} key="websiteLink">
                 {publication.websiteTitle}
             </a>
         );

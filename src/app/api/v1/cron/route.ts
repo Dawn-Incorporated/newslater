@@ -22,11 +22,11 @@ async function sendMail() {
       let userFeedsFiltered = await filter(userFeeds, user.postlimit);
 
       // Génération du mail pour l'utilisateur
-      let mailBody = MailHTML(user.firstname, userFeedsFiltered);
+      let mailBody = MailHTML(user.name, userFeedsFiltered);
 
       // Envoi du mail à l'utilisateur
       let mailResult = await send(
-        user.mail,
+        user.email,
         "Start your day with newslater.",
         mailBody
       );
