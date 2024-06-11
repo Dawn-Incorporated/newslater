@@ -1,4 +1,4 @@
-import { columns } from "@/columns/columns";
+import { columnsFeed } from "@/columns/columns-feed";
 import { DataTable } from "@/components/data/data-table";
 import { getFeedsByUser } from "@/server/db/action/usersActions";
 
@@ -7,7 +7,7 @@ export async function AuthenticatedAccountPage({email}: { email: string | null |
 
     return (
         <>
-            <DataTable columns={ columns } data={ feeds }/>
+            <DataTable columns={ columnsFeed } data={ feeds }/>
         </>
     )
 }
