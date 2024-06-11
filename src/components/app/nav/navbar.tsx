@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { SignoutButton } from "@/components/app/general/signout-button";
-import { SearchBar } from "@/components/app/nav-search-bar/search-bar";
+import { SearchBar } from "@/components/app/nav/search-bar";
 import { libre_baskerville } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -17,7 +17,7 @@ export default async function Navbar() {
         <div className="flex w-full flex-col">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-                    <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
+                    <Link href="/public" className="flex items-center gap-2 text-lg font-semibold md:text-base">
                         <h1 className={ cn(libre_baskerville.className, "header") }>newslater.</h1>
                     </Link>
                 </nav>
@@ -34,7 +34,7 @@ export default async function Navbar() {
                     </SheetTrigger>
                     <SheetContent side="left">
                         <nav className="grid gap-6 text-lg font-medium">
-                            <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
+                            <Link href="/public" className="flex items-center gap-2 text-lg font-semibold md:text-base">
                                 <h1 className={ cn(libre_baskerville.className, "header") }>newslater.</h1>
                             </Link>
                         </nav>

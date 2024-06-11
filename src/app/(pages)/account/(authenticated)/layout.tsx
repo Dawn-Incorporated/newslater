@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { SideNavbar } from "@/components/app/general/side-navbar";
+import { SideNavbar } from "@/components/app/nav/side-navbar";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/server/db";
 import { auth_users } from "@/server/db/schema";
