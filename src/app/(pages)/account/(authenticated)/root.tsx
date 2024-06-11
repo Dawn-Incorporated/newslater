@@ -1,4 +1,4 @@
-import { columns } from "@/app/(pages)/account/columns";
+import { columns } from "@/columns/columns";
 import { DataTable } from "@/components/data/data-table";
 import { getFeedsByUser } from "@/server/db/action/usersActions";
 
