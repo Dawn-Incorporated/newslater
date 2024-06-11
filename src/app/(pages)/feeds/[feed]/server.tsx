@@ -1,4 +1,4 @@
-import { FollowButton } from "@/components/custom/feeds/feed-followed-button";
+import { FollowButton } from "@/components/app/feeds/feed-followed-button";
 import { Button } from "@/components/ui/button";
 import { db } from "@/server/db";
 import { feeds } from "@/server/db/schema";

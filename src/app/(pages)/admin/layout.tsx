@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { Separator } from "@/components/ui/separator";
-import { SidebarNav } from "@/components/custom/general/SidebarNav";
+import { SidebarNav } from "@/components/app/general/SidebarNav";
 
 export const metadata: Metadata = {
     title: "newslater | Admin Panel",

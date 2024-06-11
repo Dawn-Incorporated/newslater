@@ -6,6 +6,7 @@ import { addFeed, checkFollowed, removeFeed } from "@/server/db/action/followAct
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { revalidatePath } from "next/cache";
 
 export function FollowButton({link}: { link: string | null }) {
     const {data: session, status} = useSession()
@@ -23,6 +24,7 @@ export function FollowButton({link}: { link: string | null }) {
             const add = await addFeed(session.user.email, url)
             if (add) {
                 setFollowed(true)
+                revalidatePath("/")
             }
         }
     }
@@ -32,6 +34,7 @@ export function FollowButton({link}: { link: string | null }) {
             const remove = await removeFeed(session.user.email, url)
             if (remove) {
                 setFollowed(false)
+                revalidatePath("/")
             }
         }
     }
