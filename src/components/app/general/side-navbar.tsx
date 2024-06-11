@@ -21,7 +21,7 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
     }[]
 }
 
-export function SidebarNav({className, items, ...props}: SidebarNavProps) {
+export function SideNavbar({className, items, ...props}: SidebarNavProps) {
     const pathname = usePathname();
     const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean}>({});
 
@@ -55,7 +55,7 @@ export function SidebarNav({className, items, ...props}: SidebarNavProps) {
                                     pathname === item.href
                                         ? 'bg-muted hover:bg-muted'
                                         : 'hover:bg-transparent hover:underline',
-                                    'justify-start ml-4'
+                                    'justify-start ml-4 w-[70%]'
                                 )}
                             >
                                 {item.title}
@@ -64,7 +64,7 @@ export function SidebarNav({className, items, ...props}: SidebarNavProps) {
                             <div
                                 className={cn(
                                     buttonVariants({variant: 'ghost'}),
-                                    'justify-start hover:cursor-pointer ml-4 gap-2'
+                                    'justify-start hover:cursor-pointer ml-4 gap-2 w-[70%]'
                                 )}
                                 onClick={() => toggleExpand(item.href || item.title)}
                             >

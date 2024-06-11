@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { SidebarNav } from "@/components/app/general/SidebarNav";
+import { SideNavbar } from "@/components/app/general/side-navbar";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/server/db";
 import { auth_users } from "@/server/db/schema";
@@ -69,7 +69,7 @@ export default async function SettingsLayout({children}: { children: ReactNode }
                 <Separator className="my-6"/>
                 <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
                     <aside className="-mx-4 lg:w-1/5">
-                        <SidebarNav items={ sidebarNavItems(isAdmin) }/>
+                        <SideNavbar items={ sidebarNavItems(isAdmin) }/>
                     </aside>
                     <div className="flex-1">{ children }</div>
                 </div>
