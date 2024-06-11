@@ -8,7 +8,7 @@ import Resend from "next-auth/providers/resend"
 export default {
     providers: [
         Resend({
-            server: env.EMAIL_HOST,
+            server: env.AUTH_RESEND_KEY,
             from: env.EMAIL_FROM,
             sendVerificationRequest({identifier, url}) {
                 void emailForMagicLink(identifier, url)
