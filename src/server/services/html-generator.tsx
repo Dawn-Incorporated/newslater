@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Img, Tailwind } from "@react-email/components";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { libre_baskerville } from "@/components/fonts";
+import { libre_baskerville } from "@/lib/fonts";
 
 interface Publication {
     title: string;

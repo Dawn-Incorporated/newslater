@@ -8,7 +8,7 @@ import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import { retrieveFeed } from "@/server/services/rss-retriever";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { libre_baskerville } from "@/components/fonts";
+import { libre_baskerville } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 export async function FeedHeader({feed}: { feed: string }) {
