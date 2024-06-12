@@ -5,6 +5,7 @@ import { db } from "@/server/db";
 import { auth_users } from "@/server/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { ReactNode } from "react";
+import SignedInSecurity from "@/context/SignedInSecurity";
 
 const sidebarNavItems = (isAdmin = false) => {
     const items = [
@@ -47,15 +48,7 @@ const sidebarNavItems = (isAdmin = false) => {
 export default async function SettingsLayout({children}: { children: ReactNode }) {
     const session = await auth()
     const name = session?.user?.name
-    let isAdmin: boolean = false
-
-    if (session?.user?.email) {
-        const userSettings = await db
-            .select({isAdmin: sql`settings->>'isAdmin'`})
-            .from(auth_users)
-            .where(eq(auth_users.email, session?.user?.email));
-        isAdmin = userSettings[0]?.isAdmin === '1';
-    }
+    let isAdmin: boolean = session?.user?.settings.isAdmin ?? false
 
     return (
         <>

@@ -7,10 +7,10 @@ export default function FeedDetail({params}: {params: {feed: string}}) {
 
     return (
         <div className="mx-12 my-4">
-            <Suspense fallback={ <Skeleton className="h-16 w-full"/> }>
+            <Suspense fallback={<Skeleton className="h-16 w-full"/>}>
                 <FeedHeader feed={feed}/>
             </Suspense>
-            <Suspense fallback={ <Skeleton className="h-52 w-full"/> }>
+            <Suspense fallback={<Skeleton className="h-52 w-full"/>}>
                 <FeedContent url={feed}/>
             </Suspense>
         </div>
