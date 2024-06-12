@@ -3,7 +3,14 @@ import { SignoutButton } from "@/components/app/general/signout-button";
 import { SearchBar } from "@/components/app/nav/search-bar";
 import { libre_baskerville } from "@/lib/fonts";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { getFeed } from "@/server/db/action/feedsActions";
@@ -16,9 +23,10 @@ export default async function Navbar() {
     return (
         <div className="flex w-full flex-col">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-                <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+                <nav
+                    className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                     <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
-                        <h1 className={ cn(libre_baskerville.className, "header") }>newslater.</h1>
+                        <h1 className={cn(libre_baskerville.className, "header")}>newslater.</h1>
                     </Link>
                 </nav>
                 <Sheet>
@@ -35,7 +43,7 @@ export default async function Navbar() {
                     <SheetContent side="left">
                         <nav className="grid gap-6 text-lg font-medium">
                             <Link href="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
-                                <h1 className={ cn(libre_baskerville.className, "header") }>newslater.</h1>
+                                <h1 className={cn(libre_baskerville.className, "header")}>newslater.</h1>
                             </Link>
                         </nav>
                     </SheetContent>
@@ -55,16 +63,16 @@ export default async function Navbar() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            { session?.user ? (
+                            {session?.user ? (
                                 <>
                                     <DropdownMenuLabel>
-                                        Hello { session?.user?.name || "N/A" }
+                                        Hello {session?.user?.name || "N/A"}
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator/>
-                                    <Link href={ "/account" }>
+                                    <Link href={"/account"}>
                                         <DropdownMenuItem className="cursor-pointer">account</DropdownMenuItem>
                                     </Link>
-                                    <Link href={ "/account/settings" }>
+                                    <Link href={"/account/settings"}>
                                         <DropdownMenuItem className="cursor-pointer">settings</DropdownMenuItem>
                                     </Link>
                                     <DropdownMenuSeparator/>
@@ -72,10 +80,10 @@ export default async function Navbar() {
                                 </>
                             ) : (
 
-                                <Link href={ "/account" }>
+                                <Link href={"/account"}>
                                     <DropdownMenuItem className="cursor-pointer">Sign in</DropdownMenuItem>
                                 </Link>
-                            ) }
+                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
@@ -89,6 +97,6 @@ async function SearchBarWithData() {
     const feeds = await getFeed();
 
     return (
-        <SearchBar feeds_list={ feeds }/>
+        <SearchBar feeds_list={feeds}/>
     )
 }

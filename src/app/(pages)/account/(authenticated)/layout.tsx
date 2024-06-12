@@ -51,7 +51,7 @@ export default async function SettingsLayout({children}: { children: ReactNode }
     let isAdmin: boolean = session?.user?.settings.isAdmin ?? false
 
     return (
-        <>
+        <SignedInSecurity>
             <div className="space-y-6 p-10 pb-16">
                 <div className="space-y-0.5">
                     <h2 className="text-2xl font-bold tracking-tight">hello, { name }.</h2>
@@ -67,6 +67,6 @@ export default async function SettingsLayout({children}: { children: ReactNode }
                     <div className="flex-1">{ children }</div>
                 </div>
             </div>
-        </>
+        </SignedInSecurity>
     )
 }

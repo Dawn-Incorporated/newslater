@@ -1,4 +1,3 @@
-import { SignIn } from "@/app/(pages)/account/(unauthenticated)/sign-in";
 import UserSettings, { schemaUserSettings } from "@/app/(pages)/account/(authenticated)/settings/(root)/client";
 import { auth } from "@/auth";
 import { db } from "@/server/db";
@@ -7,6 +6,7 @@ import { log } from "byarutils";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { SignIn } from "@/app/(pages)/account/(unauthenticated)/sign-in";
 
 let user_id = "";
 export default async function Page() {
