@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { getUsersWithFeeds } from "@/server/db/action/usersActions";
-import MailHTML from "@/server/services/html-generator";
+import { WrappedForPreview } from "@/server/services/html-generator";
 import { filter } from "@/server/services/rss-filter";
 import { retrieveFeeds } from "@/server/services/rss-retriever";
 import { log } from "byarutils";
@@ -17,7 +17,7 @@ async function previewEmail(login: string) {
 
         let userFeedsFiltered = await filter(userFeeds, user.postlimit);
 
-        return MailHTML(user.firstname, userFeedsFiltered);
+        return WrappedForPreview(user.firstname, userFeedsFiltered);
     } catch (error) {
         log('ERROR', 'Main Service', 'An internal error occurred: ' + error);
         return (
