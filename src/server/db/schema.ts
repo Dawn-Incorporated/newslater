@@ -29,7 +29,6 @@ export const auth_users = pgTable("auth_users", {
     emailVerified: timestamp("email_verified", {mode: "date"}),
     image: text("image"),
     settings: jsonb("settings").default({
-        "isAdmin": 0,
         "sendtime": "06:00:00",
         "postlimit": "-1"
     }).notNull(),
