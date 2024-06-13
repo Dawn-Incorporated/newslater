@@ -8,7 +8,8 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { unfollowFeed } from "@/server/db/action/followActions";
 import { toast } from "sonner";
-import { deleteFeed, verifyFeed } from "@/server/db/action/feedsActions";
+import { deleteFeed, editFeed, verifyFeed } from "@/server/db/action/feedsActions";
+import EditFeedForm from "@/app/(pages)/admin/(root)/EditFeedForm";
 
 export function ActionsCell({row}: any) {
 	const feedURL = row.original.url;
@@ -18,6 +19,29 @@ export function ActionsCell({row}: any) {
 	const handleOpenFeed = () => {
 		router.push(`/feeds/${ encodeURIComponent(feedURL) }`);
 	};
+
+	const handleVerifyFeed = async () => {
+		if (session?.user?.email && feedURL) {
+			const verified = await verifyFeed(feedURL)
+			if (verified) {
+				router.refresh()
+				return toast.success("Feed verified")
+			}
+			return toast.error("Failed to verify feed")
+		}
+	}
+
+
+	const handleEditFeed = async () => {
+		if (session?.user?.email && feedURL) {
+			const edited = await editFeed(feedURL)
+			if (edited) {
+				router.refresh()
+				return toast.success("Feed verified")
+			}
+			return toast.error("Failed to verify feed")
+		}
+	}
 
 	const handleDeleteFeed = async () => {
 		if (session?.user?.email && feedURL) {
@@ -31,16 +55,6 @@ export function ActionsCell({row}: any) {
 
 	}
 
-	const handleVerifyFeed = async () => {
-		if (session?.user?.email && feedURL) {
-			const verified = await verifyFeed(feedURL)
-			if (verified) {
-				router.refresh()
-				return toast.success("Feed verified")
-			}
-			return toast.error("Failed to verify feed")
-		}
-	}
 
 	const handleUnfollowFeed = async () => {
 		if (session?.user?.email && feedURL) {
@@ -72,6 +86,10 @@ export function ActionsCell({row}: any) {
 							<DropdownMenuItem onClick={ handleVerifyFeed }>
 								Verify
 							</DropdownMenuItem>
+							<DropdownMenuItem onClick={ handleEditFeed }>
+								<EditFeedForm/>
+							</DropdownMenuItem>
+							<DropdownMenuSeparator/>
 							<DropdownMenuItem onClick={ handleDeleteFeed }>
 								Delete
 							</DropdownMenuItem>

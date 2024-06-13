@@ -18,6 +18,10 @@ export const verifyFeed = async (url: string) => {
     return await db.update(feeds).set({date_verified: new Date()}).where(eq(feeds.url, url))
 }
 
+export const editFeed = async (feed: FeedType) => {
+    return await db.update(feeds).set(feed).where(eq(feeds.url, feed.url))
+}
+
 export const deleteFeed = async (url: string) => {
     return await db.delete(feeds).where(eq(feeds.url, url))
 }
