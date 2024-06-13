@@ -14,7 +14,6 @@ export default function Feeds() {
     useEffect(() => {
         async function getFeeds() {
             const data = await getFeed();
-            console.log(data);
             setFeeds(data);
         }
         getFeeds();
