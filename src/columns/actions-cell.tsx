@@ -6,13 +6,26 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import React from "react";
 
-export function ActionsCell({row, handleUnfollowFeed, handleVerifyFeed, handleDeleteFeed}: any) {
+export function ActionsCell({row}: any) {
 	const feed = row.original;
 	const router = useRouter();
 
 	const handleOpenFeed = () => {
 		router.push(`/feeds/${encodeURIComponent(feed.url)}`);
 	};
+
+	const handleDeleteFeed = (row: any) => {
+		console.log("Deleting feed", row);
+
+	}
+
+	const handleVerifyFeed = (row: any) => {
+		console.log("Verifying feed", row);
+	}
+
+	const handleUnfollowFeed = (row: any) => {
+		console.log("Unfollowing feed", row);
+	}
 
 	return (
 		<DropdownMenu>
