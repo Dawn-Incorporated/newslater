@@ -42,6 +42,18 @@ export const columnsFeed: ColumnDef<FeedType>[] = [
 		)
 	},
 	{
+		accessorKey: "verified",
+		header: ({column}) => (
+			<Button
+				variant="ghost"
+				onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+			>
+				Verified
+				<ArrowUpDown className="ml-2 h-4 w-4"/>
+			</Button>
+		)
+	},
+	{
 		accessorKey: "description",
 		header: "Description"
 	},
@@ -50,7 +62,7 @@ export const columnsFeed: ColumnDef<FeedType>[] = [
 		header: "URL",
 	},
 	{
-		accessorKey: "categorie",
+		accessorKey: "category",
 		header: ({column}) => (
 			<Button
 				variant="ghost"

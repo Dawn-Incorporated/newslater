@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { addFeed, checkFollowed, removeFeed } from "@/server/db/action/followActions";
+import { followFeed, checkFollowed, unfollowFeed } from "@/server/db/action/followActions";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { revalidatePath } from "next/cache";
+import { toast } from "sonner";
 
 export function FollowButton({link}: { link: string | null }) {
     const {data: session, status} = useSession()
@@ -21,21 +21,23 @@ export function FollowButton({link}: { link: string | null }) {
 
     const addFeedToFollow = async (url: string) => {
         if (session?.user?.email && url) {
-            const add = await addFeed(session.user.email, url)
+            const add = await followFeed(session.user.email, url)
             if (add) {
                 setFollowed(true)
-                revalidatePath("/")
+                return toast.success("Feed followed")
             }
+            return toast.error("Failed to follow feed")
         }
     }
 
     const removeFeedFromFollow = async (url: string) => {
         if (session?.user?.email && url) {
-            const remove = await removeFeed(session.user.email, url)
+            const remove = await unfollowFeed(session.user.email, url)
             if (remove) {
                 setFollowed(false)
-                revalidatePath("/")
+                return toast.success("Feed unfollowed")
             }
+            return toast.error("Failed to unfollow feed")
         }
     }
 

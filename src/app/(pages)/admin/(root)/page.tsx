@@ -14,7 +14,13 @@ export default function Feeds() {
     useEffect(() => {
         async function getFeeds() {
             const data = await getFeed();
-            setFeeds(data);
+            const feeds = data.map((feed: FeedType) => {
+                return {
+                    ...feed,
+                    verified: feed.date_verified ? "Y" : "N"
+                }
+            })
+            setFeeds(feeds);
         }
         getFeeds();
     }, []);

@@ -17,12 +17,12 @@ export const checkFollowed = async (email: string, url: string) => {
             ))
 }
 
-export const addFeed = async (email: string, url: string) => {
+export const followFeed = async (email: string, url: string) => {
     const userId = await db.select({id: auth_users.id}).from(auth_users).where(eq(auth_users.email, email))
     return await db.insert(follow).values({userId: userId[0].id, url: url})
 }
 
-export const removeFeed = async (email: string, url: string) => {
+export const unfollowFeed = async (email: string, url: string) => {
     const userId = await db.select({id: auth_users.id}).from(auth_users).where(eq(auth_users.email, email))
     return await db.delete(follow).where(
         and(
