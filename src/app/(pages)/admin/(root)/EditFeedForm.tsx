@@ -62,11 +62,8 @@ export default function EditFeedForm() {
 
 	return (
 		<Dialog>
-			<DialogTrigger asChild>
-				<Button size="sm"
-						className={ "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 bg-white text-black shadow-none hover:bg-transparent bg-transparent p-0 font-normal" }>
-					Edit feed
-				</Button>
+			<DialogTrigger>
+					<Button variant="ghost">Edit feed</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>

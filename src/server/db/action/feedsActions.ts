@@ -4,6 +4,7 @@ import {feeds} from "@/server/db/schema";
 import {db} from "@/server/db";
 import { FeedType } from "@/server/db/types";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 
 export const getFeed = async () => {
@@ -16,6 +17,9 @@ export const addFeed = async (feed: FeedType) => {
 
 export const verifyFeed = async (url: string) => {
     return await db.update(feeds).set({date_verified: new Date()}).where(eq(feeds.url, url))
+        .finally(() => {
+            revalidatePath("/admin")
+        })
 }
 
 export const editFeed = async (feed: FeedType) => {

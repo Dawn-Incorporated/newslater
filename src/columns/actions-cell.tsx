@@ -10,6 +10,7 @@ import { unfollowFeed } from "@/server/db/action/followActions";
 import { toast } from "sonner";
 import { deleteFeed, editFeed, verifyFeed } from "@/server/db/action/feedsActions";
 import EditFeedForm from "@/app/(pages)/admin/(root)/EditFeedForm";
+import { revalidatePath } from "next/cache";
 
 export function ActionsCell({row}: any) {
 	const feedURL = row.original.url;
@@ -24,7 +25,6 @@ export function ActionsCell({row}: any) {
 		if (session?.user?.email && feedURL) {
 			const verified = await verifyFeed(feedURL)
 			if (verified) {
-				router.refresh()
 				return toast.success("Feed verified")
 			}
 			return toast.error("Failed to verify feed")
@@ -83,10 +83,12 @@ export function ActionsCell({row}: any) {
 				{ usePathname().includes("/admin") ?
 					(
 						<>
-							<DropdownMenuItem onClick={ handleVerifyFeed }>
-								Verify
-							</DropdownMenuItem>
-							<DropdownMenuItem onClick={ handleEditFeed }>
+							{ row.original.verified === "Y" ? null :
+								<DropdownMenuItem onClick={ handleVerifyFeed }>
+									Verify
+								</DropdownMenuItem>
+							}
+							<DropdownMenuItem asChild>
 								<EditFeedForm/>
 							</DropdownMenuItem>
 							<DropdownMenuSeparator/>
