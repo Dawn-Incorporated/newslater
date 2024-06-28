@@ -1,11 +1,15 @@
 import { AuthenticatedAccountPage } from "@/app/(pages)/account/(authenticated)/root";
-import SignedInSecurity from "@/context/SignedInSecurity";
+import { auth } from "@/auth";
+import { notFound } from "next/navigation";
 
-export default function Followed() {
+export default async function Followed() {
+    const session = await auth()
+
+    if (!session?.user) {
+        return notFound();
+    }
 
     return (
-        <SignedInSecurity>
-            <AuthenticatedAccountPage/>
-        </SignedInSecurity>
+        <AuthenticatedAccountPage/>
     )
 }
