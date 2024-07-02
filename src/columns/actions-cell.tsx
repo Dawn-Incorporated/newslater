@@ -8,9 +8,8 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { unfollowFeed } from "@/server/db/action/followActions";
 import { toast } from "sonner";
-import { deleteFeed, editFeed, verifyFeed } from "@/server/db/action/feedsActions";
+import { deleteFeed, verifyFeed } from "@/server/db/action/feedsActions";
 import EditFeedForm from "@/app/(pages)/admin/(root)/EditFeedForm";
-import { revalidatePath } from "next/cache";
 
 export function ActionsCell({row}: any) {
 	const feedURL = row.original.url;
