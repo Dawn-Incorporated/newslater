@@ -31,18 +31,6 @@ export function ActionsCell({row}: any) {
 		}
 	}
 
-
-	const handleEditFeed = async () => {
-		if (session?.user?.email && feedURL) {
-			const edited = await editFeed(feedURL)
-			if (edited) {
-				router.refresh()
-				return toast.success("Feed verified")
-			}
-			return toast.error("Failed to verify feed")
-		}
-	}
-
 	const handleDeleteFeed = async () => {
 		if (session?.user?.email && feedURL) {
 			const remove = await deleteFeed(feedURL)
