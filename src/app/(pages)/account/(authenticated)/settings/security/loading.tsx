@@ -1,3 +1,3 @@
 export default function UserSecurityLoading() {
-    return <p>Loading</p>
+  return <p>Loading</p>;
 }

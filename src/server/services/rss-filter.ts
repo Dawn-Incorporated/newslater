@@ -8,41 +8,45 @@ import { log } from "byarutils";
  * If the number is -2, the user wants to receive the posts between now and yesterday. @see userFeeds.pubDate
  */
 export async function filter(userFeeds: any[], postLimit: number) {
-    let filteredFeeds = [];
-    postLimit = Number(postLimit);
-    try {
-        // If the user wants to receive all the posts
-        if (postLimit === -1) {
-            filteredFeeds = userFeeds;
-        }
-        // If the user wants to receive the posts between now and yesterday
-        else if (postLimit === -2) {
-            let yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-
-            for (let feed of userFeeds) {
-                let feedFiltered = [];
-                for (let publication of feed) {
-                    if (new Date(publication.pubDate) >= yesterday) {
-                        feedFiltered.push(publication);
-                    }
-                }
-                filteredFeeds.push(feedFiltered);
-            }
-        }
-        // If the user wants to receive a specific number of posts
-        else {
-            for (let feed of userFeeds) {
-                let feedFiltered = [];
-                for (let i = 0; i < postLimit; i++) {
-                    feedFiltered.push(feed[i]);
-                }
-                filteredFeeds.push(feedFiltered);
-            }
-        }
-        return filteredFeeds;
-    } catch (error) {
-        log('ERROR', 'RSS Filter', 'An error occurred during RSS feeds filtering. ' + error);
-        return [];
+  let filteredFeeds = [];
+  postLimit = Number(postLimit);
+  try {
+    // If the user wants to receive all the posts
+    if (postLimit === -1) {
+      filteredFeeds = userFeeds;
     }
+    // If the user wants to receive the posts between now and yesterday
+    else if (postLimit === -2) {
+      let yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      for (let feed of userFeeds) {
+        let feedFiltered = [];
+        for (let publication of feed) {
+          if (new Date(publication.pubDate) >= yesterday) {
+            feedFiltered.push(publication);
+          }
+        }
+        filteredFeeds.push(feedFiltered);
+      }
+    }
+    // If the user wants to receive a specific number of posts
+    else {
+      for (let feed of userFeeds) {
+        let feedFiltered = [];
+        for (let i = 0; i < postLimit; i++) {
+          feedFiltered.push(feed[i]);
+        }
+        filteredFeeds.push(feedFiltered);
+      }
+    }
+    return filteredFeeds;
+  } catch (error) {
+    log(
+      "ERROR",
+      "RSS Filter",
+      "An error occurred during RSS feeds filtering. " + error,
+    );
+    return [];
+  }
 }

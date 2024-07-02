@@ -1,4 +1,11 @@
-import { auth_accounts, auth_sessions, auth_users, auth_verification_token, feeds, follow } from "@/server/db/schema";
+import {
+  auth_accounts,
+  auth_sessions,
+  auth_users,
+  auth_verification_token,
+  feeds,
+  follow,
+} from "@/server/db/schema";
 
 export type FeedType = typeof feeds.$inferInsert;
 export type FollowType = typeof follow.$inferInsert;

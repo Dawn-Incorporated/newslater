@@ -5,21 +5,23 @@ import { getFeed } from "@/server/db/action/feedsActions";
 import { FeedType } from "@/server/db/types";
 
 export async function FeedsTable() {
-	const data = await getFeed();
+  const data = await getFeed();
 
-	const feeds = data.map((feed: FeedType) => {
-		return {
-			...feed,
-			verified: feed.date_verified ? "Y" : "N"
-		}
-	})
+  const feeds = data.map((feed: FeedType) => {
+    return {
+      ...feed,
+      verified: feed.date_verified ? "Y" : "N",
+    };
+  });
 
-	if (!feeds || feeds.length === 0) {
-		return <Empty
-			title="No feeds found"
-			description="There are no feeds to display."
-		/>
-	}
+  if (!feeds || feeds.length === 0) {
+    return (
+      <Empty
+        title="No feeds found"
+        description="There are no feeds to display."
+      />
+    );
+  }
 
-	return <DataTable columns={ columnsFeed } data={ feeds }/>
+  return <DataTable columns={columnsFeed} data={feeds} />;
 }

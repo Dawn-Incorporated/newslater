@@ -1,7 +1,3 @@
 export default function Terms() {
-    return (
-        <>
-
-        </>
-    )
+  return <></>;
 }

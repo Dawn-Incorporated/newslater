@@ -1,15 +1,18 @@
-"use server"
+"use server";
 
 import { auth_users } from "@/server/db/schema";
 import { db } from "@/server/db";
 import { eq, sql } from "drizzle-orm";
 
 export const updateUser = async (userEmail: string, name: string) => {
-    return await db.update(auth_users).set({name}).where(eq(auth_users.email, userEmail))
-}
+  return await db
+    .update(auth_users)
+    .set({ name })
+    .where(eq(auth_users.email, userEmail));
+};
 
 export const getUsersWithFeeds = async () => {
-    return await db.execute(sql`
+  return await db.execute(sql`
         SELECT
             fo.user_id,
             u.name,
@@ -30,7 +33,7 @@ export const getUsersWithFeeds = async () => {
 };
 
 export const getFeedsByUser = async (email: string) => {
-    return await db.execute(sql`
+  return await db.execute(sql`
         SELECT fe.url, fe.name, fe.description, fe.website, fe.category
         FROM follow fo
                  JOIN feeds fe ON fo.url = fe.url
@@ -38,4 +41,3 @@ export const getFeedsByUser = async (email: string) => {
         WHERE u.email = ${email}
     `);
 };
-

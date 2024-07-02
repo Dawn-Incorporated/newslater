@@ -1,7 +1,3 @@
 export default function Privacy() {
-    return (
-        <>
-
-        </>
-    )
+  return <></>;
 }

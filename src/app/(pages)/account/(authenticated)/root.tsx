@@ -5,13 +5,13 @@ import SettingsLayout from "@/app/(pages)/account/(authenticated)/layout";
 import { auth } from "@/auth";
 
 export async function AuthenticatedAccountPage() {
-    const session = await auth()
-    const email = session?.user.email
-    let feeds: any = email ? await getFeedsByUser(email) : []
+  const session = await auth();
+  const email = session?.user.email;
+  let feeds: any = email ? await getFeedsByUser(email) : [];
 
-    return (
-        <SettingsLayout>
-            <DataTable columns={ columnsFeed } data={ feeds }/>
-        </SettingsLayout>
-    )
+  return (
+    <SettingsLayout>
+      <DataTable columns={columnsFeed} data={feeds} />
+    </SettingsLayout>
+  );
 }
