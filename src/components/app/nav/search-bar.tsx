@@ -19,7 +19,7 @@ export function SearchBar({feeds_list}: { feeds_list: any[] }) {
                         variant="outline"
                         role="combobox"
                         aria-expanded={ open }
-                        className="pl-8 sm:min-w-[300px] md:min-w-[200px] lg:min-w-[100px]"
+                        className="pl-8 min-w-[100px]"
                     >
                         { value
                             ? feeds && feeds.find((feed: any) => feed.name === value)?.name || "Feed"
