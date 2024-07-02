@@ -6,7 +6,7 @@ export default function Home() {
 			<div className="z-1">
 				<Header/>
 			</div>
-			<UnderlayingGradient/>
+			<div className="bg-gradient-to-t from-[#DBE5D8] from-5% via-[#FCEFD6] via-40% h-96 w-full bottom-0 left-0 z-0 fixed"/>
 		</>
 	);
 }
@@ -22,13 +22,5 @@ function Header() {
 				read the news. one day at a time.
 			</p>
 		</div>
-	)
-}
-
-function UnderlayingGradient() {
-	return (
-		<>
-			<div className="bg-gradient-to-t from-[#DBE5D8] from-5% via-[#FCEFD6] via-40% h-96 w-full bottom-0 left-0 z-0 fixed"/>
-		</>
 	)
 }
