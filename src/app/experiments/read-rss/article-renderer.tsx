@@ -29,7 +29,10 @@ const ArticleRenderer: React.FC<ArticleRendererProps> = ({components = [], previ
         }
     }
     
-    const containerStyle: CSSProperties = {}
+    const containerStyle: CSSProperties = {
+        wordWrap: "break-word",
+        wordBreak: "break-word"
+    }
     if (previewOptions?.maxLines && !expanded) {
         Object.assign(containerStyle, {
             display: "-webkit-box",
