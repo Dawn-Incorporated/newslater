@@ -15,8 +15,9 @@ export default function ExperimentsLayout({children}: { children: ReactNode }) {
                     <h1 className="text-xl font-bold">Experiments</h1>
                     <p>A collection of experiments and tests.</p>
                 </div>
-                <div className="flex flex-col">
-                    <Link href="/experiments/read-rss" className={cn("rounded w-fit p-1", pathname.includes("/read-rss") ? "underline" : "")}>Read RSS</Link>
+                <div className="flex">
+                    <Link href="/experiments/read-rss" className={cn("rounded w-fit p-1", pathname.includes("/read-rss") ? "bg-gray-100" : "")}>Read RSS</Link>
+                    <Link href="/experiments/list-feeds" className={cn("rounded w-fit p-1", pathname.includes("/list-feeds") ? "bg-gray-100" : "")}>List Feeds</Link>
                 </div>
             </div>
             
