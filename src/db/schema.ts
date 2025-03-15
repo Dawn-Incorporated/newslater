@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, jsonb, primaryKey } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
@@ -48,7 +48,8 @@ export const verification = pgTable("verification", {
 });
 
 export const feeds = pgTable("feeds", {
-	url: text("url").primaryKey(),
+	id: text("id").primaryKey(),
+	url: text("url").notNull().unique(),
 	name: text('name').notNull(),
 	description: text('description'),
 	website: text('website'),
@@ -58,9 +59,11 @@ export const feeds = pgTable("feeds", {
 });
 
 export const follow = pgTable("follow", {
-	userId: text("user_id").notNull().references(() => user.id, { onDelete: 'cascade' }).primaryKey(),
-	url: text("url").notNull().references(() => feeds.url, { onDelete: 'cascade' }).primaryKey()
-});
+	userId: text("user_id").notNull().references(() => user.id, { onDelete: 'cascade' }),
+	feedId: text("feed_id").notNull().references(() => feeds.id, { onDelete: 'cascade' })
+  }, (table) => [
+	primaryKey({ columns: [table.userId, table.feedId] })
+  ]);
 
 export type User = typeof user.$inferSelect;
 export type NewUser = typeof user.$inferInsert;
