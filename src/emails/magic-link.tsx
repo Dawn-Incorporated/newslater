@@ -36,7 +36,7 @@ export const MagicLinkEmail = ({
   loginCode = 'ABCD-EFGH-IJKL',
   expiryMinutes = 10,
   companyName = 'Newslater',
-  companyLogo = `${baseUrl}/static/company-logo.png`,
+  companyLogo = `${baseUrl}/public/android-chrome-192x192.png`,
 }: MagicLinkEmailProps) => (
   <Tailwind>
     <Html>
