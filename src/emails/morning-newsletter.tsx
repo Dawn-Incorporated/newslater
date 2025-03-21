@@ -86,7 +86,7 @@ export async function getWeatherData(city = 'Paris') {
 
 export const MorningNewsletter = async ({
   username = 'Reader',
-  city = 'Paris',
+  city = 'Lyon',
   date = new Date().toLocaleDateString(),
   topNews = [],
   weather: initialWeather,
@@ -203,31 +203,6 @@ export const MorningNewsletter = async ({
       </Html>
     </Tailwind>
   );
-};
-
-// Update the PreviewProps to use getWeatherData function
-MorningNewsletter.PreviewProps = async () => {
-  const city = "New York";
-  const weatherData = await getWeatherData(city);
-  
-  return {
-    username: 'Sarah',
-    city,
-    date: 'June 15, 2023',
-    topNews: [
-      {
-        title: 'Major tech breakthrough announced at annual developer conference',
-        summary: 'The new platform promises to revolutionize how we interact with smart devices.',
-        url: '#'
-      },
-      {
-        title: 'Global climate summit reaches historic agreement',
-        summary: 'Nations commit to ambitious goals to reduce carbon emissions by 2030.',
-        url: '#'
-      }
-    ],
-    weather: weatherData
-  } as MorningNewsletterProps;
 };
 
 export default MorningNewsletter;
